@@ -7,6 +7,37 @@
     --white: #ffffff;
 }
 
+.navbar {
+    --bs-navbar-brand-color: var(--white) !important;
+}
+
+.navbar-brand {
+    color: var(--white);
+}
+
+.navbar-brand:focus,
+.navbar-brand:hover {
+    color: var(--white);
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+    color: var(--white);
+}
+
+.nav-link {
+    color: var(--white);
+}
+
+.nav-link:focus,
+.nav-link:hover {
+    color: var(--white);
+}
+
+.bg-body-tertiary {
+    background-color: var(--dark-blue) !important;
+}
+
 .btn-outline-success {
     --bs-btn-color: var(--coral);
     --bs-btn-border-color: var(--coral);

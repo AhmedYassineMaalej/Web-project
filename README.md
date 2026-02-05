@@ -1,8 +1,9 @@
 # Best-Deal
 
-Ever find yourself opening multiple online shops in seperate tabs manually comparing prices and reviews to try to find the best-deal.
+Ever find yourself endlessly opening multiple online shops in seperate tabs manually comparing prices and reviews trying to find the best-deal?
 
 That is where Best-Deal website comes in:
+
 Best-Deal website streamlines that process by automatically compiling all information from different shops in order to show you:
 - Best prices
 - Most positive reviews

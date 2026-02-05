@@ -4,25 +4,15 @@
     --light-grey: #f7f7f7;
     --taupe: #B3A394;
     --white: #FFFFFF;
-    --sidebar-width: 260px;
+    --sidebar-width: 0px;
 }
 
 body {
     background-color: var(--light-grey);
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    display: flex;
 }
 
-.sidebar {
-    width: var(--sidebar-width);
-    height: 100vh;
-    background-color: var(--dark-blue);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-}
 
 .brand-name {
     color: var(--white);
@@ -30,18 +20,6 @@ body {
     padding-left: 10px;
 }
 
-.sidebar .nav-link {
-    color: var(--taupe);
-    padding: 12px 15px;
-    margin-bottom: 5px;
-    transition: all 0.2s ease;
-}
-
-.sidebar .nav-link:hover, .sidebar .nav-link.active {
-    color: var(--white);
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-}
 
 .main-content {
     margin-left: var(--sidebar-width);
@@ -56,8 +34,8 @@ body {
 
 
 .profile-circle {
-    width: 40px; 
-    height: 40px; 
+    width: 40px;
+    height: 40px;
     background-color: var(--taupe);
 }
 

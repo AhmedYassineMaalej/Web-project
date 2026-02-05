@@ -1,196 +1,225 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="HomePageStyle.css">
-</head>
-<body>
-<section id="DealOfTheDay">
-    <div class="container">
-    <h1>Deal Of The Day</h1>
-    <div class="container">
-        <div class="card">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../css/HomePageStyle.css" />
+  </head>
+  <body>
+    <section id="DealOfTheDay">
+      <div class="container">
+        <h1>Deal Of The Day</h1>
+        <div class="container">
+          <div class="card">
             <div class="badge bg-danger">20%</div>
-            <img src="download.jpg" alt="product name" class="product_img" height="50%" width="50%">
+            <img
+              src="../public/download.jpg"
+              alt="product name"
+              class="product_img"
+              height="50%"
+              width="50%"
+            />
             <div class="card-body">
-                <span class="card-text">amazon</span>
-                <h2 class="card-text">airpods</h2>
-                <p class="card-text"> <strong>starting at 200$</strong></p>
-                <ul class="product_features">
-
-                    <li>noise Cancelling</li>
-                    <li>fast charging</li>
-                    <li>reliable battery</li>
-
-                </ul>
-
+              <span class="card-text">amazon</span>
+              <h2 class="card-text">airpods</h2>
+              <p class="card-text"><strong>starting at 200$</strong></p>
+              <ul class="product_features">
+                <li>noise Cancelling</li>
+                <li>fast charging</li>
+                <li>reliable battery</li>
+              </ul>
             </div>
+          </div>
+
+          <div class="card text-white border-0 poster-container">
+            <img
+              src="../public/money.jpg"
+              class="card-img object-fit-cover h-100"
+              alt="poster"
+            />
+            <div
+              class="card-img-overlay d-flex flex-column justify-content-end"
+            >
+              <p class="card-text fw-bold fs-4">Don't miss this opportunity</p>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-            <div class="card text-white border-0 poster-container">
-                <img src="money.jpg" class="card-img object-fit-cover h-100" alt="poster">
-                <div class="card-img-overlay d-flex flex-column justify-content-end">
-                    <p class="card-text fw-bold fs-4">Don't miss this opportunity</p>
-                </div>
-            </div>
-    </div>
-    </div>
-</section>
-
-<section class="scroll">
-    <div class="container">
-    <h1>Best Deals</h1>
-    <ul class="container list-group">
-    <li class="card">
-        <div class="badge bg-danger">20%</div>
-        <img src="pc.jpg" alt="product name" class="card-image">
-        <div class="card-body">
-            <div class="website">
+    <section class="scroll">
+      <div class="container">
+        <h1>Best Deals</h1>
+        <ul class="container list-group">
+          <li class="card">
+            <div class="badge bg-danger">20%</div>
+            <img src="../public/pc.jpg" alt="product name" class="card-image" />
+            <div class="card-body">
+              <div class="website">
                 <p>jumia</p>
-            <img src="jumia.png">
+                <img src="../public/jumia.png" />
+              </div>
+              <h2 class="card-text">pc</h2>
+              <p class="old-price">old price 300$</p>
+              <p class="card-text"><strong>starting at 200$</strong></p>
             </div>
-                <h2 class="card-text">pc</h2>
-                <p class="old-price"> old price 300$</p>
-                <p class="card-text"> <strong>starting at 200$</strong></p>
-        </div>
-    </li>
-        <li class="card">
+          </li>
+          <li class="card">
             <div class="badge bg-danger">30%</div>
-            <img src="souris.jpg" alt="product name" class="card-image">
+            <img
+              src="../public/souris.jpg"
+              alt="product name"
+              class="card-image"
+            />
             <div class="card-body">
-                <div class="website">
-                    <p>amazon</p>
-                    <img src="amazon.png">
-                </div>
-                <h2 class="card-text">mouse</h2>
-                <p class="old-price"> old price 80$</p>
-                <p class="card-text"> <strong>starting at 45$</strong></p>
+              <div class="website">
+                <p>amazon</p>
+                <img src="../public/amazon.png" />
+              </div>
+              <h2 class="card-text">mouse</h2>
+              <p class="old-price">old price 80$</p>
+              <p class="card-text"><strong>starting at 45$</strong></p>
             </div>
-        </li>
-        <li class="card">
+          </li>
+          <li class="card">
             <div class="badge bg-danger">20%</div>
-            <img src="ball.jpg" alt="product name" class="card-image">
+            <img
+              src="../public/ball.jpg"
+              alt="product name"
+              class="card-image"
+            />
             <div class="card-body">
-                <div class="website">
-                    <p>amazon</p>
-                    <img src="amazon.png">
-                </div>
-                <h2 class="card-text">ball</h2>
-                <p class="old-price"> old price 300$</p>
-                <p class="card-text"> <strong>starting at 200$</strong></p>
+              <div class="website">
+                <p>amazon</p>
+                <img src="../public/amazon.png" />
+              </div>
+              <h2 class="card-text">ball</h2>
+              <p class="old-price">old price 300$</p>
+              <p class="card-text"><strong>starting at 200$</strong></p>
             </div>
-        </li>
-    </ul>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-</section>
-
-
-
-
-<section class="scroll">
-    <div class="container">
+    <section class="scroll">
+      <div class="container">
         <h1>expiring deals</h1>
         <ul class="container list-group">
-            <li class="card">
-                <div class="badge bg-danger">30%</div>
-                <img src="tv.jpg" alt="product name" class="card-image">
-                <div class="card-body">
-                    <div class="website">
-                        <p>jumia</p>
-                        <img src="jumia.png">
-                    </div>
-                    <h2 class="card-text">smart tv</h2>
-                    <p class="old-price"> old price 1000$</p>
-                    <p class="card-text"> <strong>starting at 666$</strong></p>
-                    <h5 class="expiration-date"> remaining time:1 week 🛎️</h5>
-                </div>
-            </li>
-            <li class="card">
-                <div class="badge bg-danger">50%</div>
-                <img src="sunglasses.jpg" alt="product name" class="card-image">
-                <div class="card-body">
-                    <div class="website">
-                        <p>amazon</p>
-                        <img src="amazon.png">
-                    </div>
-                    <h2 class="card-text">sunglasses</h2>
-                    <p class="old-price"> old price 80$</p>
-                    <p class="card-text"> <strong>starting at 40$</strong></p>
-                    <h5 class="expiration-date">remaining time : 3days 🛎️</h5>
-                </div>
-            </li>
-            <li class="card">
-                <div class="badge bg-danger">10%</div>
-                <img src="smartwatch.jpg" alt="product name" class="card-image">
-                <div class="card-body">
-                    <div class="website">
-                        <p>amazon</p>
-                        <img src="amazon.png">
-                    </div>
-                    <h2 class="card-text">smartwatch</h2>
-                    <p class="old-price"> old price 500$</p>
-                    <p class="card-text"> <strong>starting at 400$</strong></p>
-                    <h5 class="expiration-date">remaining time: 2h 🛎️</h5>
-                </div>
-            </li>
+          <li class="card">
+            <div class="badge bg-danger">30%</div>
+            <img src="../public/tv.jpg" alt="product name" class="card-image" />
+            <div class="card-body">
+              <div class="website">
+                <p>jumia</p>
+                <img src="../public/jumia.png" />
+              </div>
+              <h2 class="card-text">smart tv</h2>
+              <p class="old-price">old price 1000$</p>
+              <p class="card-text"><strong>starting at 666$</strong></p>
+              <h5 class="expiration-date">remaining time:1 week 🛎️</h5>
+            </div>
+          </li>
+          <li class="card">
+            <div class="badge bg-danger">50%</div>
+            <img
+              src="../public/sunglasses.jpg"
+              alt="product name"
+              class="card-image"
+            />
+            <div class="card-body">
+              <div class="website">
+                <p>amazon</p>
+                <img src="../public/amazon.png" />
+              </div>
+              <h2 class="card-text">sunglasses</h2>
+              <p class="old-price">old price 80$</p>
+              <p class="card-text"><strong>starting at 40$</strong></p>
+              <h5 class="expiration-date">remaining time : 3days 🛎️</h5>
+            </div>
+          </li>
+          <li class="card">
+            <div class="badge bg-danger">10%</div>
+            <img
+              src="../public/smartwatch.jpg"
+              alt="product name"
+              class="card-image"
+            />
+            <div class="card-body">
+              <div class="website">
+                <p>amazon</p>
+                <img src="../public/amazon.png" />
+              </div>
+              <h2 class="card-text">smartwatch</h2>
+              <p class="old-price">old price 500$</p>
+              <p class="card-text"><strong>starting at 400$</strong></p>
+              <h5 class="expiration-date">remaining time: 2h 🛎️</h5>
+            </div>
+          </li>
         </ul>
-    </div>
+      </div>
+    </section>
 
-</section>
-
-
-<section class="scroll">
-    <div class="container">
+    <section class="scroll">
+      <div class="container">
         <h1>newest Deals</h1>
         <ul class="container list-group">
-            <li class="card">
-                <div class="badge bg-danger">20%</div>
-                <img src="pc.jpg" alt="product name" class="card-image">
-                <div class="card-body">
-                    <div class="website">
-                        <p>jumia</p>
-                        <img src="jumia.png">
-                    </div>
-                    <h2 class="card-text">pc</h2>
-                    <p class="old-price"> old price 300$</p>
-                    <p class="card-text"> <strong>starting at 200$</strong></p>
-                    <h5 class="begining-date">added 1h ago</h5>
-                </div>
-            </li>
-            <li class="card">
-                <div class="badge bg-danger">30%</div>
-                <img src="souris.jpg" alt="product name" class="card-image">
-                <div class="card-body">
-                    <div class="website">
-                        <p>amazon</p>
-                        <img src="amazon.png">
-                    </div>
-                    <h2 class="card-text">mouse</h2>
-                    <p class="old-price"> old price 80$</p>
-                    <p class="card-text"> <strong>starting at 45$</strong></p>
-                    <h5 class="begining-date">added 1 day ago</h5>
-                </div>
-            </li>
-            <li class="card">
-                <div class="badge bg-danger">20%</div>
-                <img src="ball.jpg" alt="product name" class="card-image">
-                <div class="card-body">
-                    <div class="website">
-                        <p>amazon</p>
-                        <img src="amazon.png">
-                    </div>
-                    <h2 class="card-text">ball</h2>
-                    <p class="old-price"> old price 300$</p>
-                    <p class="card-text"> <strong>starting at 200$</strong></p>
-                    <h5 class="begining-date">added 4h ago</h5>
-                </div>
-            </li>
+          <li class="card">
+            <div class="badge bg-danger">20%</div>
+            <img src="../public/pc.jpg" alt="product name" class="card-image" />
+            <div class="card-body">
+              <div class="website">
+                <p>jumia</p>
+                <img src="../public/jumia.png" />
+              </div>
+              <h2 class="card-text">pc</h2>
+              <p class="old-price">old price 300$</p>
+              <p class="card-text"><strong>starting at 200$</strong></p>
+              <h5 class="begining-date">added 1h ago</h5>
+            </div>
+          </li>
+          <li class="card">
+            <div class="badge bg-danger">30%</div>
+            <img
+              src="../public/souris.jpg"
+              alt="product name"
+              class="card-image"
+            />
+            <div class="card-body">
+              <div class="website">
+                <p>amazon</p>
+                <img src="../public/amazon.png" />
+              </div>
+              <h2 class="card-text">mouse</h2>
+              <p class="old-price">old price 80$</p>
+              <p class="card-text"><strong>starting at 45$</strong></p>
+              <h5 class="begining-date">added 1 day ago</h5>
+            </div>
+          </li>
+          <li class="card">
+            <div class="badge bg-danger">20%</div>
+            <img
+              src="../public/ball.jpg"
+              alt="product name"
+              class="card-image"
+            />
+            <div class="card-body">
+              <div class="website">
+                <p>amazon</p>
+                <img src="../public/amazon.png" />
+              </div>
+              <h2 class="card-text">ball</h2>
+              <p class="old-price">old price 300$</p>
+              <p class="card-text"><strong>starting at 200$</strong></p>
+              <h5 class="begining-date">added 4h ago</h5>
+            </div>
+          </li>
         </ul>
-    </div>
-
-</section>
-</body>
+      </div>
+    </section>
+  </body>
 </html>

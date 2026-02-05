@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Space - PriceCompare</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="sidebar p-3">
+        <h4 class="brand-name mb-4">Price Compare</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="#" class="nav-link active">My Space</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Favorites</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">History</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="content-limit-wrapper p-4"> 
+            <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+                <h1 class="h2">My Space</h1>
+                <div class="profile-info d-flex align-items-center">
+                    <span class="me-3 fw-bold">User Name</span>
+                    <div class="rounded-circle profile-circle"></div>
+                </div>
+            </div>
+
+            <section class="mb-5">
+                <h3 class="section-title mb-4">My Favorites</h3>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 product-card">
+                            <div class="badge-price">-15%</div>
+                            <div class="card-body text-center p-4">
+                                <div class="placeholder-img mb-3"></div>
+                                <h5 class="card-title">Wireless Headphones</h5>
+                                <p class="price-tag">$199.99</p>
+                                <button class="btn btn-coral w-100">View Deals</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="section-title mb-4">Recent History</h3>
+                <div class="table-responsive bg-white p-3 rounded shadow-sm">
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Date Viewed</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">Apple Smart Watch</td>
+                                <td>Electronics</td>
+                                <td>Feb 5, 2026</td>
+                                <td><a href="#" class="text-coral">Revisit</a></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Power Bank</td>
+                                <td>Electronics</td>
+                                <td>Jul 16, 2025</td>
+                                <td><a href="#" class="text-coral">Revisit</a></td>
+                            </tr>
+                           </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</body>
+</html>

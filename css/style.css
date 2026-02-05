@@ -1,0 +1,116 @@
+:root {
+    --dark-blue: #102542;
+    --coral: #F87060;
+    --light-grey: #f7f7f7;
+    --taupe: #B3A394;
+    --white: #FFFFFF;
+    --sidebar-width: 260px;
+}
+
+body {
+    background-color: var(--light-grey);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    display: flex;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--dark-blue);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.brand-name {
+    color: var(--white);
+    font-weight: 700;
+    padding-left: 10px;
+}
+
+.sidebar .nav-link {
+    color: var(--taupe);
+    padding: 12px 15px;
+    margin-bottom: 5px;
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+}
+
+.content-limit-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+.profile-circle {
+    width: 40px; 
+    height: 40px; 
+    background-color: var(--taupe);
+}
+
+.section-title {
+    font-weight: 700;
+    color: var(--dark-blue);
+}
+
+.product-card {
+    border-radius: 15px;
+    transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.placeholder-img {
+    height: 150px;
+    background-color: #CDD7D6;
+    border-radius: 10px;
+}
+
+.price-tag {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark-blue);
+}
+
+.badge-price {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--coral);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.btn-coral {
+    background-color: var(--coral);
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-coral:hover {
+    background-color: #e06254;
+    color: white;
+}
+
+.text-coral {
+    color: var(--coral);
+    text-decoration: none;
+}

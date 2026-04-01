@@ -1,0 +1,4 @@
+two files are expected here
+UserRepository.php
+ProductRepository.php
+must implement static methods w read el coventions.md for more details

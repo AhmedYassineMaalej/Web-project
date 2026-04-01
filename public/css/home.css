@@ -1,0 +1,88 @@
+body{
+    background-color: rgb(240, 240, 240);
+}
+section >.container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+}
+.container .container{
+    display: flex;
+    padding: 50px 5px ;
+    gap: 50px;
+}
+.card{
+    height: 450px;
+    width: 550px;
+    align-items: center;
+}
+.card .card-image {
+    width:100%;
+    height:100%;
+    object-fit: cover;
+
+
+}
+
+#DealOfTheDay .badge{
+    position: absolute;
+    width: 20%;
+    left:10px;
+    right:10px;
+}
+.scroll .card{
+    display: flex;
+    flex-direction: column;
+    height:auto;
+    width: 270px;
+    align-items: center;
+    padding: 10px;
+    background-color:white;
+    border-radius: 15px;
+    border: 1px solid black;
+    margin-top: 30px;
+
+}
+.scroll  ul{
+    display: flex;
+    flex-direction:row;
+    gap:20px
+}
+.scroll  .card:hover{
+    transform: scale(1.03);
+    border: 1px solid red;
+}
+
+.scroll .card .card-image{
+    margin :10px;
+    width:90%;
+    height:180px;
+}
+.scroll  .card .badge{
+    position: absolute;
+    top:10px;
+    left:10px;
+}
+.scroll  .card .card-body .old-price{
+    text-decoration:line-through grey;
+
+}
+.scroll  .card .website img{
+    height:30px;
+    object-fit: contain;
+}
+.scroll  .card .website {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.scroll .expiration-date{
+    color:red;
+    font-style: italic;
+}
+.scroll .begining-date{
+    color:blue;
+    font-style: italic;
+}
+

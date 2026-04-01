@@ -1,0 +1,6 @@
+maalej lena el python logic
+1- Awel 7aja nchoufou ken fama api endpoint
+2- Mbaaed nescrapiw
+
+Bennesba lel api endpoint kol domain iraja3 json different donc lezmek seperate parsers
+lel json 7asb m3a ana api 9a3ed ta7ki (e.g: json_walmart != json_ebay ofc)

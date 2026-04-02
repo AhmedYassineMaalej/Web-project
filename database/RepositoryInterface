@@ -1,0 +1,8 @@
+<?php
+interface RepositoryInterface {
+    public function findById(int $id) ;
+    public function findAll();
+    public function add($params);
+    public function delete(int $id);
+}
+?>

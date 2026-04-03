@@ -1,20 +1,45 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers\Auth;
 
-// We assume your friends will build this later
+
 // use App\models\UserRepository; 
-
+use App\Helpers\JWT;
+use App\Helpers\CSRF;
 class LoginController {
 
 
-    public function index() {
-        require __DIR__ . '/../../views/pages/login.php';
+
+
+
+    static public function index() {
+        if (JWT::isLoggedIn()) {
+            header('Location: /myspace');
+            exit;
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            return self::authenticate();
+        }
+        else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            return self::show_login_form();
+        }
+        else{
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo "Method Not Allowed";
+            exit;
+        }
+        
     }
 
-    public function authenticate() {
-        
-        $secret = $_ENV['JWT_SECRET'] ?? 'default_secret_key';
+    static public function authenticate() {
+
+        // validate that CSRF Token if it exists ofc
+        $csrf_token = $_POST['csrf'] ?? '';
+        if ( ! CSRF::validate_token($csrf_token ?? '')) {
+            header('Location: /login?error=invalid_csrf');
+            exit;
+        }
+        // get username and password from POST data
         
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
@@ -28,65 +53,37 @@ class LoginController {
         /*
         $user = UserRepository::getUserByUsername($username);
         if ($user && password_verify($password, $user['password'])) {
+        
             
-            // Standardized payload: includes ID for MySpace data fetching
-            $payload = [
-                'id'   => $user['id'], 
-                'user' => $username,
-                'iat'  => time(),
-                'exp'  => time() + 3600
-            ];
-
-            $token = $this->generateJWT($payload, $secret);
-            setcookie("token", $token, [
-                'expires' => time() + 3600,
-                'path' => '/',
-                'httponly' => true,
-                'samesite' => 'Lax'
-            ]);
-
+            $_COOKIE["JWT"] = JWT::issue_jwt($username, $user['id']);
             header('Location: /myspace');
-            exit; 
+
         }
-        */
+            */
+
 
         //just testing
         if ($username === "admin" && $password === "1234") {
-            
-            $payload = [
-                'id'   => 1,
-                'user' => $username,
-                'iat'  => time(),
-                'exp'  => time() + 3600 
-            ];
-
-            $jwt = $this->generateJWT($payload, $secret);
-
-            setcookie("token", $jwt, [
-                'expires' => time() + 3600,
-                'path' => '/',
-                'httponly' => true,
-                'samesite' => 'Lax'
-            ]);
+            error_log("Mock login successful for user: " . $username);
+            $_COOKIE["JWT"] = JWT::issue_jwt($username, 1); 
+            setcookie("JWT", $_COOKIE["JWT"], time() + 3600, "/");
+            error_log("JWT issued: " . $_COOKIE["JWT"]);
 
             header('Location: /'); 
-            exit;
         } else {
             header('Location: /login?error=invalid_credentials');
-            exit;
         }
     }
 
-    private function generateJWT($payload, $secret) {
-        $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-        
-        $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-        $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(json_encode($payload)));
 
-        // Create Signature using HMAC SHA256
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $secret, true);
-        $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
 
-        return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
+
+
+    static function show_login_form() {
+        $csrf_token = CSRF::generate_token();
+        $_SESSION['csrf_token'] = $csrf_token;
+        require __DIR__ . '/../../../views/pages/login.php';
     }
+
+    
 }

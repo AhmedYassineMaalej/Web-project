@@ -1,6 +1,6 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers\Auth;
 
 // use App\models\UserRepository; once ofc its done
 
@@ -25,7 +25,6 @@ class SignUpController {
             header('Location: /signup?error=password_mismatch');
             exit;
         }
-        // i hash here and UserRepository auto saves
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
 
         // uncomment everything below once done
@@ -40,7 +39,9 @@ class SignUpController {
         $success = UserRepository::createUser($username, $hashedPassword);
 
         if ($success) {
+            $_COOKIE["JWT"] = issue_jwt($username, $user_id); 
             header('Location: /login?success=account_created');
+
             exit;
         } else {
             header('Location: /signup?error=db_error');
@@ -54,6 +55,7 @@ class SignUpController {
             header('Location: /login?success=1');
             exit;
         }
+        
 
         header('Location: /signup?error=unknown');
         exit;

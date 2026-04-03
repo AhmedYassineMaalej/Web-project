@@ -1,6 +1,5 @@
 <?php
 namespace App;
-
 class Router {
     protected $routes = [];
 
@@ -10,7 +9,7 @@ class Router {
 
     public function dispatch($uri, $method) {
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === $method) {
+            if ($route['uri'] === $uri && ($route['method'] === $method || $route['method'] === 'ANY')) {
                 [$class, $function] = explode('@', $route['controller']); //like split in python
                 $controller = new $class();
                 return $controller->$function();

@@ -1,4 +1,6 @@
+You use the command ```composer dump-autoload```
 > The app runs with the command ```php -S localhost:8000 -t public```
+
 
 - the controllers call a method from the class ProductRepository (that must be filled by whoever is making that class with the appropriate method names)
 - controllers call the static method from the class **ProductRepository** and EXPECT to receive a ```list of tuples each containing 3 fields``` : **[Product_Reference, Description, ImageLink]**

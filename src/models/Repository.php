@@ -1,14 +1,16 @@
 <?php 
 namespace App\models;
 
+use PDO;
+
 abstract class Repository implements IRepository { 
     private $connection;
     private $tableName;
+
     public function __construct(PDO $connection,$tableName){ 
         $this->connection=$connection;
         $this->tableName=$tableName;
     }
-
 
     public function findAll(){
         $DBreply=$this->connection->query("select * from {$this->tableName} ;");

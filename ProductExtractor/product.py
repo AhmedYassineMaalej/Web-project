@@ -1,11 +1,22 @@
-class Product:
-    def __init__(self, reference: str, name: str, image: str, price: float, url: str):
+from category import Category
+
+
+class Product[C]:
+    def __init__(
+        self,
+        reference: str,
+        name: str,
+        image: str,
+        description: str,
+        info: dict[str, str],
+        category: C = None,
+    ):
         self.reference = reference
         self.name = name
         self.image = image
-        self.price = price
-        self.url = url
-        self.info: dict[str, str] = dict()
+        self.description = description
+        self.category = category
+        self.info = info
 
     def __repr__(self) -> str:
         res = "Product(\n"
@@ -13,3 +24,8 @@ class Product:
             res += f"\t{key} = {str(val)}\n"
         res += ")"
         return res
+
+    def with_category(self, category: Category) -> "Product[Category]":
+        return Product(
+            self.reference, self.name, self.image, self.description, self.info, category
+        )

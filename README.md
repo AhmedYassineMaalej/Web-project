@@ -13,6 +13,9 @@ For data-aquisition you can check out the requirements (here)[ProductExtractor/R
 
 # Setup 
 
+create a .env file in your project directory containing everything inside .env.example
+
+
 Regenerate classes to be included in project:
 ```bash
 composer dump-autoload

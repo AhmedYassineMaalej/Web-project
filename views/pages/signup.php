@@ -4,107 +4,218 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PickPocket | Sign Up</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/css/style.css" />
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b, #3b82f6);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.85) !important;
+        }
+
+        .stickers-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.8;
+            animation: floatRandom linear infinite;
+        }
+        .sticker:nth-child(1)  { left: 5%;  top: 80%; animation-duration: 12s; }
+        .sticker:nth-child(2)  { left: 15%; top: 60%; animation-duration: 18s; font-size: 40px; }
+        .sticker:nth-child(3)  { left: 25%; top: 90%; animation-duration: 14s; }
+        .sticker:nth-child(4)  { left: 35%; top: 70%; animation-duration: 20s; font-size: 45px; }
+        .sticker:nth-child(5)  { left: 45%; top: 85%; animation-duration: 16s; }
+        .sticker:nth-child(6)  { left: 55%; top: 75%; animation-duration: 22s; }
+        .sticker:nth-child(7)  { left: 65%; top: 95%; animation-duration: 17s; font-size: 38px; }
+        .sticker:nth-child(8)  { left: 75%; top: 65%; animation-duration: 19s; }
+        .sticker:nth-child(9)  { left: 85%; top: 88%; animation-duration: 15s; }
+        .sticker:nth-child(10) { left: 10%; top: 95%; animation-duration: 21s; }
+        .sticker:nth-child(11) { left: 50%; top: 92%; animation-duration: 18s; }
+        .sticker:nth-child(12) { left: 90%; top: 85%; animation-duration: 23s; font-size: 42px; }
+
+        @keyframes floatRandom {
+            0% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-300px) translateX(20px);
+            }
+            100% {
+                transform: translateY(-700px) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        .signup-card {
+            position: relative;
+            z-index: 2;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .signup-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .form-control {
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .btn-primary {
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+        }
+
+        .title {
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/">
-                <img src="https://staging.svgrepo.com/show/15477/coin.svg" alt="Logo" width="40" height="30" class="d-inline-block align-text-center" />
-                PickPocket
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
+<!-- stickers -->
+<div class="stickers-container">
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+    <div class="sticker">💵</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💸</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+    <div class="sticker">💵</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💸</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+</div>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card shadow-sm border-0">
-                    <div class="card-header bg-white text-center pt-4 pb-3 border-0">
-                        <h2 class="fw-bold text-primary">Create Account</h2>
-                        <p class="text-muted">Join PickPocket today</p>
-                    </div>
-                    <div class="card-body p-4">
-                        
-                        <!-- Error Messages -->
-                        <?php if (isset($_GET['error'])): ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <?php 
-                                    $error = $_GET['error'];
-                                    $message = '';
-                                    switch($error) {
-                                        case 'empty_fields':
-                                            $message = 'Please fill in all fields.';
-                                            break;
-                                        case 'password_mismatch':
-                                            $message = 'Passwords do not match.';
-                                            break;
-                                        case 'user_exists':
-                                            $message = 'Username already exists. Please choose another.';
-                                            break;
-                                        case 'db_error':
-                                            $message = 'Database error. Please try again later.';
-                                            break;
-                                        case 'invalid_csrf':
-                                            $message = 'Invalid security token. Please try again.';
-                                            break;
-                                        default:
-                                            $message = 'An error occurred. Please try again.';
-                                    }
-                                    echo htmlspecialchars($message);
-                                ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-
-                        <form method="POST" action="/sign_up">
-                            <!-- CSRF Token -->
-                            <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_token) ?>">
-                            
-                            <!-- Username -->
-                            <div class="mb-3">
-                                <label for="username" class="form-label fw-semibold">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" 
-                                       value="<?= htmlspecialchars($_GET['username'] ?? '') ?>"
-                                       placeholder="Choose a username" required autofocus>
-                                <div class="form-text">Your unique username for logging in.</div>
-                            </div>
-                            
-                            <!-- Password -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label fw-semibold">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" 
-                                       placeholder="Create a password" required>
-                                <div class="form-text">At least 6 characters recommended.</div>
-                            </div>
-                            
-                            <!-- Confirm Password -->
-                            <div class="mb-4">
-                                <label for="confirm_password" class="form-label fw-semibold">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
-                                       placeholder="Confirm your password" required>
-                            </div>
-                            
-                            <!-- Submit Button -->
-                            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">Sign Up</button>
-                        </form>
-                    </div>
-                    <div class="card-footer bg-white text-center py-3 border-0">
-                        <p class="mb-0">Already have an account? <a href="/login" class="text-decoration-none">Login here</a></p>
-                    </div>
-                </div>
-            </div>
+<!-- nav -->
+<nav class="navbar navbar-expand-lg shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/">
+            <img src="https://staging.svgrepo.com/show/15477/coin.svg" width="40">
+            PickPocket
+        </a>
+        <div class="ms-auto">
+            <a class="nav-link fw-semibold" href="/login">Login</a>
         </div>
     </div>
+</nav>
+
+<!-- sign-up section -->
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 90vh;">
+    <div class="col-md-6 col-lg-5">
+
+        <div class="signup-card p-4">
+
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-primary title">Create Account</h2>
+                <p class="text-muted">Join PickPocket and hunt the best deals 💰</p>
+            </div>
+
+            <!-- error -->
+            <?php if (isset($_GET['error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <?php 
+                        $error = $_GET['error'];
+                        $message = '';
+                        switch($error) {
+                            case 'empty_fields': $message = 'Please fill in all fields.'; break;
+                            case 'password_mismatch': $message = 'Passwords do not match.'; break;
+                            case 'user_exists': $message = 'Username already exists.'; break;
+                            case 'db_error': $message = 'Database error.'; break;
+                            case 'invalid_csrf': $message = 'Invalid security token.'; break;
+                            default: $message = 'Something went wrong.';
+                        }
+                        echo htmlspecialchars($message);
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
+            <!-- form -->
+            <form method="POST" action="/sign_up">
+
+                <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_token) ?>">
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Username</label>
+                    <input type="text" class="form-control"
+                        name="username"
+                        value="<?= htmlspecialchars($_GET['username'] ?? '') ?>"
+                        placeholder="type your username"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Password</label>
+                    <input type="password" class="form-control"
+                        name="password"
+                        placeholder="password"
+                        required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Confirm Password</label>
+                    <input type="password" class="form-control"
+                        name="confirm_password"
+                        placeholder="confirm your password"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                    Create Account
+                </button>
+
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="mb-0 text-muted">
+                    Already have an account?
+                    <a href="/login" class="fw-semibold text-decoration-none">Login</a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

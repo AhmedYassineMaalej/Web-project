@@ -3,14 +3,11 @@
 namespace App\Controllers\Auth;
 
 
-// use App\models\UserRepository; 
+use App\models\UserRepository; 
 use App\Helpers\JWT;
 use App\Helpers\CSRF;
+
 class LoginController {
-
-
-
-
 
     static public function index() {
         if (JWT::isLoggedIn()) {
@@ -48,30 +45,19 @@ class LoginController {
             header('Location: /login?error=missing_fields');
             exit;
         }
+        $user_repo = new UserRepository();
+        $user = $user_repo->getUserByUsername($username);
 
-        // when db ready, we uncomment this and remove the mock login below
-        /*
-        $user = UserRepository::getUserByUsername($username);
-        if ($user && password_verify($password, $user['password'])) {
-        
-            
-            $_COOKIE["JWT"] = JWT::issue_jwt($username, $user['id']);
+        if ($user && password_verify($password, $user->getPassword())) {
+            $jwt_cookie = JWT::issue_jwt($username, $user->getId());
+            setcookie("JWT", $jwt_cookie, time() + 3600, "/", "", false, true);
+            error_log("JWT issued: " . $jwt_cookie);
             header('Location: /myspace');
-
+            exit;
         }
-            */
-
-
-        //just testing
-        if ($username === "admin" && $password === "1234") {
-            error_log("Mock login successful for user: " . $username);
-            $_COOKIE["JWT"] = JWT::issue_jwt($username, 1); 
-            setcookie("JWT", $_COOKIE["JWT"], time() + 3600, "/");
-            error_log("JWT issued: " . $_COOKIE["JWT"]);
-
-            header('Location: /'); 
-        } else {
+        else {
             header('Location: /login?error=invalid_credentials');
+            exit;
         }
     }
 

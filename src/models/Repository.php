@@ -5,8 +5,8 @@ use PDO;
 use Exception;
 
 abstract class Repository implements IRepository { 
-    private $connection;
-    private $tableName;
+    protected $connection;
+    protected $tableName;
 
     public function __construct($tableName){  //here we pass one argument to avoid complexity!
         $this->connection=DBConnection::getInstance();
@@ -24,7 +24,7 @@ abstract class Repository implements IRepository {
         try {
             $DBreply = $this->connection->prepare("select * from {$this->tableName} where id = ?;");
             $DBreply->execute([$id]);
-            return $DBreply->fetch(PDO::FETCH_OBJ);  // might return the object or false
+            return $DBreply->fetch(PDO::FETCH_OBJ);  // might return the object if it exists or no error occurs otherwise boolean "false"
         } catch (Exception $e) {
             return false;  
         }

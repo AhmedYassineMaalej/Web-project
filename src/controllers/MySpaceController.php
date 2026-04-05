@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Controllers;
+use App\Helpers\JWT;
 
 class MySpaceController {
     public function index() {
-        $path = __DIR__ . '/../../views/pages/myspace.php';
-
-        if (file_exists($path)) {
-            require $path;
-        } else {
-            echo "Error: View file not found at " . $path;
+        if (! JWT::isLoggedIn()){
+            header("Location : /?error=not_logged_in");
+            exit;
         }
+        require __DIR__ . '/../../views/pages/myspace.php';
     }
     
 }

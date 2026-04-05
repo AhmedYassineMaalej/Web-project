@@ -23,7 +23,7 @@ composer dump-autoload
 
 # Running the server
 
-Run the server with the command]
+Run the server with the command
 ```bash
 php -S localhost:8000 -t public
 ```

@@ -1,15 +1,16 @@
 <?php
 namespace App\Controllers;
 use App\models\ProductRepository;
-
+use App\Helpers\JWT;
 class HomeController {
     public function index() {
         // We fetch different lists for different sections of the Home Page
         // must be able to call these static methods without creating an object of ProductRepository
-        /*$dealOfTheDay  = ProductRepository::getDailyDeal();     // Expects 1 tuple
+        /*
+        $dealOfTheDay  = ProductRepository::getDailyDeal();     // Expects 1 tuple
         $bestDeals     = ProductRepository::getBestDeals();    // Expects list of tuples
         $expiringDeals = ProductRepository::getExpiringDeals(); // Expects list of tuples
-*/
+        */
         // hardcoded as an example
         // FAKE DATA FOR TESTING
         $dealOfTheDay = ["REF-DAILY", "Ultra Premium Airpods", "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"];
@@ -27,7 +28,11 @@ class HomeController {
             ["NEW-01", "Latest Smartwatch", "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500"],
             ["NEW-02", "New Mechanical Keyboard", "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500"]
         ];
-        
+        if (JWT::isLoggedIn()){
+            $username = JWT::decode_jwt($_COOKIE['JWT'],$_ENV['JWT_SECRET'])['user'];
+            $is_logged = true;
+        }
+        else $is_logged=false;
         require __DIR__ . '/../../views/pages/home.php';
     }
 }

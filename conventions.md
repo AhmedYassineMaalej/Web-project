@@ -1,11 +1,10 @@
-You use the command ```composer dump-autoload```
-> The app runs with the command ```php -S localhost:8000 -t public```
+if the user is not logged in -> home page has buttons to sign up and login only and the other routes like catalog and myspace are forbidden
 
+if the user is logged in -> he has access them + he sees a welcome message on top with his name (on a low level, we decode his JWT cookie and extract the name after verifying integrity)
 
-- the controllers call a method from the class ProductRepository (that must be filled by whoever is making that class with the appropriate method names)
-- controllers call the static method from the class **ProductRepository** and EXPECT to receive a ```list of tuples each containing 3 fields``` : **[Product_Reference, Description, ImageLink]**
+**regardless of the user being logged in or not logged in, he sees in the home page some best deals that encourage him to make an account and join:**
+Therefore i need the following methods to show on the home page since it's the only spot a user can actually see some best deals products
 
-- we expect ```UserRepository``` and ```ProductRepository``` to be both at **App\models\\**
 ### App\Models\ProductRepository
 - `getAllProducts()`
 - `getDailyDeal()`
@@ -13,21 +12,8 @@ You use the command ```composer dump-autoload```
 - `getExpiringDeals()`
 - `getNewestDeals()`
 
-### App\Models\UserRepository
-
-- `getUserByUsername($username)` -> returns the password (its already hashed bc i gave it to createUser hashed in the 1st place)
-
-- `createUser($username, $hashed_password)`
-- `getUserById($id)`
-
----
-
 **Note:**
 - Product methods must return: `[$ref, $description, $imageLink]`
 - `getUserByUsername` must return the **Bcrypt hash** (Cost: 10)
 - All methods must be **`public static`**
 
-
-- Also passwords in the database must be hashed with **bcrypt** algorithm with exactly 10 rounds
-
-- consider adding more configs in .env for the database part

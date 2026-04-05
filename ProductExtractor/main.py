@@ -23,6 +23,20 @@ def main():
     scraper.quit()
 
     # to be replaced with database calls
+    """
+    hey, pls dont hardcode your mysql credentials, use ".env" only! copy paste .env.example into .env and modify it like your mysql credentials
+    here u go:
+    
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+
+    HOST = os.getenv('HOST')
+    DB_NAME=os.getenv('DB_NAME')
+    USER = os.getenv('USER')
+    PWD = os.getenv('PWD')
+    """
     for prod in products:
         print(prod)
 

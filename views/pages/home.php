@@ -35,25 +35,22 @@
                     <input class="form-control me-2" type="search" placeholder="Search products...">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/myspace">My Space</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Login</a>
-                        <div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 250px;">
-                            <form>
-                                <div class="mb-3">
-                                    <label class="form-label text-dark">Email</label>
-                                    <input type="email" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label text-dark">Password</label>
-                                    <input type="password" class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Submit</button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
+                
+                <?php if ($is_logged): ?>
+                    <!-- Show when user is logged in -->
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/catalog">Catalog</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/myspace">My Space</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                        <li class="nav-item"><span class="navbar-text text-success ms-2">Welcome, <?= htmlspecialchars($username) ?>!</span></li>
+                    </ul>
+                <?php else: ?>
+                    <!-- Show when user is not logged in -->
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/sign_up">Sign Up</a></li>
+                    </ul>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

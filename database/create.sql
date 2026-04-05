@@ -1,12 +1,6 @@
-DROP DATABASE website_db;
-CREATE DATABASE website_db
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
+-- DBConnection.php already selects the db, added "create IF NOT EXISTS" too
 
-USE website_db;
-
-
-CREATE TABLE Users (
+CREATE TABLE IF NOT EXISTS Users (
     ID          INT          NOT NULL AUTO_INCREMENT,
     Username    VARCHAR(100) NOT NULL UNIQUE,
     Role        VARCHAR(50)  NOT NULL DEFAULT 'user',
@@ -14,14 +8,14 @@ CREATE TABLE Users (
     PRIMARY KEY (ID)
 );
 
-CREATE TABLE Category (
+CREATE TABLE IF NOT EXISTS Category (
     ID    INT          NOT NULL AUTO_INCREMENT,
     Name  VARCHAR(100) NOT NULL UNIQUE,
     PRIMARY KEY (ID)
 );
 
 
-CREATE TABLE Provider (
+CREATE TABLE IF NOT EXISTS Provider (
     ID    INT          NOT NULL AUTO_INCREMENT,
     Name  VARCHAR(100) NOT NULL,
     Icon  VARCHAR(255),
@@ -29,7 +23,7 @@ CREATE TABLE Provider (
     PRIMARY KEY (ID)
 );
 
-CREATE TABLE Product (
+CREATE TABLE IF NOT EXISTS Product (
     ID          INT          NOT NULL AUTO_INCREMENT,
     Reference   VARCHAR(100) NOT NULL UNIQUE,
     Description TEXT,
@@ -43,7 +37,7 @@ CREATE TABLE Product (
 );
 
 
-CREATE TABLE ProductInfo (
+CREATE TABLE IF NOT EXISTS ProductInfo (
     ID        INT          NOT NULL AUTO_INCREMENT,
     ProductID INT          NOT NULL,
     `Key`     VARCHAR(100) NOT NULL,
@@ -56,7 +50,7 @@ CREATE TABLE ProductInfo (
 );
 
 
-CREATE TABLE ProductOffer (
+CREATE TABLE IF NOT EXISTS ProductOffer (
     ID         INT            NOT NULL AUTO_INCREMENT,
     Reference  VARCHAR(100)   NOT NULL,          
     Link       VARCHAR(500),
@@ -73,7 +67,7 @@ CREATE TABLE ProductOffer (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Bookmark (
+CREATE TABLE IF NOT EXISTS Bookmark (
     UserID    INT NOT NULL,
     ProductID INT NOT NULL,
     PRIMARY KEY (UserID, ProductID),

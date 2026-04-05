@@ -6,9 +6,8 @@ namespace App\Helpers;
 class JWT {
 
     public static function issue_jwt($username, $user_id){
-        $secret = $_ENV['JWT_SECRET'] ?? 'default_secret_key';
+        $secret = $_ENV['JWT_SECRET'] ?? 'my_key_for_jwt_signing';
         $payload = [
-            'id' => $user_id,
             'user' => $username,
             'iat' => time(),
             'exp' => time() + 3600
@@ -18,7 +17,7 @@ class JWT {
 
 
     public static function verify_jwt($token){
-        $secret = $_ENV['JWT_SECRET'] ?? 'default_secret_key';
+        $secret = $_ENV['JWT_SECRET'] ?? 'my_key_for_jwt_signing';
         try {
             return self::decode_jwt($token, $secret);
         } catch (Exception $e) {
@@ -43,9 +42,7 @@ class JWT {
 
     public static function isLoggedIn() {
         if (isset($_COOKIE['JWT'])) {
-            error_log("JWT found in cookie: " . $_COOKIE['JWT']);
             $payload = self::verify_jwt($_COOKIE['JWT']);
-            error_log("JWT verification result: " . ($payload ? "valid" : "invalid"));
             return $payload !== null;
         }
         return false;

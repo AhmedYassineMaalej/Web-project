@@ -3,6 +3,7 @@ namespace App\Controllers\Auth;
 use App\Helpers\JWT;
 use App\Helpers\CSRF;
 class LogoutController {
+
     static public function index() {
         if (!JWT::isLoggedIn()) {
             header('Location: /');
@@ -20,6 +21,7 @@ class LogoutController {
             exit;
         }
     }
+
     static public function show_logout_form() {
         $csrf_token = CSRF::generate_token();
         require __DIR__ . '/../../../views/pages/logout.php';
@@ -27,14 +29,14 @@ class LogoutController {
 
     static public function logout() {
 
-        // validate that CSRF Token if it exists ofc
-        $csrf_token = $_POST['csrf'] ?? '';
-        if ( ! CSRF::validate_token($csrf_token ?? '')) {
+        
+        $csrf_token = $_POST['csrf'];
+        if ( ! CSRF::validate_token($csrf_token)) {
             header('Location: /myspace?error=invalid_csrf');
             exit;
         }
 
-        setcookie("JWT", "", time() - 3600, "/");
+        setcookie("JWT", "", time() - 3600, "/","",false,true);
         $_SESSION['csrf_token'] = null;
         unset($_COOKIE["JWT"]);
         header('Location: /');

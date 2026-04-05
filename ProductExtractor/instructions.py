@@ -1,96 +1,198 @@
+from category import Category
 from abc import ABC, abstractmethod
-from typing import Callable, Optional
+from typing import Callable
 
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.window import WindowTypes
+from provider import Provider
 
 from product import Product
+from offer import Offer
+
+from browser import Browser
+
+DEFAULT_TIMEOUT = 10
 
 
-class Instruction[T](ABC):
+class BrowserInstruction[T](ABC):
     @abstractmethod
-    def execute(self, driver: WebDriver) -> T:
+    def accept(self, browser: Browser) -> T:
         pass
 
 
-class OpenInstruction(Instruction[None]):
+class GotoURL(BrowserInstruction[None]):
     def __init__(self, url: str):
         self.url = url
 
-    def execute(self, driver: WebDriver) -> None:
-        driver.get(self.url)
+    def accept(self, browser: Browser) -> None:
+        browser.driver.get(self.url)
+
+
+class OpenTab(BrowserInstruction[str]):
+    def accept(self, browser: Browser) -> str:
+        original = browser.driver.current_window_handle
+        browser.driver.switch_to.new_window(WindowTypes.TAB)
+        return original
+
+
+class CloseTab(BrowserInstruction[None]):
+    def __init__(self, previous: str) -> None:
+        self.prev = previous
+
+    def accept(self, browser: Browser) -> None:
+        browser.driver.close()
+        browser.driver.switch_to.window(self.prev)
 
 
 type Processing[T] = Callable[[str], T]
 
 
-class ScrapeInstruction[T](Instruction[list[T]]):
+def identity(T):
+    return T
+
+
+class Scrape[T = str](BrowserInstruction[list[T]]):
     def __init__(
         self,
         selector: str,
         attribute_name: str,
-        processing: Optional[Processing[T]] = None,
+        processing: Processing[T] = identity,
     ):
         self.selector = selector
         self.attribute_name = attribute_name
         self.processing = processing
 
-    def execute(self, driver: WebDriver) -> list[T]:
+    def accept(self, browser: Browser) -> list[T]:
         try:
-            elements = WebDriverWait(driver, 5).until(
+            elements = WebDriverWait(browser.driver, DEFAULT_TIMEOUT).until(
                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, self.selector))
             )
         except TimeoutException:
             print("selector didnt match:", self.selector)
             return []
 
-        data = []
-        for elem in elements:
-            datum = elem.get_attribute(self.attribute_name)
-            if datum is None:
+        data: list[str] = []
+
+        for element in elements:
+            attr = element.get_attribute(self.attribute_name)
+            if attr is None:
                 continue
+            data.append(attr)
 
-            if self.processing:
-                datum = self.processing(datum)
-
-            data.append(datum)
-
-        return data
+        return list(map(self.processing, data))
 
 
-class Workflow(Instruction):
+class ScrapeProductInfo(BrowserInstruction):
     def __init__(
         self,
-        url: str,
-        price_instruction: ScrapeInstruction[float],
-        name_instruction: ScrapeInstruction[str],
-        url_instruction: ScrapeInstruction[str],
-        image_instruction: ScrapeInstruction[str],
-        reference_instruction: ScrapeInstruction[str],
-    ):
-        self.open_instruction = OpenInstruction(url)
-        self.price_instruction = price_instruction
-        self.name_instruction = name_instruction
-        self.url_instruction = url_instruction
-        self.image_instruction = image_instruction
-        self.reference_instruction = reference_instruction
+        scrape_keys: Scrape[str],
+        scrape_values: Scrape[str],
+    ) -> None:
+        self.scrape_keys = scrape_keys
+        self.scrape_values = scrape_values
 
-    def execute(self, driver: WebDriver) -> list[Product]:
-        self.open_instruction.execute(driver)
-        prices = self.price_instruction.execute(driver)
-        names = self.name_instruction.execute(driver)
-        urls = self.url_instruction.execute(driver)
-        images = self.image_instruction.execute(driver)
-        references = self.reference_instruction.execute(driver)
+    def accept(self, browser: Browser) -> dict[str, str]:
+        keys = self.scrape_keys.accept(browser)
+        values = self.scrape_values.accept(browser)
 
-        products = []
-        for price, name, url, image, ref in zip(
-            prices, names, urls, images, references
+        return dict(zip(keys, values))
+
+
+class ScrapeOffers(Scrape[Offer[None, None]]):
+    def __init__(
+        self,
+        scrape_prices: Scrape[float],
+        scrape_names: Scrape[str],
+        scrape_links: Scrape[str],
+        scrape_images: Scrape[str],
+        scrape_references: Scrape[str],
+        scrape_product_info: ScrapeProductInfo,
+    ) -> None:
+        self.scrape_prices = scrape_prices
+        self.scrape_names = scrape_names
+        self.scrape_links = scrape_links
+        self.scrape_images = scrape_images
+        self.scrape_references = scrape_references
+        self.scrape_product_info = scrape_product_info
+
+    def accept(self, browser: Browser) -> list[Offer[None, None]]:
+        prices = browser.execute(self.scrape_prices)
+        names = browser.execute(self.scrape_names)
+        links = browser.execute(self.scrape_links)
+        images = browser.execute(self.scrape_images)
+        references = browser.execute(self.scrape_references)
+
+        offers = []
+        for price, name, link, image, ref in zip(
+            prices, names, links, images, references
         ):
-            product = Product(ref, name, image, price, url)
-            products.append(product)
+            product_info = browser.execute(
+                GetProductInfo(link, self.scrape_product_info)
+            )
+            product = Product(ref, name, image, "todo", product_info)
+            offer = Offer(product, None, price, link)
+            offers.append(offer)
 
-        return products
+        return offers
+
+
+class ScrapeCategory(Scrape[Offer[Category, None]]):
+    def __init__(self, category: Category, scrape_offers: ScrapeOffers) -> None:
+        self.category = category
+        self.scrape_offers = scrape_offers
+
+    def accept(self, browser: Browser) -> list[Offer[Category, None]]:
+        offers = browser.execute(self.scrape_offers)
+        offers = [offer.with_category(self.category) for offer in offers]
+
+        return offers
+
+
+class GetCategory(BrowserInstruction):
+    def __init__(self, url: str, scrape_category: ScrapeCategory) -> None:
+        self.url = url
+        self.scrape_category = scrape_category
+
+    def accept(self, browser: Browser) -> list[Offer[Category, None]]:
+        browser.execute(GotoURL(self.url))
+        offers = browser.execute(self.scrape_category)
+        return offers
+
+
+class ScrapeProvider(Scrape[Offer[Category, Provider]]):
+    def __init__(self, provider: Provider, get_category: GetCategory) -> None:
+        self.provider = provider
+        self.get_category = get_category
+
+    def accept(self, browser: Browser) -> list[Offer[Category, Provider]]:
+        offers = browser.execute(self.get_category)
+
+        return [offer.with_provider(self.provider) for offer in offers]
+
+
+class GetOffers(BrowserInstruction):
+    def __init__(self, url: str, scrape_instruction: ScrapeOffers) -> None:
+        self.url = url
+        self.scrape_instruction = scrape_instruction
+
+    def accept(self, browser: Browser) -> list[Offer]:
+        browser.execute(GotoURL(self.url))
+        return browser.execute(self.scrape_instruction)
+
+
+class GetProductInfo(BrowserInstruction):
+    def __init__(
+        self, product_url: str, scrape_instructions: ScrapeProductInfo
+    ) -> None:
+        self.url = product_url
+        self.scrape_instruction = scrape_instructions
+
+    def accept(self, browser: Browser) -> dict[str, str]:
+        origibal = browser.execute(OpenTab())
+        browser.execute(GotoURL(self.url))
+        info = browser.execute(self.scrape_instruction)
+        browser.execute(CloseTab(origibal))
+        return info

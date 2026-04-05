@@ -52,13 +52,13 @@ CREATE TABLE IF NOT EXISTS ProductInfo (
 
 CREATE TABLE IF NOT EXISTS ProductOffer (
     ID         INT            NOT NULL AUTO_INCREMENT,
-    Reference  VARCHAR(100)   NOT NULL,          
+    ProductID  INT   NOT NULL,          
     Link       VARCHAR(500),
     Price      DECIMAL(10, 2) NOT NULL,
     ProviderID INT            NOT NULL,
     PRIMARY KEY (ID),
     CONSTRAINT fk_productoffer_product
-        FOREIGN KEY (Reference) REFERENCES Product(Reference)
+        FOREIGN KEY (ProductID) REFERENCES Product(ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     CONSTRAINT fk_productoffer_provider

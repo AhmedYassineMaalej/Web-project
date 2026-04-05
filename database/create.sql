@@ -1,4 +1,5 @@
-DROP DATABASE website_db;
+DROP DATABASE IF EXISTS website_db;
+
 CREATE DATABASE website_db
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -58,13 +59,13 @@ CREATE TABLE ProductInfo (
 
 CREATE TABLE ProductOffer (
     ID         INT            NOT NULL AUTO_INCREMENT,
-    Reference  VARCHAR(100)   NOT NULL,          
+    ProductID  INT   NOT NULL,          
     Link       VARCHAR(500),
     Price      DECIMAL(10, 2) NOT NULL,
     ProviderID INT            NOT NULL,
     PRIMARY KEY (ID),
     CONSTRAINT fk_productoffer_product
-        FOREIGN KEY (Reference) REFERENCES Product(Reference)
+        FOREIGN KEY (ProductID) REFERENCES Product(ID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     CONSTRAINT fk_productoffer_provider

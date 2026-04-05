@@ -1,4 +1,22 @@
-from instructions import Workflow, ScrapeInstruction
+from category import Category
+from instructions import (
+    GetCategory,
+    ScrapeCategory,
+    ScrapeOffers,
+    ScrapeProductInfo,
+    Scrape,
+    ScrapeProvider,
+)
+from provider import Provider
+
+scrape_product_info = ScrapeProductInfo(
+    scrape_keys=Scrape(".data.table th.col.label", "innerHTML"),
+    scrape_values=Scrape(".data.table td.col.data", "innerHTML"),
+)
+
+
+def process_reference(price: str) -> str:
+    return price.removeprefix("[").removesuffix("]")
 
 
 def process_price(price: str) -> float:
@@ -7,26 +25,34 @@ def process_price(price: str) -> float:
     return float(price)
 
 
-def process_reference(price: str) -> str:
-    return price.removeprefix("[").removesuffix("]")
-
-
-workflow = Workflow(
-    "https://www.mytek.tn/informatique/composants-informatique/barrettes-memoire.html",
-    price_instruction=ScrapeInstruction(
+scrape_offers = ScrapeOffers(
+    scrape_prices=Scrape(
         ".product-container span.final-price", "innerHTML", process_price
     ),
-    name_instruction=ScrapeInstruction(
+    scrape_names=Scrape(
         ".product-container a.product-item-link", "innerHTML", str.strip
     ),
-    image_instruction=ScrapeInstruction(
-        ".product-container .product-item-photo img", "src"
-    ),
-    url_instruction=ScrapeInstruction(
+    scrape_images=Scrape(".product-container .product-item-photo img", "src"),
+    scrape_links=Scrape(
         ".product-container a.product-item-link",
         "href",
     ),
-    reference_instruction=ScrapeInstruction(
-        ".product-container .sku", "innerHTML", process_reference
-    ),
+    scrape_references=Scrape(".product-container .sku", "innerHTML", process_reference),
+    scrape_product_info=scrape_product_info,
+)
+
+provider = Provider(
+    "mytek",
+    "https://mk-media.mytek.tn/media/logo/stores/1/LOGO-MYTEK-176PX-INVERSE.png",
+    "https://www.mytek.tn/",
+)
+
+URLS = {
+    "Memory": "https://www.mytek.tn/informatique/composants-informatique/barrettes-memoire.html",
+    "GPU": "https://www.mytek.tn/informatique/composants-informatique/carte-graphique.html",
+}
+
+scrape_provider = ScrapeProvider(
+    provider,
+    GetCategory(URLS["Memory"], ScrapeCategory(Category("Memory"), scrape_offers)),
 )

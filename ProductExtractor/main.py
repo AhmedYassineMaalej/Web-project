@@ -1,6 +1,11 @@
-from selenium import webdriver
-from scraper import Scraper
-from workflows.mytek import workflow
+from selenium.webdriver.chrome.webdriver import WebDriver as Chrome
+from selenium.webdriver.firefox.webdriver import WebDriver as Firefox
+
+from database.product_offer_repository import ProductOfferRepository
+
+from browser import Browser
+
+from workflows.mytek import scrape_provider
 
 import argparse
 
@@ -14,17 +19,19 @@ def main():
     args = parser.parse_args()
     match args.browser:
         case "chrome":
-            driver = webdriver.Chrome()
+            driver = Chrome()
         case "firefox":
-            driver = webdriver.Firefox()
+            driver = Firefox()
+        case _:
+            print("unsupported browser:", args.browser)
+            return
 
-    scraper = Scraper(driver)
-    products = scraper.accept_workflow(workflow)
-    scraper.quit()
+    browser = Browser(driver)
+    offers = browser.execute(scrape_provider)
+    browser.quit()
 
-    # to be replaced with database calls
-    for prod in products:
-        print(prod)
+    for offer in offers:
+        ProductOfferRepository.add(offer)
 
 
 if __name__ == "__main__":

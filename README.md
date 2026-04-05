@@ -9,7 +9,7 @@ required:
     - [mysql](https://www.mysql.com/downloads/)
     - [mariadb](https://mariadb.com/downloads/)
 
-For data-aquisition you can check out the requirements (here)[ProductExtractor/README.md]
+For data-aquisition you can check out the requirements [here](ProductExtractor/READMd.md)
 
 # Setup 
 

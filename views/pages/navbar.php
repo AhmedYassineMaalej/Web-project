@@ -40,22 +40,7 @@
                 >Home</a
               >
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Categories
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Category1</a></li>
-                <li><a class="dropdown-item" href="#">Category2</a></li>
-                <li><a class="dropdown-item" href="#">Category3</a></li>
-              </ul>
-            </li>
+          
           </ul>
           <form class="d-flex me-auto" role="search">
             <input

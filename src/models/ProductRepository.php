@@ -3,8 +3,6 @@
 namespace App\models;
 use PDO;
 
-
-
 class ProductRepository extends Repository {
     
     public function __construct() {
@@ -40,7 +38,7 @@ class ProductRepository extends Repository {
         if (!$data) return false;
         return new ProductOffer(
             $data->ID,
-            $data->Reference,
+            $data->ProductID,
             $data->Link,
             $data->Price,
             $data->ProviderID
@@ -59,7 +57,6 @@ class ProductRepository extends Repository {
         return array_map([$this, 'convertToProduct'], $results);
     }
 
-
     //save a product into a database given four fields(which are the same columns of the db table), a successful add returns true otherwise false
     public function saveProduct($reference, $description, $image, $categoryId) :bool {
         return $this->add([
@@ -68,10 +65,8 @@ class ProductRepository extends Repository {
             'Image' => $image,
             'CategoryID' => $categoryId
         ]);
-        
     }
     
-
     public function getProductInfo($productId) {
         try {
             $stmt = $this->connection->prepare("SELECT * FROM ProductInfo WHERE ProductID = ?");
@@ -93,27 +88,27 @@ class ProductRepository extends Repository {
         }
     }
     
-    // given a reference of a product, it returns an array of objects ProductInfo (read PRODuctInfo.php to udnerstand what that is)
-    public function getProductOffers($reference) {
+    // given a product id, it returns an array of objects ProductOffer
+    public function getProductOffers($productId) {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM ProductOffer WHERE Reference = ?");
-            $stmt->execute([$reference]);
+            $stmt = $this->connection->prepare("SELECT * FROM ProductOffer WHERE ProductID = ?");
+            $stmt->execute([$productId]);
             $results = $stmt->fetchAll(PDO::FETCH_OBJ);
             return array_map([$this, 'convertToProductOffer'], $results);
         } catch (Exception $e) {
             return [];
         }
     }
+    
     // success add returns true otherwise false
-    public function addProductOffer($reference, $link, $price, $providerId) {
+    public function addProductOffer($productId, $link, $price, $providerId) {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ProductOffer (Reference, Link, Price, ProviderID) VALUES (?, ?, ?, ?)");
-            return $stmt->execute([$reference, $link, $price, $providerId]);
+            $stmt = $this->connection->prepare("INSERT INTO ProductOffer (ProductID, Link, Price, ProviderID) VALUES (?, ?, ?, ?)");
+            return $stmt->execute([$productId, $link, $price, $providerId]);
         } catch (Exception $e) {
             return false;
         }
     }
-    
     
     /*
     get the whole entire info needed for a product
@@ -130,8 +125,154 @@ class ProductRepository extends Repository {
         return (object)[
             'product' => $product,
             'info' => $this->getProductInfo($id),
-            'offers' => $this->getProductOffers($product->getReference())
+            'offers' => $this->getProductOffers($id)
         ];
     }
-}
 
+    public function getProductsWithMostOffers($limit = 6) {
+        try {
+            $limit = (int)$limit; // Cast to integer for safety
+            $stmt = $this->connection->prepare("
+                SELECT p.*, COUNT(po.ID) as offer_count, MIN(po.Price) as min_price
+                FROM Product p
+                INNER JOIN ProductOffer po ON p.ID = po.ProductID
+                GROUP BY p.ID
+                ORDER BY offer_count DESC
+                LIMIT $limit
+            ");
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            $products = [];
+            foreach ($results as $row) {
+                $products[] = [
+                    'product' => $this->convertToProduct($row),
+                    'offer_count' => $row->offer_count,
+                    'min_price' => $row->min_price
+                ];
+            }
+            return $products;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    //simply fetches the min price
+    public function getTopOffers($limit = 6) {
+        try {
+            $limit = (int)$limit;
+            $stmt = $this->connection->prepare("
+                SELECT p.*, MIN(po.Price) as min_price, COUNT(po.ID) as offer_count
+                FROM Product p
+                INNER JOIN ProductOffer po ON p.ID = po.ProductID
+                GROUP BY p.ID
+                ORDER BY min_price ASC
+                LIMIT $limit
+            ");
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            $products = [];
+            foreach ($results as $row) {
+                $products[] = [
+                    'product' => $this->convertToProduct($row),
+                    'min_price' => $row->min_price,
+                    'offer_count' => $row->offer_count
+                ];
+            }
+            return $products;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+
+    public function getMostInfoProducts($limit = 6) {
+        try {
+            $limit = (int)$limit;
+            $stmt = $this->connection->prepare("
+                SELECT p.*, COUNT(pi.ID) as info_count
+                FROM Product p
+                INNER JOIN ProductInfo pi ON p.ID = pi.ProductID
+                GROUP BY p.ID
+                ORDER BY info_count DESC
+                LIMIT $limit
+            ");
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+            
+            $products = [];
+            foreach ($results as $row) {
+                $products[] = [
+                    'product' => $this->convertToProduct($row),
+                    'info_count' => $row->info_count
+                ];
+            }
+            return $products;
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+
+    public function getNewestProducts($limit = 6) {
+        try {
+            $limit = (int)$limit;
+            $stmt = $this->connection->prepare("
+                SELECT * FROM Product 
+                ORDER BY ID DESC 
+                LIMIT $limit
+            ");
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+            return array_map([$this, 'convertToProduct'], $results);
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+
+    public function getDealOfTheDay() {
+        try {
+            $stmt = $this->connection->prepare("
+                SELECT p.*, MIN(po.Price) as min_price
+                FROM Product p
+                INNER JOIN ProductOffer po ON p.ID = po.ProductID
+                GROUP BY p.ID
+                ORDER BY RAND()
+                LIMIT 1
+            ");
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
+            
+            if (!$row) return null;
+            
+            return [
+                $row->Reference ?? '',
+                $row->Description ?? 'Product',
+                $row->Image ?? '/images/placeholder.png',
+                $row->min_price ?? 0
+            ];
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+    public function getMinPriceForProduct($productId) {
+        try {
+            $stmt = $this->connection->prepare("
+                SELECT MIN(Price) as min_price
+                FROM ProductOffer
+                WHERE ProductID = ?
+            ");
+            $stmt->execute([$productId]);
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            
+            return $result->min_price ? (float)$result->min_price : null;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+
+
+}

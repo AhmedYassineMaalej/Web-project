@@ -31,6 +31,7 @@ $router->add('GET', '/navbar', 'App\Controllers\NavbarController@index');
 $router->add('ANY','/login', 'App\Controllers\Auth\LoginController@index');
 $router->add('ANY','/logout', 'App\Controllers\Auth\LogoutController@index');
 $router->add('ANY','/sign_up','App\Controllers\Auth\SignupController@index');
+$router->add('GET', '/catalog/getProductAjax', 'App\Controllers\CatalogController@getProductAjax');
 
 
 

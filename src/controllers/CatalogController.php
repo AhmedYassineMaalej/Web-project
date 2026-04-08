@@ -13,19 +13,85 @@ class CatalogController {
             header('Location: /');
             exit;
         }
-        $products = [
-            new Product(1, "SNY-100", "Sony Headphones", "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500", 1),
-            new Product(2, "APL-600", "Apple Watch", "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500", 1),
-            new Product(3, "LOG-999", "Gaming Mouse", "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500", 2),
-            new Product(4, "RZR-111", "Mechanical Keyboard", "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500", 2),
-            new Product(5, "DL-XPS", "Dell XPS Laptop", "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500", 3),
-            new Product(6, "GXY-S24", "Samsung S24", "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500", 1)
-        ];
+        $product_repo = new ProductRepository();
+        $products = $product_repo->getAllProducts();
+
         require __DIR__ . '/../../views/pages/catalog.php';
-        //$products = ProductRepository::getAllProducts(); // Fetch products from repository "::" means static btw!
-        // whereas "->" for dynamically created objects like $productrepo = new ProductRepository()
-        // For simplicity, we'll hardcode some products here (n7eb el api traja3 kif li ena ketebhom ellouta)
-        
-        
     }
+    
+    // Add this method for AJAX requests
+    public function getProductAjax() {
+        // Set headers first
+        header('Content-Type: application/json');
+        
+        // Check login
+        if (!JWT::isLoggedIn()) {
+            echo json_encode(['error' => 'Not logged in']);
+            exit;
+        }
+        
+        // Get product ID
+        $productId = isset($_GET['id']) ? (int)$_GET['id'] : null;
+        
+        if (!$productId) {
+            echo json_encode(['error' => 'Product ID required']);
+            exit;
+        }
+        
+        // Get product repository
+        $product_repo = new ProductRepository();
+        $completeProduct = $product_repo->getCompleteProduct($productId);
+        
+        // Check if product exists
+        if (!$completeProduct || !$completeProduct->product) {
+            echo json_encode(['error' => 'Product not found']);
+            exit;
+        }
+        
+        // Build response using the correct getters
+        $response = [
+            'product' => [
+                'id' => $completeProduct->product->getId(),
+                'reference' => $completeProduct->product->getReference(),
+                'description' => $completeProduct->product->getDescription(),
+                'image' => $completeProduct->product->getImage(),
+                'categoryId' => $completeProduct->product->getCategoryId()
+            ],
+            'info' => [],
+            'offers' => []
+        ];
+        
+        // Add product info if exists
+        if (isset($completeProduct->info) && is_array($completeProduct->info)) {
+            foreach ($completeProduct->info as $info) {
+                if ($info) {
+                    $response['info'][] = [
+                        'key' => $info->getKey(),
+                        'value' => $info->getValue()
+                    ];
+                }
+            }
+        }
+        
+        // Add offers if exists - using product_id now
+        if (isset($completeProduct->offers) && is_array($completeProduct->offers)) {
+            foreach ($completeProduct->offers as $offer) {
+                if ($offer) {
+                    $response['offers'][] = [
+                        'id' => $offer->getId(),
+                        'product_id' => $offer->getProductId(),  // Changed from reference to product_id
+                        'link' => $offer->getLink(),
+                        'price' => $offer->getPrice(),
+                        'providerId' => $offer->getProviderId()
+                    ];
+                }
+            }
+        }
+        
+        // Output JSON and exit
+        echo json_encode($response);
+        exit;
+    }
+
+
 }

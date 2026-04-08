@@ -4,14 +4,14 @@ namespace App\models;
 
 class ProductOffer {
     private $_id;
-    private $_reference;
+    private $_product_id;
     private $_link;
     private $_price;
     private $_providerId;
     
-    public function __construct($id, $reference, $link, $price, $providerId) {
+    public function __construct($id, $product_id, $link, $price, $providerId) {
         $this->_id = $id;
-        $this->_reference = $reference;
+        $this->_product_id = $product_id;
         $this->_link = $link;
         $this->_price = $price;
         $this->_providerId = $providerId;
@@ -21,8 +21,8 @@ class ProductOffer {
         return $this->_id;
     }
     
-    public function getReference() {
-        return $this->_reference;
+    public function getProductId() {
+        return $this->_product_id;
     }
     
     public function getLink() {
@@ -37,8 +37,8 @@ class ProductOffer {
         return $this->_providerId;
     }
     
-    public function setReference($reference) {
-        $this->_reference = $reference;
+    public function setProductId($product_id) {
+        $this->_product_id = $product_id;
     }
     
     public function setLink($link) {

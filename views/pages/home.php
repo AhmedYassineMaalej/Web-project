@@ -175,14 +175,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Categories</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Electronics</a></li>
-                        <li><a class="dropdown-item" href="#">Fashion</a></li>
-                        <li><a class="dropdown-item" href="#">Home</a></li>
-                    </ul>
-                </li>
             </ul>
             <form class="d-flex me-auto" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search products...">
@@ -236,7 +228,6 @@
                             <li>✔ High Quality Product</li>
                             <li>✔ Limited Time Offer</li>
                         </ul>
-                        <a href="/product?ref=<?= urlencode($dealOfTheDay[0]) ?>" class="btn btn-primary btn-lg px-5">Get it Now 🚀</a>
                     </div>
                 </div>
             </div>
@@ -259,31 +250,31 @@ foreach ($sections as $section):
     <div class="container mb-5">
         <h1 class="mb-4"><?= $section['title'] ?></h1>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-            <?php foreach ($section['data'] as $product): ?>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="position-relative" style="height: 220px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.9); border-radius: 20px 20px 0 0;">
-                        <img src="<?= htmlspecialchars($product[2]) ?>" 
-                             class="card-img-top p-3" 
-                             alt="<?= htmlspecialchars($product[1]) ?>"
-                             style="max-height: 100%; max-width: 100%; object-fit: contain;"
-                             onerror="this.onerror=null; this.src='/images/placeholder.jpg';">
-                    </div>
-                    <div class="card-body d-flex flex-column text-center">
-                        <h5 class="card-title fw-bold text-truncate" title="<?= htmlspecialchars($product[1]) ?>">
-                            <?= htmlspecialchars($product[1]) ?>
-                        </h5>
-                        <p class="text-muted small mt-1 mb-3">Ref: <?= htmlspecialchars($product[0]) ?></p>
-                        <div class="mt-auto">
-                            <p class="text-success fw-bold fs-5 mb-3">Starting At ...</p>
-                            <a href="/product?ref=<?= urlencode($product[0]) ?>" class="btn btn-outline-primary btn-sm w-100">
-                                View Details 👀
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
+            <?php foreach ($bestDeals as $product): ?>
+<div class="col">
+    <div class="card h-100 shadow-sm border-0">
+        <div class="position-relative" style="height: 220px; display: flex; align-items: center; justify-content: center; background: #fff;">
+            <img src="<?= htmlspecialchars($product->getImage()) ?>" 
+                 class="card-img-top p-3" 
+                 alt="<?= htmlspecialchars($product->getDescription()) ?>"
+                 style="max-height: 100%; max-width: 100%; object-fit: contain;">
+        </div>
+        <div class="card-body d-flex flex-column text-center">
+            <h5 class="card-title fw-bold"><?= htmlspecialchars($product->getDescription()) ?></h5>
+            <p class="text-muted small mb-3">Ref: <?= htmlspecialchars($product->getReference()) ?></p>
+            <?php 
+            $minPrice = $product_repo->getMinPriceForProduct($product->getId());
+            ?>
+            <p class="text-success fw-bold fs-5 mb-3">
+                Starting at $<?= number_format($minPrice, 2) ?>
+            </p>
+            <a href="/product?ref=<?= urlencode($product->getReference()) ?>" class="btn btn-outline-primary btn-sm w-100">
+                View Details 👀
+            </a>
+        </div>
+    </div>
+</div>
+<?php endforeach; ?>
         </div>
     </div>
 </section>

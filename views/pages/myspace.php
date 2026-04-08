@@ -252,16 +252,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Categories
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Electronics</a></li>
-                        <li><a class="dropdown-item" href="#">Fashion</a></li>
-                        <li><a class="dropdown-item" href="#">Home</a></li>
-                    </ul>
-                </li>
+                
             </ul>
             <form class="d-flex me-auto" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" />

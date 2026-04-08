@@ -1,7 +1,6 @@
-from typing import Optional
-from database.utils import get_connection, insert, select
-from category import Category
-from database.repository import Repository
+from repository.utils import insert, select
+from models.category import Category
+from repository.repository import Repository
 
 
 class CategoryRepository(Repository[Category]):

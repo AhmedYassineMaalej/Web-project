@@ -1,7 +1,7 @@
 from typing import TypeVar
-from category import Category
-from product import Product
-from provider import Provider
+from models.category import Category
+from models.product import Product
+from models.provider import Provider
 
 C = TypeVar("C", Category, None)
 P = TypeVar("P", Provider, None)

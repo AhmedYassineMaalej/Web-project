@@ -1,4 +1,4 @@
-from category import Category
+from models.category import Category
 
 
 class Product[C]:

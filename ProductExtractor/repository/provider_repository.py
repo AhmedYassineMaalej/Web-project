@@ -1,7 +1,7 @@
-from database.repository import Repository
-from database.utils import insert, select
+from repository.repository import Repository
+from repository.utils import insert, select
 
-from provider import Provider
+from models.provider import Provider
 
 
 class ProviderRepository(Repository[Provider]):

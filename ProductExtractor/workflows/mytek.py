@@ -1,4 +1,4 @@
-from category import Category
+from models.category import Category
 from instructions import (
     GetCategory,
     ScrapeCategory,
@@ -7,7 +7,7 @@ from instructions import (
     Scrape,
     ScrapeProvider,
 )
-from provider import Provider
+from models.provider import Provider
 
 scrape_product_info = ScrapeProductInfo(
     scrape_keys=Scrape(".data.table th.col.label", "innerHTML"),

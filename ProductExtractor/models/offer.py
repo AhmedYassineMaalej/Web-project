@@ -1,24 +1,21 @@
-from typing import TypeVar
+from models.builder import MissingAttributeException
 from models.category import Category
-from models.product import Product
+from models.product import Product, ProductBuilder
 from models.provider import Provider
 
-C = TypeVar("C", Category, None)
-P = TypeVar("P", Provider, None)
 
-
-class Offer[C, P]:
+class Offer:
     def __init__(
         self,
-        product: Product[C],
-        provider: P,
+        product: Product,
+        provider: Provider,
         price: float,
-        url: str,
+        link: str,
     ):
         self.product = product
         self.provider = provider
         self.price = price
-        self.url = url
+        self.link = link
 
     def __repr__(self) -> str:
         res = "ProductOffer(\n"
@@ -27,10 +24,23 @@ class Offer[C, P]:
         res += ")"
         return res
 
-    def with_category(self, category: Category) -> "Offer[Category, P]":
-        return Offer(
-            self.product.with_category(category), self.provider, self.price, self.url
-        )
 
-    def with_provider(self, provider: Provider) -> "Offer[C, Provider]":
-        return Offer(self.product, provider, self.price, self.url)
+class OfferBuilder:
+    def __init__(self, product: ProductBuilder, price: float, url: str) -> None:
+        self.product = product
+        self.provider = None
+        self.price = price
+        self.url = url
+
+    def set_provider(self, provider: Provider):
+        self.provider = provider
+
+    def build(self) -> Offer:
+        if self.provider is None:
+            raise MissingAttributeException(
+                "Tried to contruct Offer without setting provider attribute"
+            )
+
+        product = self.product.build()
+
+        return Offer(product, self.provider, self.price, self.url)

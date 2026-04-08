@@ -1,4 +1,4 @@
-from category import Category
+from models.category import Category
 from abc import ABC, abstractmethod
 from typing import Callable
 
@@ -7,10 +7,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
-from provider import Provider
+from models.provider import Provider
 
-from product import Product
-from offer import Offer
+from models.product import Product, ProductBuilder
+from models.offer import Offer, OfferBuilder
 
 from browser import Browser
 
@@ -101,7 +101,7 @@ class ScrapeProductInfo(BrowserInstruction):
         return dict(zip(keys, values))
 
 
-class ScrapeOffers(Scrape[Offer[None, None]]):
+class ScrapeOffers(Scrape[OfferBuilder]):
     def __init__(
         self,
         scrape_prices: Scrape[float],
@@ -118,7 +118,7 @@ class ScrapeOffers(Scrape[Offer[None, None]]):
         self.scrape_references = scrape_references
         self.scrape_product_info = scrape_product_info
 
-    def accept(self, browser: Browser) -> list[Offer[None, None]]:
+    def accept(self, browser: Browser) -> list[OfferBuilder]:
         prices = browser.execute(self.scrape_prices)
         names = browser.execute(self.scrape_names)
         links = browser.execute(self.scrape_links)
@@ -132,45 +132,54 @@ class ScrapeOffers(Scrape[Offer[None, None]]):
             product_info = browser.execute(
                 GetProductInfo(link, self.scrape_product_info)
             )
-            product = Product(ref, name, image, "todo", product_info)
-            offer = Offer(product, None, price, link)
+            product = ProductBuilder(name, ref)
+            product.set_description("TODO")
+            product.set_image(image)
+            product.set_info(product_info)
+
+            offer = OfferBuilder(product, price, link)
+
             offers.append(offer)
 
         return offers
 
 
-class ScrapeCategory(Scrape[Offer[Category, None]]):
+class ScrapeCategory(Scrape[OfferBuilder]):
     def __init__(self, category: Category, scrape_offers: ScrapeOffers) -> None:
         self.category = category
         self.scrape_offers = scrape_offers
 
-    def accept(self, browser: Browser) -> list[Offer[Category, None]]:
+    def accept(self, browser: Browser) -> list[OfferBuilder]:
         offers = browser.execute(self.scrape_offers)
-        offers = [offer.with_category(self.category) for offer in offers]
+        for offer in offers:
+            offer.product.set_category(self.category)
 
         return offers
 
 
-class GetCategory(BrowserInstruction):
+class GetCategory(BrowserInstruction[list[OfferBuilder]]):
     def __init__(self, url: str, scrape_category: ScrapeCategory) -> None:
         self.url = url
         self.scrape_category = scrape_category
 
-    def accept(self, browser: Browser) -> list[Offer[Category, None]]:
+    def accept(self, browser: Browser) -> list[OfferBuilder]:
         browser.execute(GotoURL(self.url))
         offers = browser.execute(self.scrape_category)
         return offers
 
 
-class ScrapeProvider(Scrape[Offer[Category, Provider]]):
+class ScrapeProvider(Scrape[Offer]):
     def __init__(self, provider: Provider, get_category: GetCategory) -> None:
         self.provider = provider
         self.get_category = get_category
 
-    def accept(self, browser: Browser) -> list[Offer[Category, Provider]]:
+    def accept(self, browser: Browser) -> list[Offer]:
         offers = browser.execute(self.get_category)
 
-        return [offer.with_provider(self.provider) for offer in offers]
+        for offer in offers:
+            offer.set_provider(self.provider)
+
+        return [offer.build() for offer in offers]
 
 
 class GetOffers(BrowserInstruction):
@@ -178,7 +187,7 @@ class GetOffers(BrowserInstruction):
         self.url = url
         self.scrape_instruction = scrape_instruction
 
-    def accept(self, browser: Browser) -> list[Offer]:
+    def accept(self, browser: Browser) -> list[OfferBuilder]:
         browser.execute(GotoURL(self.url))
         return browser.execute(self.scrape_instruction)
 

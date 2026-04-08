@@ -1,7 +1,7 @@
 from selenium.webdriver.chrome.webdriver import WebDriver as Chrome
 from selenium.webdriver.firefox.webdriver import WebDriver as Firefox
 
-from database.product_offer_repository import ProductOfferRepository
+from repository.product_offer_repository import ProductOfferRepository
 
 from browser import Browser
 

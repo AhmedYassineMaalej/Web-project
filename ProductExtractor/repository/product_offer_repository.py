@@ -1,9 +1,9 @@
-from database.provider_repository import ProviderRepository
-from database.repository import Repository
-from database.utils import insert, select
-from database.product_repository import ProductRepository
+from repository.provider_repository import ProviderRepository
+from repository.repository import Repository
+from repository.utils import insert, select
+from repository.product_repository import ProductRepository
 
-from offer import Offer
+from models.offer import Offer
 
 
 class ProductOfferRepository(Repository[Offer]):
@@ -33,7 +33,7 @@ class ProductOfferRepository(Repository[Offer]):
             cls.tablename(),
             {
                 "ProductID": product_id,
-                "Link": item.url,
+                "Link": item.link,
                 "Price": item.price,
                 "ProviderID": provider_id,
             },

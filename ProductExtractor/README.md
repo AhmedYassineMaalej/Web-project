@@ -9,11 +9,11 @@ This section of the code is responsible for regularly updating the prices of pro
 ## Running the Extractor
 
 Navigate to the root directory of the uv project and run
-```
+```bash
 uv run main.py
 ```
 or if you're using Chrome
-```
+```bash
 uv run main.py --browser chrome
 ```
 

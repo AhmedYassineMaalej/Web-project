@@ -1,7 +1,7 @@
-from database.category_repository import CategoryRepository
-from database.utils import get_connection, insert, select
-from product import Product
-from database.repository import Repository
+from repository.category_repository import CategoryRepository
+from repository.utils import insert, select
+from models.product import Product
+from repository.repository import Repository
 
 
 class ProductRepository(Repository[Product]):

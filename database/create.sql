@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS Provider (
     Name  VARCHAR(100) NOT NULL,
     Icon  VARCHAR(255),
     Link  VARCHAR(500),
+    IsForeign BOOLEAN,
     PRIMARY KEY (ID)
 );
 

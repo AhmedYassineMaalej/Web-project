@@ -6,9 +6,12 @@ use App\Helpers\JWT;
 class MySpaceController {
     public function index() {
         if (! JWT::isLoggedIn()){
-            header("Location : /?error=not_logged_in");
+            $_SESSION['error'] = "You're not logged in";
+            header("Location : /");
             exit;
         }
+        $username = JWT::decode_jwt($_COOKIE['JWT'],$_ENV['JWT_SECRET'])['user'];
+
         require __DIR__ . '/../../views/pages/myspace.php';
     }
     

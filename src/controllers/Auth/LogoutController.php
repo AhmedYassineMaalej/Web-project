@@ -6,6 +6,7 @@ class LogoutController {
 
     static public function index() {
         if (!JWT::isLoggedIn()) {
+            $_SESSION['error'] = "You're already logged in";
             header('Location: /');
             exit;
         }
@@ -31,8 +32,9 @@ class LogoutController {
 
         
         $csrf_token = $_POST['csrf'];
-        if ( ! CSRF::validate_token($csrf_token)) {
-            header('Location: /myspace?error=invalid_csrf');
+        if (!CSRF::validate_token($csrf_token)) {
+            $_SESSION['error'] = 'Invalid security token. Please try again.';
+            header('Location: /myspace');
             exit;
         }
 

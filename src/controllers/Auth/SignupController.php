@@ -12,6 +12,7 @@ class SignUpController {
     static public function index() {
         
         if (JWT::isLoggedIn()) {
+            $_SESSION['error'] = "You're already logged in";
             header('Location: /myspace');
             exit;
         }
@@ -30,7 +31,8 @@ class SignUpController {
     static public function register() {
         $csrf_token = $_POST['csrf'] ?? '';
         if (!CSRF::validate_token($csrf_token)) {
-            header('Location: /signup?error=invalid_csrf');
+            $_SESSION['error'] = 'Invalid security token. Please try again.';
+            header('Location: /signup');
             exit;
         }
         
@@ -39,17 +41,20 @@ class SignUpController {
         $confirm  = $_POST['confirm_password'] ?? '';
 
         if (empty($username) || empty($password)) {
-            header('Location: /signup?error=empty_fields');
+            $_SESSION['error'] = 'Please fill out all the fields';
+            header('Location: /signup');
             exit;
         }
 
         if ($password !== $confirm) {
-            header('Location: /signup?error=password_mismatch');
+            $_SESSION['error'] = "The passwords don't match";
+            header('Location: /signup');
             exit;
         }
         $user_repo = new UserRepository();
         if ($user_repo->getUserByUsername($username)) {
-            header('Location: /signup?error=user_exists');
+            $_SESSION['error'] = 'User of this name already exists !';
+            header('Location: /signup');
             exit;
         }
         
@@ -69,7 +74,8 @@ class SignUpController {
             header('Location: /?success=account_created');
             exit;
         } else {
-            header('Location: /signup?error=db_error');
+            $_SESSION['error'] = 'DB ERROR';
+            header('Location: /signup');
             exit;
         }
     }

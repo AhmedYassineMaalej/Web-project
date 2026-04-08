@@ -11,6 +11,7 @@ class LoginController {
 
     static public function index() {
         if (JWT::isLoggedIn()) {
+            $_SESSION['error'] = "You're already logged in !";
             header('Location: /myspace');
             exit;
         }
@@ -33,7 +34,8 @@ class LoginController {
         // validate that CSRF Token if it exists ofc
         $csrf_token = $_POST['csrf'] ?? '';
         if ( ! CSRF::validate_token($csrf_token ?? '')) {
-            header('Location: /login?error=invalid_csrf');
+            $_SESSION['error'] = 'Invalid security token. Please try again.';
+            header('Location: /login');
             exit;
         }
         // get username and password from POST data
@@ -42,7 +44,8 @@ class LoginController {
         $password = $_POST['password'] ?? '';
 
         if (empty($username) || empty($password)) {
-            header('Location: /login?error=missing_fields');
+            $_SESSION['error'] = 'Please fill out all the fields';
+            header('Location: /login');
             exit;
         }
         $user_repo = new UserRepository();
@@ -56,7 +59,8 @@ class LoginController {
             exit;
         }
         else {
-            header('Location: /login?error=invalid_credentials');
+            $_SESSION['error'] = 'Invalid credentials';
+            header('Location: /login');
             exit;
         }
     }

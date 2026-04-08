@@ -129,6 +129,13 @@
       <h1>Product Catalog</h1>
       <p class="mb-0">Compare prices and choose where to buy</p>
     </header>
+    <?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">
+        <strong>⚠️ Error!</strong> <?php echo htmlspecialchars($_SESSION['error']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
 
     <main class="container my-4">
       <div class="row">
@@ -137,9 +144,9 @@
             <?php 
                 // Mapping the tuple fields based on your requirements:
                 // [0] = Product_Reference, [1] = Description, [2] = ImageLink
-                $ref   = $product[0];
-                $desc  = $product[1];
-                $image = $product[2];
+                $ref   = $product->getReference();
+                $desc  = $product->getDescription();
+                $image = $product->getImage();
             ?>
             <div class="col-md-3 col-sm-6 mb-4">
                 <div class="card h-100 text-center shadow-sm">

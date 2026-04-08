@@ -21,6 +21,22 @@ Regenerate classes to be included in project:
 composer dump-autoload
 ```
 
+## Create the database
+# **1- Either use commandline tool mysql with the following command (after adding mysql to env vars)**
+
+```bash
+mysql -u root -p<password>   # Connect to mysql : no space between -p and <password>
+```
+
+
+# **2- Or use the mysql UI**
+
+
+> then inside the window or the prompt (depending on what you're using):
+```text
+SOURCE database/create.sql;
+```
+
 # Running the server
 
 Run the server with the command

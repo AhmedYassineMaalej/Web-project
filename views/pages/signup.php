@@ -138,7 +138,13 @@
     </div>
 </nav>
 
-<!-- sign-up section -->
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">
+        <strong>⚠️ Error!</strong> <?php echo htmlspecialchars($_SESSION['error']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 90vh;">
     <div class="col-md-6 col-lg-5">
 

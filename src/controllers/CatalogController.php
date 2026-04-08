@@ -9,7 +9,8 @@ class CatalogController {
     
     public function index() {
         if (! JWT::isLoggedIn()){
-            header('Location : /?error=not_logged_in');
+            $_SESSION['error'] = "You're not logged in yet !";
+            header('Location: /');
             exit;
         }
         $products = [

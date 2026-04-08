@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 class NavbarController {
     public function index() {
-        // Path: src/controllers -> src -> root -> views/pages/navbar.php
         $path = __DIR__ . '/../../views/pages/navbar.php';
 
         if (file_exists($path)) {

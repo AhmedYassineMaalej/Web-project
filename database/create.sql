@@ -1,4 +1,8 @@
--- DBConnection.php already selects the db, added "create IF NOT EXISTS" too
+DROP DATABASE IF EXISTS website_db;
+CREATE DATABASE website_db;
+
+USE website_db;
+
 
 CREATE TABLE IF NOT EXISTS Users (
     ID          INT          NOT NULL AUTO_INCREMENT,

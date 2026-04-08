@@ -1,4 +1,5 @@
 from repository.category_repository import CategoryRepository
+from repository.product_info_repository import ProductInfo, ProductInfoRepository
 from repository.utils import insert, select
 from models.product import Product
 from repository.repository import Repository
@@ -17,7 +18,7 @@ class ProductRepository(Repository[Product]):
             return rows[0][0]
 
         category_id = CategoryRepository.add(item.category)
-        return insert(
+        product_id = insert(
             cls.tablename(),
             {
                 "Reference": item.reference,
@@ -26,3 +27,8 @@ class ProductRepository(Repository[Product]):
                 "CategoryID": category_id,
             },
         )
+
+        for key, val in item.info.items():
+            ProductInfoRepository.add(ProductInfo(product_id, key, val))
+
+        return product_id

@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
 from models.provider import Provider
 
-from models.product import Product, ProductBuilder
+from models.product import ProductBuilder
 from models.offer import Offer, OfferBuilder
 
 from browser import Browser

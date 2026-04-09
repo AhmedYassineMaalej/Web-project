@@ -5,6 +5,7 @@ This section of the code is responsible for regularly updating the prices of pro
 ## Dependencies
 
 - [uv](https://docs.astral.sh/uv/) for managing dependencies, versions and virtual environments
+- [geckodriver] is a dependency as well
 
 ## Running the Extractor
 

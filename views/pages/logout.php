@@ -1,39 +1,62 @@
+<?php require __DIR__ . "/../fragments/head.php"; ?>
+<?php require __DIR__ . "/../fragments/navbar.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/navbar.css"> 
-    <style>
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: sans-serif;
-        }
-        .error-msg { color: red; margin-bottom: 15px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
-    </style>
-</head>
+    <?php head("Logout", "css/logout.css") ?>
 <body>
 
-    <div class="login-container">
-        <h2>Logout</h2>
+<!-- Floating Stickers/Coins Animation -->
+<div class="stickers-container">
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+    <div class="sticker">💵</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💸</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+    <div class="sticker">💵</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💸</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+</div>
 
-        <form action="/logout" method="POST">
-
-        <input type="hidden" name="csrf" value="<?php echo $csrf_token ?? ''; ?>">
+<?php navbar() ?>
 
 
-            <button type="submit">Logout</button>
-        </form>
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">
+        <strong>⚠️ Error!</strong> <?php echo htmlspecialchars($_SESSION['error']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
 
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 90vh;">
+    <div class="col-md-6 col-lg-5">
+        <div class="logout-card p-5">
+            <div class="icon-large">🚪</div>
+            
+            <h2 class="fw-bold text-danger mb-3 title">Ready to Leave?</h2>
+            <p class="text-muted mb-4">Are you sure you want to logout from PickPocket?</p>
+
+            <!-- Logout Form -->
+            <form action="/logout" method="POST">
+                <input type="hidden" name="csrf" value="<?php echo $csrf_token ?? ''; ?>">
+                
+                <button type="submit" class="btn btn-danger w-100 py-2 fw-semibold mb-3">
+                    Yes, Logout 🚪
+                </button>
+                
+                <a href="/" class="btn btn-secondary w-100 py-2 fw-semibold text-decoration-none">
+                    Cancel, Stay Here 🏠
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

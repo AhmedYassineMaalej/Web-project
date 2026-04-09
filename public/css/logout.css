@@ -112,84 +112,50 @@
     }
 }
 
-.card {
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.95);
+.logout-card {
+    position: relative;
+    z-index: 2;
     border-radius: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+    text-align: center;
 }
 
-.card:hover {
+.logout-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
 }
 
-.btn-primary {
+.btn-danger {
     border-radius: 12px;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     border: none;
     transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
+.btn-danger:hover {
     transform: scale(1.03);
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
 }
 
-.btn-outline-primary {
+.btn-secondary {
     border-radius: 12px;
+    background: linear-gradient(135deg, #64748b, #475569);
+    border: none;
     transition: all 0.3s ease;
 }
 
-.btn-outline-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+.btn-secondary:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(100, 116, 139, 0.4);
 }
 
-.form-control {
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    transition: all 0.2s ease;
+.title {
+    letter-spacing: 0.5px;
 }
 
-.form-control:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-.badge {
-    border-radius: 10px;
-}
-
-section {
-    position: relative;
-    z-index: 2;
-}
-
-.navbar-text {
-    color: #3b82f6 !important;
-    font-weight: 600;
-}
-
-h1,
-h2,
-h3 {
-    background: linear-gradient(135deg, #fff, #e0e7ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.text-primary {
-    color: #fff !important;
-}
-
-.card-title,
-.card-text {
-    color: #1e293b;
-}
-
-.text-muted {
-    color: #64748b !important;
+.icon-large {
+    font-size: 80px;
+    margin-bottom: 20px;
 }

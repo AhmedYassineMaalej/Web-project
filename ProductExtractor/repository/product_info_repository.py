@@ -1,16 +1,29 @@
+from typing import NamedTuple
 from repository.utils import insert, select
-from models.category import Category
 from repository.repository import Repository
 
 
-class CategoryRepository(Repository[Category]):
+class ProductInfo(NamedTuple):
+    product_id: int
+    key: str
+    value: str
+
+
+class ProductInfoRepository(Repository[ProductInfo]):
     @classmethod
     def tablename(cls) -> str:
-        return "Category"
+        return "ProductInfo"
 
     @classmethod
-    def add(cls, item: Category) -> int:
-        rows = select(cls.tablename(), ["ID"], {"Name": item.name})
+    def add(cls, item: ProductInfo) -> int:
+        rows = select(
+            cls.tablename(),
+            ["`Key`"],
+            {
+                "ProductID": item.product_id,
+                "`Key`": item.key,
+            },
+        )
 
         if len(rows) > 0:
             return rows[0][0]
@@ -18,6 +31,8 @@ class CategoryRepository(Repository[Category]):
         return insert(
             cls.tablename(),
             {
-                "Name": item.name,
+                "ProductID": item.product_id,
+                "`Key`": item.key,
+                "Value": item.value,
             },
         )

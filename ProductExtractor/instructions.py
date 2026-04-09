@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.window import WindowTypes
 from models.provider import Provider
 
-from models.product import Product, ProductBuilder
+from models.product import ProductBuilder
 from models.offer import Offer, OfferBuilder
 
 from browser import Browser
@@ -132,7 +132,12 @@ class ScrapeOffers(Scrape[OfferBuilder]):
             product_info = browser.execute(
                 GetProductInfo(link, self.scrape_product_info)
             )
+<<<<<<< HEAD
             product = ProductBuilder(name, ref)
+=======
+            product = ProductBuilder(ref, name)
+            product.set_description("TODO")
+>>>>>>> main
             product.set_image(image)
             product.set_info(product_info)
 

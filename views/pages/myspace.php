@@ -1,191 +1,123 @@
+<?php require __DIR__ . "/../fragments/head.php"; ?>
+<?php require __DIR__ . "/../fragments/navbar.php"; ?>
+
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Space - PriceCompare</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php head("My Space", "css/myspace.css") ?>
+<body>
 
-    <link rel="stylesheet" href="/css/myspace.css" />
-    <link rel="stylesheet" href="/css/navbar.css" />
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            src="https://staging.svgrepo.com/show/15477/coin.svg"
-            alt="Logo"
-            width="40"
-            height="30"
-            class="d-inline-block align-text-center"
-          />
-          PickPocket
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Categories
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Category1</a></li>
-                <li><a class="dropdown-item" href="#">Category2</a></li>
-                <li><a class="dropdown-item" href="#">Category3</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex me-auto" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                class="bi bi-search"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
-                />
-              </svg>
-            </button>
-          </form>
-          <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/myspace"
-                >My Space</a
-              >
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Login
-              </a>
-              <div class="dropdown-menu dropdown-menu-end min-vw-25 p-3">
-                <form>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label"
-                      >Email address</label
-                    >
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label"
-                      >Password</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="exampleInputPassword1"
-                    />
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <main class="main-content">
-      <div class="content-limit-wrapper p-4">
-        <div
-          class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom"
-        >
-          <h1 class="h2">My Space</h1>
-          <div class="profile-info d-flex align-items-center">
-            <span class="me-3 fw-bold">User Name</span>
-            <div class="rounded-circle profile-circle"></div>
-          </div>
+<!-- Floating Stickers/Coins Animation -->
+<div class="stickers-container">
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+    <div class="sticker">💵</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💸</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+    <div class="sticker">💵</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💸</div>
+    <div class="sticker">🪙</div>
+    <div class="sticker">💰</div>
+</div>
+
+<?php navbar() ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">
+        <strong>⚠️ Error!</strong> <?php echo htmlspecialchars($_SESSION['error']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
+
+<main class="main-content">
+    <div class="content-limit-wrapper p-4">
+        <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+            <h1 class="h2 fw-bold">My Space 👤</h1>
+            <div class="profile-info d-flex align-items-center">
+                <span class="me-3 fw-bold"><?php echo htmlspecialchars($username ?? ''); ?></span>
+                <div class="rounded-circle profile-circle"></div>
+            </div>
         </div>
 
         <section class="mb-5">
-          <h3 class="section-title mb-4">My Favorites</h3>
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-            <div class="col">
-              <div class="card h-100 shadow-sm border-0 product-card">
-                <div class="badge-price">-15%</div>
-                <div class="card-body text-center p-4">
-                  <div class="placeholder-img mb-3"></div>
-                  <h5 class="card-title">Wireless Headphones</h5>
-                  <p class="price-tag">$199.99</p>
-                  <button class="btn btn-coral w-100">View Deals</button>
+            <h3 class="section-title mb-4">⭐ My Favorites</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 product-card">
+                        <div class="badge-price">-15%</div>
+                        <div class="card-body text-center p-4">
+                            <div class="placeholder-img mb-3"></div>
+                            <h5 class="card-title fw-bold">Wireless Headphones</h5>
+                            <p class="price-tag">$199.99</p>
+                            <button class="btn btn-coral w-100">View Deals 🎧</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 product-card">
+                        <div class="badge-price">-20%</div>
+                        <div class="card-body text-center p-4">
+                            <div class="placeholder-img mb-3"></div>
+                            <h5 class="card-title fw-bold">Smart Watch Pro</h5>
+                            <p class="price-tag">$299.99</p>
+                            <button class="btn btn-coral w-100">View Deals ⌚</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 product-card">
+                        <div class="badge-price">-10%</div>
+                        <div class="card-body text-center p-4">
+                            <div class="placeholder-img mb-3"></div>
+                            <h5 class="card-title fw-bold">Gaming Mouse</h5>
+                            <p class="price-tag">$59.99</p>
+                            <button class="btn btn-coral w-100">View Deals 🖱️</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </section>
 
         <section>
-          <h3 class="section-title mb-4">Recent History</h3>
-          <div class="table-responsive bg-white p-3 rounded shadow-sm">
-            <table class="table align-middle">
-              <thead class="table-light">
-                <tr>
-                  <th>Product</th>
-                  <th>Category</th>
-                  <th>Date Viewed</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="fw-bold">Apple Smart Watch</td>
-                  <td>Electronics</td>
-                  <td>Feb 5, 2026</td>
-                  <td><a href="#" class="text-coral">Revisit</a></td>
-                </tr>
-                <tr>
-                  <td class="fw-bold">Power Bank</td>
-                  <td>Electronics</td>
-                  <td>Jul 16, 2025</td>
-                  <td><a href="#" class="text-coral">Revisit</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <h3 class="section-title mb-4">📜 Recent History</h3>
+            <div class="table-responsive bg-white p-3 rounded shadow-sm">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Date Viewed</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">Apple Smart Watch</td>
+                            <td>Electronics</td>
+                            <td>Feb 5, 2026</td>
+                            <td><a href="#" class="text-coral">Revisit 👀</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Power Bank 20000mAh</td>
+                            <td>Electronics</td>
+                            <td>Jul 16, 2025</td>
+                            <td><a href="#" class="text-coral">Revisit 👀</a></td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Noise Cancelling Headphones</td>
+                            <td>Electronics</td>
+                            <td>Jan 28, 2026</td>
+                            <td><a href="#" class="text-coral">Revisit 👀</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
-      </div>
-    </main>
-  </body>
+    </div>
+</main>
+
+</body>
 </html>

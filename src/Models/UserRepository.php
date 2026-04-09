@@ -5,7 +5,7 @@ use PDO;
 
 
 class UserRepository extends Repository {
-    public static string $tableName = "Users";
+    protected static string $tableName = "Users";
 
     private static function convertToUser(object $data): ?User {
         if (!$data) return null;

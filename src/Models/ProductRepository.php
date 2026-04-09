@@ -5,16 +5,28 @@ use Exception;
 use PDO;
 
 class ProductRepository extends Repository {
-    public static string $tableName = "Product";
+    protected static string $tableName = "Product";
 
     /*
     the three methods below, all they do is return one of the three objects whose classes are inside Product.php, ProductInfo.php and ProductOffer.php
     Example of $data = (object)['ID' => 1, 'Reference' => 'aa', etc];
     */
 
+    private static function convertToProduct($data): ?Product {
+        if (!$data) return null;
+        
+        // Adjust these parameters based on your Product class constructor
+        return new Product(
+            $data->ID,
+            $data->Reference,
+            $data->Description ?? $data->Name, // Use Description or Name
+            $data->Image,
+            $data->CategoryID
+        );
+    }
 
     private static function convertToProductInfo(object $data): ProductInfo {
-            return new ProductInfo(
+        return new ProductInfo(
             $data->ID,
             $data->ProductID,
             $data->Key,
@@ -23,31 +35,25 @@ class ProductRepository extends Repository {
     }
 
     public static function getProductById(int $id): ?Product {
-        $result = $this->findById($id);
-        return new Product(
-            $result->ID,
-            $result->Name,
-            $result->Reference,
-            $result->Image,
-            $result->Category,
-            $result->Info,
-        );
+        $result = self::findById($id); 
+        if (!$result) return null;
+        
+        return self::convertToProduct($result);
     }
 
-    //expect as return type an array of Product objects (Read Product.php)
-    public function getAllProducts() {
-        $results = $this->findAll();
-        return array_map([$this, 'convertToProduct'], $results);
+    public static function getAllProducts() {
+        $results = self::findAll();
+        return array_map([self::class, 'convertToProduct'], $results); // Changed $this to self::class
     }
 
-    /* TODO: move to ProductInfoRepository */
+
     public static function getProductInfo(int $productId) {
         try {
             $conn = self::getConnection();
             $stmt = $conn->prepare("SELECT * FROM ProductInfo WHERE ProductID = ?");
             $stmt->execute([$productId]);
             $results = $stmt->fetchAll(PDO::FETCH_OBJ);
-            return array_map([$this, 'convertToProductInfo'], $results);
+            return array_map([self::class, 'convertToProductInfo'], $results); // Changed $this to self::class
         } catch (Exception $e) {
             return [];
         }
@@ -55,6 +61,7 @@ class ProductRepository extends Repository {
 
     public static function getProductsWithMostOffers(int $limit = 6) {
         $conn = self::getConnection();
+        $limit = (int)$limit;
         $stmt = $conn->prepare("
             SELECT p.*, COUNT(po.ID) as offer_count, MIN(po.Price) as min_price
             FROM Product p
@@ -62,28 +69,18 @@ class ProductRepository extends Repository {
             GROUP BY p.ID
             ORDER BY offer_count DESC
             LIMIT $limit
-            ");
+        ");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         return array_map(function ($row) {
-            $categoryID = $row->CategoryID;
-            $category = CategoryRepository::getByID($categoryID);
-            $info = ProductInfoRepository::getByID($row->ID);
-
-            return new Product(
-                    $row->ID,
-                    $row->Name,
-                    $row->Reference,
-                    $row->Image,
-                    $category,
-                    $info,
-            );
+            return self::convertToProduct($row);
         }, $results);
     }
 
     public static function getTopOffers(int $limit = 6) {
         $conn = self::getConnection();
+        $limit = (int)$limit;
         $stmt = $conn->prepare("
             SELECT p.*, MIN(po.Price) as min_price, COUNT(po.ID) as offer_count
             FROM Product p
@@ -91,28 +88,16 @@ class ProductRepository extends Repository {
             GROUP BY p.ID
             ORDER BY min_price ASC
             LIMIT $limit
-            ");
+        ");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         return array_map(function ($row) {
-            $categoryID = $row->CategoryID;
-            $category = CategoryRepository::getByID($categoryID);
-            $info = ProductInfoRepository::getByID($row->ID);
-
-            return new Product(
-                $row->ID,
-                $row->Name,
-                $row->Reference,
-                $row->Image,
-                $category,
-                $info,
-            );
+            return self::convertToProduct($row);
         }, $results);
     }
 
-
-    public function getMostInfoProducts($limit = 6) {
+    public static function getMostInfoProducts($limit = 6) {
         $limit = (int)$limit;
         $conn = self::getConnection();
         $stmt = $conn->prepare("
@@ -122,26 +107,14 @@ class ProductRepository extends Repository {
             GROUP BY p.ID
             ORDER BY info_count DESC
             LIMIT $limit
-            ");
+        ");
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         return array_map(function ($row) {
-            $categoryID = $row->CategoryID;
-            $category = CategoryRepository::getByID($categoryID);
-            $info = ProductInfoRepository::getByID($row->ID);
-
-            return new Product(
-                $row->ID,
-                $row->Name,
-                $row->Reference,
-                $row->Image,
-                $category,
-                $info,
-            );
+            return self::convertToProduct($row);
         }, $results);
     }
-
 
     public static function getNewestProducts($limit = 6) {
         try {
@@ -155,23 +128,12 @@ class ProductRepository extends Repository {
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_OBJ);
             return array_map(function ($result) {
-                $category = CategoryRepository::getByID($result->CategoryID);
-                $info = ProductInfoRepository::getByID($result->ID);
-
-                return new Product(
-                    $result->ID,
-                    $result->Name,
-                    $result->Reference,
-                    $result->Image,
-                    $category,
-                    $info,
-                );
+                return self::convertToProduct($result);
             }, $results);
         } catch (Exception $e) {
             return [];
         }
     }
-
 
     public static function getDealOfTheDay() {
         $conn = self::getConnection();
@@ -182,7 +144,7 @@ class ProductRepository extends Repository {
             GROUP BY p.ID
             ORDER BY RAND()
             LIMIT 1
-            ");
+        ");
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_OBJ);
 
@@ -190,13 +152,13 @@ class ProductRepository extends Repository {
 
         return [
             $row->Reference ?? '',
-            $row->Name ?? 'ProductName',
+            $row->Description ?? $row->Name ?? 'Product',
             $row->Image ?? '/images/placeholder.png',
             $row->min_price ?? 0
         ];
     }
 
-    public static function getMinPriceForProduct(int $productId): float {
+    public static function getMinPriceForProduct(int $productId): ?float {
         $conn = self::getConnection();
         $stmt = $conn->prepare("
             SELECT MIN(Price) as min_price
@@ -206,6 +168,16 @@ class ProductRepository extends Repository {
         $stmt->execute([$productId]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-        return $result->min_price;
+        return $result->min_price ? (float)$result->min_price : null;
+    }
+    public static function getCompleteProduct($id) {
+        $product = self::getProductById($id);
+        if (!$product) return false;
+        
+        return (object)[
+            'product' => $product,
+            'info' => self::getProductInfo($id),
+            'offers' => ProductOfferRepository::getProductOffers($id)
+        ];
     }
 }

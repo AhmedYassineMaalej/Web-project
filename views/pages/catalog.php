@@ -38,10 +38,10 @@
         <?php if (!empty($products)): ?>
             <?php foreach ($products as $product): ?>
                 <?php 
-                    $id = $product->getId();
-                    $ref = $product->getReference();
-                    $image = $product->getImage();
-                    $name = $product->getName();
+                    $id = $product->id;
+                    $ref = $product->reference;
+                    $image = $product->image;
+                    $name = $product->name;
                 ?>
                 <div class="col-md-3 col-sm-6 mb-4">
                     <div class="card h-100 text-center shadow-sm border-0" onclick="showProductModal(<?= $id ?>)">
@@ -147,7 +147,7 @@
                     offersHtml += `
                         <div class="offer-card d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="fw-bold text-primary">Provider ID: ${escapeHtml(offer.providerId)}</div>
+                                <div class="text-muted small">Provider Name: ${escapeHtml(offer.providerName)}</div>
                                 <div class="text-muted small">Product ID: ${escapeHtml(offer.product_id)}</div>
                             </div>
                             <div class="text-end">
@@ -193,7 +193,7 @@
                         <div class="info-card">
                             <h4 class="text-white mb-2">${escapeHtml(data.product.description)}</h4>
                             <p class="text-white-50 mb-2">Reference: ${escapeHtml(data.product.reference)}</p>
-                            <p class="text-white-50 mb-2">Category ID: ${data.product.categoryId || 'N/A'}</p>
+                            <p class="text-white-50 mb-2">Category Name: ${data.product.categoryName || 'N/A'}</p>
                         </div>
                     </div>
                 </div>

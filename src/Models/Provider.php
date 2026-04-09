@@ -4,8 +4,9 @@ namespace App\Models;
 class Provider {
     public $ID;
     public $Name;
-    public $Icon;
-    public $Link;
 
-    public function __construct() {}
+    public function __construct($id,$name) {
+        $this->ID = $id;
+        $this->Name = $name;
+    }
 }

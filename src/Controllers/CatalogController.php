@@ -13,8 +13,7 @@ class CatalogController {
             header('Location: /');
             exit;
         }
-        $product_repo = new ProductRepository();
-        $products = $product_repo->getAllProducts();
+        $products = ProductRepository::getAllProducts();
 
         require __DIR__ . '/../../views/pages/catalog.php';
     }
@@ -38,9 +37,7 @@ class CatalogController {
             exit;
         }
         
-        // Get product repository
-        $product_repo = new ProductRepository();
-        $completeProduct = $product_repo->getCompleteProduct($productId);
+        $completeProduct = ProductRepository::getCompleteProduct($productId);
         
         // Check if product exists
         if (!$completeProduct || !$completeProduct->product) {
@@ -48,13 +45,12 @@ class CatalogController {
             exit;
         }
         
-        // Build response using the correct getters
         $response = [
             'product' => [
-                'id' => $completeProduct->product->getId(),
-                'reference' => $completeProduct->product->getReference(),
-                'image' => $completeProduct->product->getImage(),
-                'categoryId' => $completeProduct->product->getCategoryId()
+                'id' => $completeProduct->product->id,
+                'reference' => $completeProduct->product->reference,
+                'image' => $completeProduct->product->image,
+                'categoryName' => $completeProduct->product->category->Name
             ],
             'info' => [],
             'offers' => []
@@ -65,8 +61,8 @@ class CatalogController {
             foreach ($completeProduct->info as $info) {
                 if ($info) {
                     $response['info'][] = [
-                        'key' => $info->getKey(),
-                        'value' => $info->getValue()
+                        'key' => $info->key,
+                        'value' => $info->value
                     ];
                 }
             }
@@ -77,11 +73,11 @@ class CatalogController {
             foreach ($completeProduct->offers as $offer) {
                 if ($offer) {
                     $response['offers'][] = [
-                        'id' => $offer->getId(),
-                        'product_id' => $offer->getProductId(),  // Changed from reference to product_id
-                        'link' => $offer->getLink(),
-                        'price' => $offer->getPrice(),
-                        'providerId' => $offer->getProviderId()
+                        'id' => $offer->id,
+                        'product_id' => $offer->product->id,  // Changed from reference to product_id
+                        'link' => $offer->link,
+                        'price' => $offer->price,
+                        'providerName' => $offer->provider->Name
                     ];
                 }
             }

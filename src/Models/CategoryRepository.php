@@ -4,7 +4,7 @@ namespace App\Models;
 use Exception;
 
 class CategoryRepository extends Repository {
-    public static string $tableName = "Category";
+    protected static string $tableName = "Category";
 
     public static function getByID(int $categoryID): Category {
         $data = self::select(['ID' => $categoryID])[0];

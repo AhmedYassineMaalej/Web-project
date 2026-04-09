@@ -4,11 +4,11 @@ namespace App\Models;
 use Exception;
 
 class ProductOfferRepository extends Repository {
-    private static string $tableName = "ProductOffer";
+    protected static string $tableName = "ProductOffer";
 
     public static function getProductOffers(int $productID): array {
         $data = self::select(['ProductID' => $productID]);
-        array_map(self::convertToProductOffer(...), $data);
+        return array_map(self::convertToProductOffer(...), $data);
     }
 
     private static function convertToProductOffer(object $data): ProductOffer {

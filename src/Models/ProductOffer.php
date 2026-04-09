@@ -9,11 +9,21 @@ class ProductOffer {
     public float $price;
     public Provider $provider;
 
-    public function __construct(int $id, Product $product, string $link, float $price, Provider $provider) {
+    public function __construct(int $id, Product|int $product, string $link, float $price, Provider|int $provider) {
         $this->id = $id;
-        $this->product = $product;
         $this->link = $link;
         $this->price = $price;
-        $this->provider = $provider;
+        if ($product instanceof Product){
+            $this->product = $product;
+        }
+        else{
+            $this->product = ProductRepository :: getProductById($product);
+        }
+        if ($provider instanceof Provider){
+            $this->provider = $provider;
+        }
+        else{
+            $this->provider = ProviderRepository :: getByID ($provider);
+        }
     }
 }

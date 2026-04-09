@@ -6,5 +6,8 @@ class Category {
     public $ID;
     public $Name;
 
-    public function __construct() {}
+    public function __construct($id,$name) {
+        $this->Name=$name;
+        $this->ID = $id;
+    }
 }

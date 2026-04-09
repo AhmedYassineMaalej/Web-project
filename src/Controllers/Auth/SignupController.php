@@ -51,8 +51,7 @@ class SignUpController {
             header('Location: /signup');
             exit;
         }
-        $user_repo = new UserRepository();
-        if ($user_repo->getUserByUsername($username)) {
+        if (UserRepository::getUserByUsername($username)) {
             $_SESSION['error'] = 'User of this name already exists !';
             header('Location: /signup');
             exit;

@@ -22,7 +22,7 @@ class JWT {
         try {
             return self::decode_jwt($token, $secret);
         } catch (Exception $e) {
-            return null;
+            return false;
         }
     }
 

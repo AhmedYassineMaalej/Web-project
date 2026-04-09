@@ -48,8 +48,7 @@ class LoginController {
             header('Location: /login');
             exit;
         }
-        $user_repo = new UserRepository();
-        $user = $user_repo->getUserByUsername($username);
+        $user = UserRepository::getUserByUsername($username);
 
         if ($user && password_verify($password, $user->getPassword())) {
             $jwt_cookie = JWT::issue_jwt($username, $user->getId());

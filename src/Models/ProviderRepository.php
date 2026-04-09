@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+use Exception;
+
+class ProviderRepository extends Repository {
+    protected static string $tableName = "provider";
+
+    public static function getByID(int $provider_id): Provider {
+        $data = self::select(['ID' => $provider_id])[0];
+        return self::convertToProvider($data);
+    }
+
+    private static function convertToProvider(object $data): Provider {
+        return new Provider(
+            $data->ID,
+            $data->Name,
+        );
+    }
+}

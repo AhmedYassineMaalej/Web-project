@@ -8,14 +8,20 @@ class Product {
     public string $reference;
     public string $image;
     public Category $category;
-    public array $info;
 
-    public function __construct(int $id, string $name, string $reference, string $image, Category $category, array $info) {
+    public function __construct(int $id, string $name, string $reference, string $image, Category|int $category) {
         $this->id = $id;
         $this->name = $name;
         $this->reference = $reference;
         $this->image = $image;
-        $this->category = $category;
-        $this->info = $info;
+
+        if ($category instanceof Category){
+            $this->category = $category;
+        }
+        else{
+            $this->category = CategoryRepository::getByID($category);
+        }
+
+        
     }
 }

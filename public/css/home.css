@@ -193,3 +193,112 @@ h3 {
 .text-muted {
     color: #64748b !important;
 }
+/* Add this at the end of your home.css */
+
+/* Modal Styles */
+.modal-content {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 20px 25px;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding: 20px 25px;
+}
+
+.product-image-modal {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.product-image-modal img {
+    max-height: 250px;
+    object-fit: contain;
+    width: 100%;
+}
+
+.info-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.offer-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateX(5px);
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.price-tag {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.btn-view-offer {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-view-offer:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+    color: white;
+}
+
+.info-badge {
+    background: rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.info-key {
+    font-weight: bold;
+    color: #3b82f6;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.info-value {
+    color: white;
+    font-size: 0.95rem;
+}
+
+.text-white-50 {
+    color: rgba(255,255,255,0.5);
+}
+
+hr {
+    margin: 20px 0;
+}

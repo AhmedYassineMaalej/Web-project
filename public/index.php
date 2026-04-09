@@ -2,7 +2,6 @@
 
 use App\Router;
 
-//env vars for the secret jwt key for now and extra env vars for more features in the future...
 $envPath = __DIR__ . '/../.env';
 if (file_exists($envPath)) {
     $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -28,7 +27,7 @@ $router = new Router();
 
 
 $router->add('GET', '/', 'App\Controllers\HomeController@index');
-$router->add('GET', '/catalog', 'App\Controllers\CatalogController@index');
+$router->add('ANY', '/catalog', 'App\Controllers\CatalogController@index');
 $router->add('GET', '/myspace', 'App\Controllers\MySpaceController@index');
 $router->add('GET', '/navbar', 'App\Controllers\NavbarController@index');
 $router->add('ANY','/login', 'App\Controllers\Auth\LoginController@index');

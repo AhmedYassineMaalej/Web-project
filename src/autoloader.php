@@ -15,7 +15,8 @@ function autoload(string $classpath) {
             "App" => "",
             "Controllers" => "/Controllers",
             "Helpers" => "/Helpers",
-            "Models" => "/Models",
+            "Repositories" => "/Repositories",
+            "Entities" => "/Entities",
             "Auth" => "/Auth",
         };
         $path = $path . $path_part;

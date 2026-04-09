@@ -1,5 +1,5 @@
 <?php 
-use App\Models\ProductRepository;
+use App\Repositories\ProductRepository;
 require __DIR__ . "/../fragments/head.php"; ?>
 <?php require __DIR__ . "/../fragments/navbar.php"; ?>
 <?php require __DIR__ . "/../fragments/deal_of_the_day.php"; ?>

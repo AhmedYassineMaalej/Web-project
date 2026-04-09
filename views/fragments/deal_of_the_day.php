@@ -1,5 +1,5 @@
 <?php 
-use App\Models\ProductRepository;
+use App\Repositories\ProductRepository;
 
 function deal_of_the_day() {
     $dealOfTheDay = ProductRepository::getDealOfTheDay();

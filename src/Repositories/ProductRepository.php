@@ -1,6 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
+use App\Entities\Product;
+use App\Entities\ProductInfo;
+use App\Entities\ProductOffer;
+use App\Repositories\ProductOfferRepository;
+
 use Exception;
 use PDO;
 
@@ -15,11 +20,11 @@ class ProductRepository extends Repository {
     private static function convertToProduct($data): ?Product {
         if (!$data) return null;
         
-        // Adjust these parameters based on your Product class constructor
+        
         return new Product(
             $data->ID,
             $data->Reference,
-            $data->Description ?? $data->Name, // Use Description or Name
+            $data->Description ?? $data->Name,
             $data->Image,
             $data->CategoryID
         );

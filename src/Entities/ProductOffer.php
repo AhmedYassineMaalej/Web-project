@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
+use App\Repositories\ProductRepository;
+use App\Repositories\ProviderRepository;
 
 class ProductOffer {
     public int $id;

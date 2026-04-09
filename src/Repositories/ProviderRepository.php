@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
+use App\Entities\Provider;
+
 use Exception;
 
 class ProviderRepository extends Repository {

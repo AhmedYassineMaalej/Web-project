@@ -2,8 +2,8 @@
 
 namespace App\Controllers\Auth;
 
-use App\Models\UserRepository;
-use App\Models\User;
+use App\Repositories\UserRepository;
+use App\Entities\User;
 use App\Helpers\JWT;
 use App\Helpers\CSRF;
 

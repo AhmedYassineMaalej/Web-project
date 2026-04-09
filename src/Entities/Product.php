@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
+use App\Repositories\CategoryRepository;
+
 
 class Product {
     public int $id;

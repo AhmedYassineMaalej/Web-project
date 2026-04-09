@@ -1,6 +1,6 @@
 <?php 
-use App\Models\ProductRepository;
-use App\Models\Product;
+use App\Repositories\ProductRepository;
+use App\Entities\Product;
 
 
 function product_card(Product $product) { ?>

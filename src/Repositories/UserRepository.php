@@ -1,5 +1,7 @@
 <?php 
-namespace App\Models;
+namespace App\Repositories;
+use App\Entities\User;
+
 use Exception;
 use PDO;
 

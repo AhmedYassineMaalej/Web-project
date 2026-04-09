@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\ProductRepository;
-use App\Models\Product;
+use App\Repositories\ProductRepository;
+use App\Repositories\ProductOfferRepository; 
+use App\Entities\ProductInfo; 
+use App\Entities\ProductOffer;
+use App\Entities\Product;
 use App\Helpers\JWT;
 
 class CatalogController {
@@ -13,17 +16,23 @@ class CatalogController {
             header('Location: /');
             exit;
         }
-        $products = ProductRepository::getAllProducts();
-
-        require __DIR__ . '/../../views/pages/catalog.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+            $products = ProductRepository::getAllProducts();
+            require __DIR__ . '/../../views/pages/catalog.php';
+        }
+        else if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            add_to_cart();
+        }
+        else{
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo "Method Not Allowed";
+            exit;
+        }
     }
     
-    // Add this method for AJAX requests
     public function getProductAjax() {
-        // Set headers first
         header('Content-Type: application/json');
         
-        // Check login
         if (!JWT::isLoggedIn()) {
             echo json_encode(['error' => 'Not logged in']);
             exit;
@@ -88,5 +97,9 @@ class CatalogController {
         exit;
     }
 
-
 }
+
+
+
+
+

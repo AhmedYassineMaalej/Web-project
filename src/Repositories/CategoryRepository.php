@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
+use App\Entities\Category;
+
 use Exception;
 
 class CategoryRepository extends Repository {

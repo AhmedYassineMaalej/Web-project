@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Repositories;
+use App\Entities\ProductOffer;
+
 use Exception;
 
 class ProductOfferRepository extends Repository {

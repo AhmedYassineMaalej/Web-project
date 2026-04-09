@@ -11,10 +11,10 @@ class DBConnection {
 
 
     private function __construct(){ 
-        self::$_host = $_ENV['DB_HOST'];
+        self::$_host = $_ENV['HOST'];
         self::$_dbname = $_ENV['DB_NAME'];
-        self::$_user = $_ENV['DB_USER'];
-        self::$_pwd = $_ENV['DB_PWD'];
+        self::$_user = $_ENV['USER'];
+        self::$_pwd = $_ENV['PWD'];
 
         self::$connection = new PDO(
             "mysql:host=" . self::$_host . ";dbname=" . self::$_dbname . ";charset=utf8",

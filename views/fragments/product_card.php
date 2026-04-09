@@ -9,7 +9,7 @@ function product_card(Product $product) { ?>
             <div class="position-relative" style="height: 220px; display: flex; align-items: center; justify-content: center; background: #fff;">
                 <img src="<?= htmlspecialchars($product->image) ?>" 
                     class="card-img-top p-3" 
-                    alt="<?= htmlspecialchars($product->description) ?>"
+                    alt="product image"
                     style="max-height: 100%; max-width: 100%; object-fit: contain;">
             </div>
             <div class="card-body d-flex flex-column text-center">

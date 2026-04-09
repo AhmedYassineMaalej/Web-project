@@ -6,6 +6,8 @@
     <?php head("Login", 'css/login.css'); ?>
 <body>
 
+<?php navbar(); ?>
+
 <!-- Floating Stickers/Coins Animation -->
 <div class="stickers-container">
     <div class="sticker">🪙</div>
@@ -23,7 +25,6 @@
 </div>
 
 
-<?php navbar(); ?>
 
 <?php if (isset($_SESSION['error'])): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">
@@ -98,6 +99,5 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

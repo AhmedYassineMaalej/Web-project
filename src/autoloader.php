@@ -11,7 +11,6 @@ function autoload(string $classpath) {
     $path = "";
 
     foreach ($namespace_parts as $part) {
-        error_log($part);
         $path_part = match ($part) {
             "App" => "",
             "Controllers" => "/Controllers",

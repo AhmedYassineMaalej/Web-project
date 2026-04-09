@@ -1,8 +1,11 @@
-<?php function navbar(bool $logged_in) { ?>
-    <?php require __DIR__ . "/logo.php";
-        require __DIR__ . "/search_bar.php";
-        require __DIR__ . "/login_button.php";
-        require __DIR__ . "/logout_button.php";
+<?php 
+use App\Helpers\JWT;
+function navbar() {
+    require __DIR__ . "/logo.php";
+    require __DIR__ . "/search_bar.php";
+    require __DIR__ . "/login_button.php";
+    require __DIR__ . "/logout_button.php";
+    require __DIR__ . "/myspace_button.php";
     ?>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -28,18 +31,14 @@
           </ul>
           <?php search_bar() ?>
           <ul class="navbar-nav mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/myspace"
-                >My Space</a
-              >
-            </li>
-                <?php
-                if (!$logged_in) {
-                    login_button();
-                } else {
-                    logout_button();
-                }
-                ?>
+            <?php
+            if (JWT::isLoggedIn()) {
+                myspace_button();
+                logout_button();
+            } else {
+                login_button();
+            }
+            ?>
           </ul>
         </div>
       </div>

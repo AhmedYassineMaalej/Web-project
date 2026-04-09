@@ -7,7 +7,8 @@ from browser import Browser
 
 from workflows.mytek import scrape_provider
 
-import argparse, os
+import argparse
+import os
 
 
 def main():

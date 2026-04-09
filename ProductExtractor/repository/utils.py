@@ -10,8 +10,8 @@ load_dotenv("../.env")
 def get_connection() -> PooledMySQLConnection | MySQLConnectionAbstract:
     connection = mysql.connector.connect(
         host="localhost",
-        user=os.getenv("USER"),
-        password=os.getenv("PWD"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PWD"),
         database="website_db",
     )
 

@@ -31,9 +31,10 @@ CREATE TABLE IF NOT EXISTS Provider (
 CREATE TABLE IF NOT EXISTS Product (
     ID          INT          NOT NULL AUTO_INCREMENT,
     Reference   VARCHAR(100) NOT NULL UNIQUE,
+    Name        VARCHAR(100) NOT NULL,
     Description TEXT,
     Image       VARCHAR(500),
-    CategoryID  INT,                          
+    CategoryID  INT,
     PRIMARY KEY (ID),
     CONSTRAINT fk_product_category
         FOREIGN KEY (CategoryID) REFERENCES Category(ID)

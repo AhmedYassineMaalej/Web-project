@@ -6,7 +6,6 @@ use Exception;
 
 
 class JWT {
-
     public static function issue_jwt($username, $user_id){
         $secret = $_ENV['JWT_SECRET'] ?? 'my_key_for_jwt_signing';
         $payload = [
@@ -42,7 +41,7 @@ class JWT {
     }
 
 
-    public static function isLoggedIn() {
+    public static function isLoggedIn(): bool {
         if (isset($_COOKIE['JWT'])) {
             $payload = self::verify_jwt($_COOKIE['JWT']);
             return $payload !== null;

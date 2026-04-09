@@ -23,6 +23,7 @@ class ProductRepository(Repository[Product]):
             {
                 "Reference": item.reference,
                 "Description": item.description,
+                "Name": item.name,
                 "Image": item.image,
                 "CategoryID": category_id,
             },

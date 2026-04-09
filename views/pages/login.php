@@ -1,4 +1,6 @@
 <?php require __DIR__ . "/../fragments/head.php"; ?>
+<?php require __DIR__ . "/../fragments/navbar.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <?php head("Login", 'css/login.css'); ?>
@@ -20,18 +22,8 @@
     <div class="sticker">💰</div>
 </div>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg shadow-sm">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="/">
-            <img src="https://staging.svgrepo.com/show/15477/coin.svg" width="40" alt="Logo">
-            PickPocket
-        </a>
-        <div class="ms-auto">
-            <a class="nav-link fw-semibold" href="/sign_up">Sign Up</a>
-        </div>
-    </div>
-</nav>
+
+<?php navbar(); ?>
 
 <?php if (isset($_SESSION['error'])): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">

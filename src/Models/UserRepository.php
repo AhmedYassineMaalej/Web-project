@@ -1,5 +1,6 @@
 <?php 
 namespace App\Models;
+use Exception;
 use PDO;
 
 /*
@@ -19,13 +20,10 @@ createUser(username,hashed password) -> returns either [user object or false] in
 
 
 class UserRepository extends Repository {
-    
-    public function __construct(){
-        parent::__construct("Users");
-    }
-    
-    private function convertToUser($data) {
-        if (!$data) return false;
+    static private $tableName = "Users";
+
+    private static function convertToUser(object $data): ?User {
+        if (!$data) return null;
         return new User(
             $data->ID,
             $data->Username,
@@ -34,32 +32,33 @@ class UserRepository extends Repository {
         );
     }
     
-    public function getUserByUsername($username) {
+    public static function getUserByUsername(string $username): ?User {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM Users WHERE Username = ?");
+            $table = self::$tableName;
+            $stmt = $this->connection->prepare("SELECT * FROM $table WHERE Username = ?");
             $stmt->execute([$username]);
             $result = $stmt->fetch(PDO::FETCH_OBJ);
             return $this->convertToUser($result);
         } catch (Exception $e) {
-            return false;
+            return null;
         }
     }
-    
-    public function getUserById($id) {
+
+    public function getUserById(int $id) {
         $result = $this->findById($id);
         return $this->convertToUser($result);
     }
-    
+
     public function createUser($username, $hashed_password) {
         $result = $this->add([
             'Username' => $username,
             'Pwd' => $hashed_password
         ]);
-        
+
         if ($result) {
             return $this->getUserByUsername($username);
         }
-        
+
         return false;
     }
 }

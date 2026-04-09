@@ -29,8 +29,6 @@ class LogoutController {
     }
 
     static public function logout() {
-
-        
         $csrf_token = $_POST['csrf'];
         if (!CSRF::validate_token($csrf_token)) {
             $_SESSION['error'] = 'Invalid security token. Please try again.';

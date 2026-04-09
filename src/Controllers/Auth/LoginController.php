@@ -65,15 +65,9 @@ class LoginController {
         }
     }
 
-
-
-
-
     static function show_login_form() {
         $csrf_token = CSRF::generate_token();
         $_SESSION['csrf_token'] = $csrf_token;
         require __DIR__ . '/../../../views/pages/login.php';
     }
-
-    
 }

@@ -58,9 +58,8 @@ class SignUpController {
         }
         
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 10]);
-        
-        $user = $user_repo->createUser($username, $hashedPassword);
-        
+        $user = UserRepository::createUser($username, $hashedPassword);
+
         if ($user) {
             $user_id = $user->getId();
             $jwt = JWT::issue_jwt($username, $user_id);

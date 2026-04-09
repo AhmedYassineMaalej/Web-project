@@ -5,7 +5,7 @@ use App\Helpers\JWT;
 
 class MySpaceController {
     public function index() {
-        if (! JWT::isLoggedIn()){
+        if (!JWT::isLoggedIn()){
             $_SESSION['error'] = "You're not logged in";
             header("Location : /");
             exit;

@@ -266,9 +266,6 @@
                 <li class="nav-item">
                     <a class="nav-link active fw-bold" href="/myspace">My Space</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
             </ul>
         </div>
     </div>

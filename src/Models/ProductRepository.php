@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Exception;
 use PDO;
 
 class ProductRepository extends Repository {

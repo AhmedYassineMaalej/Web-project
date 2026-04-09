@@ -42,7 +42,7 @@ class ProductRepository extends Repository {
     }
 
     /* TODO: move to ProductInfoRepository */
-    public static function getProductInfo($productId) {
+    public static function getProductInfo(int $productId) {
         try {
             $conn = self::getConnection();
             $stmt = $conn->prepare("SELECT * FROM ProductInfo WHERE ProductID = ?");
@@ -54,124 +54,100 @@ class ProductRepository extends Repository {
         }
     }
 
-
     public static function getProductsWithMostOffers(int $limit = 6) {
-        try {
-            $conn = self::getConnection();
-            $stmt = $conn->prepare("
-                SELECT p.*, COUNT(po.ID) as offer_count, MIN(po.Price) as min_price
-                FROM Product p
-                INNER JOIN ProductOffer po ON p.ID = po.ProductID
-                GROUP BY p.ID
-                ORDER BY offer_count DESC
-                LIMIT $limit
+        $conn = self::getConnection();
+        $stmt = $conn->prepare("
+            SELECT p.*, COUNT(po.ID) as offer_count, MIN(po.Price) as min_price
+            FROM Product p
+            INNER JOIN ProductOffer po ON p.ID = po.ProductID
+            GROUP BY p.ID
+            ORDER BY offer_count DESC
+            LIMIT $limit
             ");
-            $stmt->execute();
-            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
-            
-            $products = [];
-            foreach ($results as $row) {
-                $categoryID = $row->CategoryID;
-                $category = CategoryRepository::getByID($categoryID);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-                $products[] = [
-                    'product' => new Product(
-                        $row->ID,
-                        $row->Name,
-                        $row->Reference,
-                        $row->Description,
-                        $row->Image,
-                        $category,
-                        $row->Info,
-                    ),
-                    'offer_count' => $row->offer_count,
-                    'min_price' => $row->min_price
-                ];
-            }
-            return $products;
-        } catch (Exception $e) {
-            return [];
-        }
+        return array_map(function ($row) {
+            $categoryID = $row->CategoryID;
+            $category = CategoryRepository::getByID($categoryID);
+            $info = ProductInfoRepository::getByID($row->ID);
+
+            return new Product(
+                    $row->ID,
+                    $row->Name,
+                    $row->Reference,
+                    $row->Description,
+                    $row->Image,
+                    $category,
+                    $info,
+            );
+        }, $results);
     }
 
     public static function getTopOffers(int $limit = 6) {
-        try {
-            $conn = self::getConnection();
-            $stmt = $conn->prepare("
-                SELECT p.*, MIN(po.Price) as min_price, COUNT(po.ID) as offer_count
-                FROM Product p
-                INNER JOIN ProductOffer po ON p.ID = po.ProductID
-                GROUP BY p.ID
-                ORDER BY min_price ASC
-                LIMIT $limit
+        $conn = self::getConnection();
+        $stmt = $conn->prepare("
+            SELECT p.*, MIN(po.Price) as min_price, COUNT(po.ID) as offer_count
+            FROM Product p
+            INNER JOIN ProductOffer po ON p.ID = po.ProductID
+            GROUP BY p.ID
+            ORDER BY min_price ASC
+            LIMIT $limit
             ");
-            $stmt->execute();
-            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            $products = [];
-            foreach ($results as $row) {
-                $categoryID = $row->CategoryID;
-                $category = CategoryRepository::getByID($categoryID);
+        return array_map(function ($row) {
+            $categoryID = $row->CategoryID;
+            $category = CategoryRepository::getByID($categoryID);
+            $info = ProductInfoRepository::getByID($row->ID);
 
-                $products[] = [
-                    'product' => new Product(
-                        $row->ID,
-                        $row->Name,
-                        $row->Reference,
-                        $row->Description,
-                        $row->Image,
-                        $category,
-                        $row->Info,
-                    ),
-                    'min_price' => $row->min_price,
-                    'offer_count' => $row->offer_count
-                ];
-            }
-            return $products;
-        } catch (Exception $e) {
-            return [];
-        }
+            return new Product(
+                $row->ID,
+                $row->Name,
+                $row->Reference,
+                $row->Description,
+                $row->Image,
+                $category,
+                $info,
+            );
+        }, $results);
     }
 
 
     public function getMostInfoProducts($limit = 6) {
-        try {
-            $limit = (int)$limit;
-            $conn = self::getConnection();
-            $stmt = $conn->prepare("
-                SELECT p.*, COUNT(pi.ID) as info_count
-                FROM Product p
-                INNER JOIN ProductInfo pi ON p.ID = pi.ProductID
-                GROUP BY p.ID
-                ORDER BY info_count DESC
-                LIMIT $limit
+        $limit = (int)$limit;
+        $conn = self::getConnection();
+        $stmt = $conn->prepare("
+            SELECT p.*, COUNT(pi.ID) as info_count
+            FROM Product p
+            INNER JOIN ProductInfo pi ON p.ID = pi.ProductID
+            GROUP BY p.ID
+            ORDER BY info_count DESC
+            LIMIT $limit
             ");
-            $stmt->execute();
-            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            $products = [];
-            foreach ($results as $row) {
-                $products[] = [
-                    'product' => new Product(
-                        $row->ID,
-                        $row->Name,
-                        $row->Reference,
-                        $row->Description,
-                        $row->Image,
-                        $row->Category,
-                        $row->Info,
-                    ),
-                    'info_count' => $row->info_count
-                ];
-            }
-            return $products;
-        } catch (Exception $e) {
-            return [];
-        }
+        return array_map(function ($row) {
+            $categoryID = $row->CategoryID;
+            $category = CategoryRepository::getByID($categoryID);
+            $info = ProductInfoRepository::getByID($row->ID);
+
+            return new Product(
+                $row->ID,
+                $row->Name,
+                $row->Reference,
+                $row->Description,
+                $row->Image,
+                $category,
+                $info,
+            );
+        }, $results);
     }
 
 
-    public function getNewestProducts($limit = 6) {
+    public static function getNewestProducts($limit = 6) {
         try {
             $limit = (int)$limit;
             $conn = self::getConnection();
@@ -195,7 +171,6 @@ class ProductRepository extends Repository {
                     $category,
                     $info,
                 );
-
             }, $results);
         } catch (Exception $e) {
             return [];
@@ -203,47 +178,39 @@ class ProductRepository extends Repository {
     }
 
 
-    public function getDealOfTheDay() {
-        try {
-            $conn = self::getConnection();
-            $stmt = $conn->prepare("
-                SELECT p.*, MIN(po.Price) as min_price
-                FROM Product p
-                INNER JOIN ProductOffer po ON p.ID = po.ProductID
-                GROUP BY p.ID
-                ORDER BY RAND()
-                LIMIT 1
+    public static function getDealOfTheDay() {
+        $conn = self::getConnection();
+        $stmt = $conn->prepare("
+            SELECT p.*, MIN(po.Price) as min_price
+            FROM Product p
+            INNER JOIN ProductOffer po ON p.ID = po.ProductID
+            GROUP BY p.ID
+            ORDER BY RAND()
+            LIMIT 1
             ");
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if (!$row) return null;
+        if (!$row) return null;
 
-            return [
-                $row->Reference ?? '',
-                $row->Description ?? 'Product',
-                $row->Image ?? '/images/placeholder.png',
-                $row->min_price ?? 0
-            ];
-        } catch (Exception $e) {
-            return null;
-        }
+        return [
+            $row->Reference ?? '',
+            $row->Name ?? 'ProductName',
+            $row->Image ?? '/images/placeholder.png',
+            $row->min_price ?? 0
+        ];
     }
 
-    public function getMinPriceForProduct(int $productId) {
-        try {
-            $conn = self::getConnection();
-            $stmt = $conn->prepare("
-                SELECT MIN(Price) as min_price
-                FROM ProductOffer
-                WHERE ProductID = ?
-            ");
-            $stmt->execute([$productId]);
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
+    public static function getMinPriceForProduct(int $productId): float {
+        $conn = self::getConnection();
+        $stmt = $conn->prepare("
+            SELECT MIN(Price) as min_price
+            FROM ProductOffer
+            WHERE ProductID = ?
+        ");
+        $stmt->execute([$productId]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
 
-            return $result->min_price ? (float)$result->min_price : null;
-        } catch (Exception $e) {
-            return null;
-        }
+        return $result->min_price;
     }
 }

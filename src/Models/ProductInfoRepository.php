@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Models;
-use Exception;
 
 class ProductInfoRepository extends Repository {
-    private static string $tableName = "ProductInfo";
+    public static string $tableName = "ProductInfo";
 
     public static function getByID(int $productID): array {
-        self::select(["ProductID" => $productID]);
+        $result = self::select(["ProductID" => $productID]);
+        return array_map(function ($row) {
+            return new ProductInfo(
+                $row->ID,
+                $row->ProductID,
+                $row->Key,
+                $row->Value,
+            );
+        }, $result);
     }
 }

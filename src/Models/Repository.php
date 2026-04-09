@@ -50,7 +50,7 @@ abstract class Repository {
     }
 
     public static function select(?array $where = array()): array {
-        $table = self::$tableName;
+        $table = static::$tableName;
         $sql = "SELECT * FROM $table";
         if (!empty($where)) {
             $conditions = array_map(function (string $key) {
@@ -71,7 +71,8 @@ abstract class Repository {
         $keys = array_keys($params);
         $keyString = implode(',',$keys);
         $paramString = implode(',', array_fill(0, count(value: $keys), '?'));
-        $sql = " INSERT INTO `{$this->tableName}` ({$keyString}) VALUES ({$paramString})";
+        $table = static::$tableName;
+        $sql = " INSERT INTO `{$table}` ({$keyString}) VALUES ({$paramString})";
         $connection = self::getConnection();
         $response = $connection->prepare($sql);
         $response->execute(array_values($params));

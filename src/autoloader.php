@@ -2,11 +2,6 @@
 
 namespace App;
 
-function split_classpath(string $classpath): string {
-    $parts = explode("\\", $classpath);
-    var_dump($parts);
-    return end($parts);
-}
 
 function autoload(string $classpath) {
     $parts = explode("\\", $classpath);

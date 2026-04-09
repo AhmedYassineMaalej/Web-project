@@ -33,7 +33,6 @@ CREATE TABLE Provider (
 CREATE TABLE Product (
     ID          INT          NOT NULL AUTO_INCREMENT,
     Reference   VARCHAR(100) NOT NULL UNIQUE,
-    Description TEXT,
     Image       VARCHAR(500),
     CategoryID  INT,                          
     PRIMARY KEY (ID),

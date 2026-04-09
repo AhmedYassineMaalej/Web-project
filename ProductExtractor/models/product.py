@@ -8,14 +8,12 @@ class Product:
         reference: str,
         name: str,
         image: str,
-        description: str,
         info: dict[str, str],
         category: Category,
     ):
         self.reference = reference
         self.name = name
         self.image = image
-        self.description = description
         self.category = category
         self.info = info
 
@@ -32,7 +30,6 @@ class ProductBuilder(Builder[Product]):
         self.reference = reference
         self.name = name
         self.image = None
-        self.description = None
         self.category = None
         self.info = None
 
@@ -46,9 +43,6 @@ class ProductBuilder(Builder[Product]):
     def set_image(self, image: str):
         self.image = image
 
-    def set_description(self, description: str):
-        self.description = description
-
     def set_category(self, category: Category):
         self.category = category
 
@@ -59,11 +53,6 @@ class ProductBuilder(Builder[Product]):
         if self.image is None:
             raise MissingAttributeException(
                 "Attempted to construct Product without setting image attribute"
-            )
-
-        if self.description is None:
-            raise MissingAttributeException(
-                "Attempted to construct Product without setting description attribute"
             )
 
         if self.info is None:
@@ -80,7 +69,6 @@ class ProductBuilder(Builder[Product]):
             self.reference,
             self.name,
             self.image,
-            self.description,
             self.info,
             self.category,
         )

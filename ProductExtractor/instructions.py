@@ -133,7 +133,6 @@ class ScrapeOffers(Scrape[OfferBuilder]):
                 GetProductInfo(link, self.scrape_product_info)
             )
             product = ProductBuilder(name, ref)
-            product.set_description("TODO")
             product.set_image(image)
             product.set_info(product_info)
 

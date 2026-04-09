@@ -21,7 +21,6 @@ class ProductRepository(Repository[Product]):
             cls.tablename(),
             {
                 "Reference": item.reference,
-                "Description": item.description,
                 "Image": item.image,
                 "CategoryID": category_id,
             },

@@ -3,7 +3,7 @@
 namespace App\Controllers\Auth;
 
 
-use App\models\UserRepository; 
+use App\Models\UserRepository; 
 use App\Helpers\JWT;
 use App\Helpers\CSRF;
 

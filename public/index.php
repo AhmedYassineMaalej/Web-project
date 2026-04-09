@@ -1,4 +1,7 @@
 <?php
+
+use App\Router;
+
 //env vars for the secret jwt key for now and extra env vars for more features in the future...
 $envPath = __DIR__ . '/../.env';
 if (file_exists($envPath)) {
@@ -11,7 +14,7 @@ if (file_exists($envPath)) {
 }
 
 
-require_once __DIR__ . '/../vendor/autoload.php';
+include_once '../src/autoloader.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -21,7 +24,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
 
-$router = new App\Router();
+$router = new Router();
 
 
 $router->add('GET', '/', 'App\Controllers\HomeController@index');

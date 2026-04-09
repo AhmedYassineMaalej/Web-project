@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\models\ProductRepository;
+use App\Models\ProductRepository;
 use App\Helpers\JWT;
 
 class HomeController {

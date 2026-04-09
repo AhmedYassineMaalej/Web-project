@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Controllers;
-use App\models\ProductRepository;
-use App\models\Product;
+use App\Models\ProductRepository;
+use App\Models\Product;
 use App\Helpers\JWT;
 
 class CatalogController {

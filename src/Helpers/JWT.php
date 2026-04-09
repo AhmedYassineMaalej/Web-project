@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Exception;
+
 
 class JWT {
 

@@ -3,24 +3,9 @@ namespace App\Models;
 use Exception;
 use PDO;
 
-/*
-
-Flow: DBConnection → Repository → UserRepository → User object
-UserRepository offers 4 functions in total
-
-convertToUser($data):
-    $dummyData = (object)['ID' => 1, 'Username' => 'john', 'Pwd' => 'hash', 'Role' => 'admin'];
-    $user = $this->convertToUser($dummyData);
-
-getUserByUsername(string as username) => returns a user object
-getUserById(id) => returns user object
-
-createUser(username,hashed password) -> returns either [user object or false] indicating success or failure (it contacts mother class to insert into db)
-*/
-
 
 class UserRepository extends Repository {
-    static private $tableName = "Users";
+    public static string $tableName = "Users";
 
     private static function convertToUser(object $data): ?User {
         if (!$data) return null;
@@ -31,32 +16,30 @@ class UserRepository extends Repository {
             $data->Role
         );
     }
-    
+
     public static function getUserByUsername(string $username): ?User {
-        try {
-            $table = self::$tableName;
-            $stmt = $this->connection->prepare("SELECT * FROM $table WHERE Username = ?");
-            $stmt->execute([$username]);
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
-            return $this->convertToUser($result);
-        } catch (Exception $e) {
+        $rows = self::select(["Username" => $username]);
+
+        if (count($rows) == 0) {
             return null;
         }
+
+        return self::convertToUser($rows[0]);
     }
 
-    public function getUserById(int $id) {
-        $result = $this->findById($id);
-        return $this->convertToUser($result);
+    public static function getUserById(int $id) {
+        $result = self::findById($id);
+        return self::convertToUser($result);
     }
 
-    public function createUser($username, $hashed_password) {
-        $result = $this->add([
+    public static function createUser($username, $hashed_password) {
+        $result = self::insert([
             'Username' => $username,
             'Pwd' => $hashed_password
         ]);
 
         if ($result) {
-            return $this->getUserByUsername($username);
+            return self::getUserByUsername($username);
         }
 
         return false;

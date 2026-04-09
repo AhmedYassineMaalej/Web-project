@@ -35,20 +35,6 @@ abstract class Repository {
         }
     }
 
-    public static function add($params): bool
-    {
-        try{
-            $keys=array_keys($params);
-            $keyString=implode(',',$keys);
-            $paramsString=implode(',',array_fill(0,count($keys),'?'));
-            $DBreply = $this->connection->prepare("INSERT INTO {$this->tableName} ({$keyString}) VALUES ({$paramsString});");
-            return $DBreply->execute(array_values($params));
-        }
-        catch(Exception $e){
-            return false;
-        }
-    }
-
     public static function select(?array $where = array()): array {
         $table = static::$tableName;
         $sql = "SELECT * FROM $table";

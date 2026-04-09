@@ -91,7 +91,7 @@
             <div class="text-center mt-4">
                 <p class="mb-0 text-muted">
                     Don't have an account? 
-                    <a href="/sign_up" class="fw-semibold text-decoration-none">Sign Up</a>
+                    <a href="/signup" class="fw-semibold text-decoration-none">Sign Up</a>
                 </p>
             </div>
         </div>

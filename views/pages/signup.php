@@ -1,4 +1,5 @@
 <?php require __DIR__ . "/../fragments/head.php"; ?>
+<?php require __DIR__ . "/../fragments/navbar.php"; ?>
 <!doctype html>
 <html lang="en">
     <?php head("Sign Up", "css/signup.css") ?>
@@ -19,18 +20,7 @@
     <div class="sticker">💰</div>
 </div>
 
-<!-- nav -->
-<nav class="navbar navbar-expand-lg shadow-sm">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="/">
-            <img src="https://staging.svgrepo.com/show/15477/coin.svg" width="40">
-            PickPocket
-        </a>
-        <div class="ms-auto">
-            <a class="nav-link fw-semibold" href="/login">Login</a>
-        </div>
-    </div>
-</nav>
+<?php navbar() ?>
 
 <?php if (isset($_SESSION['error'])): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">
@@ -70,7 +60,7 @@
             <?php endif; ?>
 
             <!-- form -->
-            <form method="POST" action="/sign_up">
+            <form method="POST" action="/signup">
 
                 <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf_token) ?>">
 
@@ -116,6 +106,5 @@
 
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

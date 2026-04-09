@@ -9,6 +9,7 @@ class JWT {
     public static function issue_jwt($username, $user_id){
         $secret = $_ENV['JWT_SECRET'] ?? 'my_key_for_jwt_signing';
         $payload = [
+            'user_id' => $user_id,
             'user' => $username,
             'iat' => time(),
             'exp' => time() + 3600
@@ -79,6 +80,11 @@ class JWT {
         }
 
         return $payload;
+    }
+    public static function getUserId(){
+        $secret = $_ENV['JWT_SECRET'] ?? 'my_key_for_jwt_signing';
+        $payload = self::decode_jwt($_COOKIE['JWT'],$secret);
+        return $payload['user_id'];
     }
 
 

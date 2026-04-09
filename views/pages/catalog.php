@@ -1,9 +1,13 @@
-<?php require __DIR__ . "/../fragments/head.php"; ?>
-<?php require __DIR__ . "/../fragments/navbar.php"; ?>
+<?php 
+require __DIR__ . "/../fragments/head.php"; 
+require __DIR__ . "/../fragments/navbar.php";
+use App\Repositories\CartItemRepository;
+?>
+
 
 <!doctype html>
 <html lang="en">
-    <?php head("Pickpocket | Home", 'css/home.css') ?>
+    <?php head("Pickpocket | Home", 'css/home.css','css/cart.css') ?>
 <body>
 
 <!-- Floating Stickers/Coins Animation -->
@@ -55,6 +59,9 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title fw-bold"><?= htmlspecialchars($name) ?></h5>
                             <p class="text-muted small mb-3">Ref: <?= htmlspecialchars($ref) ?></p>
+                            <button class="btn btn-success mt-2" onclick="event.stopPropagation(); addToCart(<?= $id ?>, this)">
+                                Add to Cart 🛒
+                            </button>
                             <button class="btn btn-primary mt-auto" onclick="event.stopPropagation(); showProductModal(<?= $id ?>)">
                                 View Details 👀
                             </button>
@@ -227,6 +234,63 @@ function escapeHtml(str) {
         if (m === '>') return '&gt;';
         return m;
     });
+}
+function addToCart(productId, button) {
+    // Change button text and disable it
+    const originalText = button.innerHTML;
+    button.innerHTML = 'Adding...';
+    button.disabled = true;
+    
+    fetch(`/cart/add?id=${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('✅ Added to cart!', 'success');
+            // Change button permanently to "Add more"
+            button.innerHTML = 'Add more +';
+            button.disabled = false;
+        } else {
+            showToast(data.error || 'Failed to add', 'error');
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
+    })
+    .catch(error => {
+        showToast('Something went wrong', 'error');
+        button.innerHTML = originalText;
+        button.disabled = false;
+    });
+}
+
+function showToast(message, type) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Animate in
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    // Remove after 2 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 2000);
 }
 
 

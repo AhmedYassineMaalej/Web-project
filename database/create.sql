@@ -88,21 +88,22 @@ CREATE TABLE IF NOT EXISTS Bookmark (
 
 
 
-CREATE TABLE Cart (
+CREATE TABLE if not exists Cart (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
+    total_price int default 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     UNIQUE KEY unique_user_cart (user_id)
 );
 
-CREATE TABLE CartItem (
+CREATE TABLE if not exists CartItem (
     id INT PRIMARY KEY AUTO_INCREMENT,
     cart_id INT NOT NULL,
     product_offer_id INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
-    cost DECIMAL(10, 2) NOT NULL,
+    totalprice DECIMAL(10, 2) default 0 NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (cart_id) REFERENCES Cart(id) ON DELETE CASCADE,

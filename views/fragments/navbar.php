@@ -6,6 +6,7 @@ function navbar() {
     require __DIR__ . "/login_button.php";
     require __DIR__ ."/signup_button.php";
     require __DIR__."/catalog_button.php";
+    require __DIR__."/cart_button.php";
     require __DIR__ . "/logout_button.php";
     require __DIR__ . "/myspace_button.php";
     ?>
@@ -35,6 +36,7 @@ function navbar() {
           <ul class="navbar-nav mb-2 mb-lg-0">
             <?php
             if (JWT::isLoggedIn()) {
+                cart_button();
                 catalog_button();
                 myspace_button();
                 logout_button();

@@ -51,15 +51,15 @@ abstract class Repository {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public static function insert(array $params): void {
+    public static function insert(array $params): bool {
         $keys = array_keys($params);
         $keyString = implode(',', $keys);
         $paramString = implode(',', array_fill(0, count($keys), '?'));
-        $table = self::$tableName;
+        $table = static::$tableName;
         $sql = "INSERT INTO " . $table . " ({$keyString}) VALUES ({$paramString})";
         $connection = self::getConnection();
         $response = $connection->prepare($sql);
-        $response->execute(array_values($params));
+        return $response->execute(array_values($params));
     }
 
     public static function getConnection(): PDO {

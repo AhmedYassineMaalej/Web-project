@@ -26,5 +26,10 @@ class ProductOfferRepository extends Repository {
             $data->ProviderID
         );
     }
+    public static function getProductOfferById(int $id): ?ProductOffer {
+        $data = self::findById($id);
+        if (!$data) return null;
+        return self::convertToProductOffer($data);
+    }
 
 }

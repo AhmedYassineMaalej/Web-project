@@ -1,23 +1,45 @@
 <?php
 
 namespace App\Entities;
+use App\Repositories\ProductOfferRepository;
 
 class CartItem {
-    public $ID;
-    public $ProductOfferId;
-    public $UserId;
-    public $Quantity;
-    public $TotalCost;
-
-    public function __construct(int $id, int $user_id , int $product_id) {
-        $this->ID = $id;
-        $this->ProductId = $product_id;
-        $this->UserId = $user_id;
-        $this->Quantity = 0;
-        $this->TotalCost = 0;
+    public int $id;
+    public int $cartId;
+    public ProductOffer $productOffer;
+    public int $quantity;
+    public float $price;
+    public float $totalPrice;
+    public string $createdAt;
+    public string $updatedAt;
+    
+    public function __construct(int $id, int $cartId, int|ProductOffer $productOffer, int $quantity, float $price, string $createdAt, string $updatedAt) {
+        $this->id = $id;
+        $this->cartId = $cartId;
+        $this->quantity = $quantity;
+        $this->price = $price;
+        $this->totalPrice = $price * $quantity;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+        
+        if ($productOffer instanceof ProductOffer) {
+            $this->productOffer = $productOffer;
+        } else {
+            $this->productOffer = ProductOfferRepository::getProductOfferById($productOffer);
+        }
     }
-    public function AddItem(){
-        $this->Quantity += 1;
-        $this->TotalCost += "idk";
+
+    public function getSubtotal() : float {
+        return $this->price * $this->quantity;
+    }
+
+    public function updateQuantity(int $quantity): void {
+        $this->quantity = $quantity;
+        $this->totalPrice = $this->price * $quantity;
+    }
+
+    public function updatePrice(float $price): void {
+        $this->price = $price;
+        $this->totalPrice = $price * $this->quantity;
     }
 }

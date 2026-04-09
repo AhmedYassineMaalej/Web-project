@@ -132,12 +132,7 @@ class ScrapeOffers(Scrape[OfferBuilder]):
             product_info = browser.execute(
                 GetProductInfo(link, self.scrape_product_info)
             )
-<<<<<<< HEAD
-            product = ProductBuilder(name, ref)
-=======
             product = ProductBuilder(ref, name)
-            product.set_description("TODO")
->>>>>>> main
             product.set_image(image)
             product.set_info(product_info)
 

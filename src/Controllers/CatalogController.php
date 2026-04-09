@@ -53,7 +53,6 @@ class CatalogController {
             'product' => [
                 'id' => $completeProduct->product->getId(),
                 'reference' => $completeProduct->product->getReference(),
-                'description' => $completeProduct->product->getDescription(),
                 'image' => $completeProduct->product->getImage(),
                 'categoryId' => $completeProduct->product->getCategoryId()
             ],

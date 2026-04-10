@@ -7,12 +7,13 @@ class Router {
         $this->routes[] = compact('method', 'uri', 'controller');
     }
 
-    public function dispatch(string $uri, string $method) {
+    public function dispatch(string $uri, string $method): void {
         foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && ($route['method'] === $method || $route['method'] === 'ANY')) {
-                [$class, $function] = explode('@', $route['controller']); //like split in python
+                [$class, $function] = explode('@', $route['controller']);
                 $controller = new $class();
-                return $controller->$function();
+                $controller->$function();
+                return;
             }
         }
 

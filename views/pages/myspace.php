@@ -3,7 +3,7 @@
 
 <!doctype html>
 <html lang="en">
-    <?php head("My Space", "myspace.css") ?>
+    <?php head("My Space", "myspace.css","/css/cart.css") ?>
 <body>
 
 <!-- Floating Stickers/Coins Animation -->

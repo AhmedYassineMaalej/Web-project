@@ -68,12 +68,12 @@
 .cart-item p,
 .cart-item .text-muted,
 .cart-item .text-primary {
-    color: #f1f5f9;
+    color: black;
 }
 
 /* Order summary card */
 .order-summary-card {
-    background: rgba(30, 41, 59, 0.95);
+    background: white;
     border-radius: 12px;
 }
 
@@ -96,6 +96,7 @@
 .card {
     border: none;
 }
+
 /* Force ALL text inside cart to be light */
 .cart-item *,
 .order-summary-card * {
@@ -113,4 +114,50 @@
 
 .cart-item .btn-danger {
     color: white !important;
+}
+
+/* Force light background for modal popup */
+#cartModal .modal-content {
+    background: white !important;
+    border-radius: 25px;
+}
+
+#cartModal .modal-header,
+#cartModal .modal-body,
+#cartModal .modal-footer {
+    background: white !important;
+}
+
+/* Force dark text inside modal */
+#cartModal .modal-content * {
+    color: #1e293b !important;
+}
+
+/* Keep button text white */
+#cartModal .btn-primary,
+#cartModal .btn-success,
+#cartModal .btn-danger {
+    color: white !important;
+}
+
+/* Keep colored text */
+#cartModal .text-primary {
+    color: #3b82f6 !important;
+}
+
+#cartModal .text-success {
+    color: #10b981 !important;
+}
+
+#cartModal .text-muted {
+    color: #64748b !important;
+}
+
+/* Modal borders */
+#cartModal .border-bottom {
+    border-bottom-color: #e2e8f0 !important;
+}
+
+#cartModal .border-top {
+    border-top-color: #e2e8f0 !important;
 }

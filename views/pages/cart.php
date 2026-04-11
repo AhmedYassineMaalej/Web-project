@@ -3,7 +3,7 @@
 
 <!doctype html>
 <html lang="en">
-    <?php head("Pickpocket | Cart", '/css/cart.css') ?>
+    <?php head("Pickpocket | Cart", 'cart.css') ?>
 <body>
 
 <!-- Floating Stickers/Coins Animation -->

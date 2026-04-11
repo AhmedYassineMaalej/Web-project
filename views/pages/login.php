@@ -3,7 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <?php head("Login", 'css/login.css'); ?>
+    <?php head("Login", 'login.css'); ?>
 <body>
 
 <?php navbar(); ?>

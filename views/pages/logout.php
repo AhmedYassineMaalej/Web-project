@@ -3,7 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <?php head("Logout", "css/logout.css") ?>
+    <?php head("Logout", "logout.css") ?>
 <body>
 
 <!-- Floating Stickers/Coins Animation -->

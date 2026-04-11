@@ -7,7 +7,7 @@ use App\Repositories\CartItemRepository;
 
 <!doctype html>
 <html lang="en">
-    <?php head("Pickpocket | Home", 'css/home.css','css/cart.css') ?>
+    <?php head("Pickpocket | Home", 'home.css','cart.css') ?>
 <body>
 
 <!-- Floating Stickers/Coins Animation -->

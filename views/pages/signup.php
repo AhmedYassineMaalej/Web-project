@@ -2,7 +2,7 @@
 <?php require __DIR__ . "/../fragments/navbar.php"; ?>
 <!doctype html>
 <html lang="en">
-    <?php head("Sign Up", "css/signup.css") ?>
+    <?php head("Sign Up", "signup.css") ?>
 <body>
 <!-- stickers -->
 <div class="stickers-container">

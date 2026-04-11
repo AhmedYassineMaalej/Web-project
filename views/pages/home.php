@@ -7,7 +7,7 @@ require __DIR__ . "/../fragments/head.php"; ?>
 
 <!doctype html>
 <html lang="en">
-    <?php head("Pickpocket | Home", 'css/home.css') ?>
+    <?php head("Pickpocket | Home", 'home.css') ?>
     <body>
         <div class="stickers-container">
             <div class="sticker">🪙</div>

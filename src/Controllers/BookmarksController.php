@@ -1,8 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Helpers\JWT;
-use App\Repositories\BookmarksRepository;
-use App\Repositories\BookmarksItemRepository;
+use App\Repositories\BookmarkRepository;
 
 class BookmarksController {
     public static function getBookmarksJson() {
@@ -14,25 +13,21 @@ class BookmarksController {
         }
 
         $userId = JWT::getUserId();
-        $cart = BookmarksRepository::getOrCreateBookmarksByUserId($userId);
-        $items = BookmarksItemRepository::getBookmarksItems($cart->id);
-        $cart->setItems($items);
+        $bookmarks = BookmarkRepository::getUserBookmarks($userId);
 
         $response = [
             'items' => [],
-            'total' => $cart->getTotalCost()
         ];
 
-        foreach ($items as $item) {
-            $offer = $item->productOffer;
+        foreach ($bookmarks as $bookmark) {
+            $offer = $bookmark->productOffer;
             if ($offer) {
                 $response['items'][] = [
-                    'id' => $item->id,
-                    'name' => $offer->product->name,
-                    'image' => $offer->product->image,
-                    'quantity' => $item->quantity,
-                    'price' => $item->price,
-                    'total' => $item->price * $item->quantity
+                    'id' => $bookmark->id,
+                    'name' => $bookmark->product->name,
+                    'image' => $bookmark->product->image,
+                    'quantity' => $bookmark->quantity,
+                    'price' => $bookmark->price,
                 ];
             }
         }
@@ -57,16 +52,22 @@ class BookmarksController {
         }
 
         $userId = JWT::getUserId();
+<<<<<<< HEAD
 
         $result = BookmarksItemRepository::addToBookmarks($cart->id, (int)$productOfferId, $quantity);
+=======
+        $result = BookmarkRepository::addUserBookmark($userId, $productId);
+>>>>>>> 1b2dbaf (add bookmarks)
 
         if ($result) {
             echo json_encode(['success' => true]);
         } else {
-            echo json_encode(['success' => false, 'error' => 'Failed to add to cart']);
+            echo json_encode(['success' => false, 'error' => 'Failed to add to bookmarks']);
         }
         exit;
     }
+
+
     public static function removeBookmark() {
         header('Content-Type: application/json');
 

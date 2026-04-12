@@ -35,9 +35,9 @@ require __DIR__ . "/../fragments/head.php"; ?>
         <?php endif; ?>
         <?php deal_of_the_day() ?>
         <?php 
-        product_section('🌟 Best Deals', ProductRepository::getProductsWithMostOffers(6));
-        product_section('⏰ Expiring Deals', ProductRepository::getTopOffers(6), "py-5");
-        product_section('🆕 Newest Deals', ProductRepository::getNewestProducts(6), "py-5");
+        product_section('🌟 Best Deals', ProductRepository::getProductsWithMostOffers(8));
+        product_section('⏰ Expiring Deals', ProductRepository::getTopOffers(8), "py-5");
+        product_section('🆕 Newest Deals', ProductRepository::getNewestProducts(8), "py-5");
         ?>
 
     </body>

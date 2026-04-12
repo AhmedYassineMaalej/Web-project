@@ -5,6 +5,7 @@
         <title><?= $title ?></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/bookmark_button.js" defer></script>
         <link href="css/common.css" rel="stylesheet">
         <link href="/css/<?= $csspath?>" rel="stylesheet">
     </head>

@@ -26,7 +26,7 @@ class CartRepository extends Repository {
     public static function getCartByUserId(int $userId): ?Cart {
         $data = self::select(['user_id' => $userId]);
         if (empty($data)) return null;
-        
+
         $cartData = $data[0];
         return new Cart(
             $cartData->id,

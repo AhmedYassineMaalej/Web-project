@@ -12,19 +12,12 @@ use PDO;
 class ProductRepository extends Repository {
     protected static string $tableName = "Product";
 
-    /*
-    the three methods below, all they do is return one of the three objects whose classes are inside Product.php, ProductInfo.php and ProductOffer.php
-    Example of $data = (object)['ID' => 1, 'Reference' => 'aa', etc];
-    */
 
-    private static function convertToProduct($data): ?Product {
-        if (!$data) return null;
-        
-        
+    private static function convertToProduct(object $data): Product {
         return new Product(
             $data->ID,
+            $data->Name,
             $data->Reference,
-            $data->Description ?? $data->Name,
             $data->Image,
             $data->CategoryID
         );
@@ -46,27 +39,29 @@ class ProductRepository extends Repository {
         return self::convertToProduct($result);
     }
 
+    /**
+     * @return Product[]
+     */
     public static function getAllProducts() {
         $results = self::findAll();
-        return array_map([self::class, 'convertToProduct'], $results); // Changed $this to self::class
+        return array_map(self::convertToProduct(...), $results);
     }
-
-
+    /**
+     * @return ProductInfo[]
+     */
     public static function getProductInfo(int $productId) {
-        try {
-            $conn = self::getConnection();
-            $stmt = $conn->prepare("SELECT * FROM ProductInfo WHERE ProductID = ?");
-            $stmt->execute([$productId]);
-            $results = $stmt->fetchAll(PDO::FETCH_OBJ);
-            return array_map([self::class, 'convertToProductInfo'], $results); // Changed $this to self::class
-        } catch (Exception $e) {
-            return [];
-        }
+        $conn = self::getConnection();
+        $stmt = $conn->prepare("SELECT * FROM ProductInfo WHERE ProductID = ?");
+        $stmt->execute([$productId]);
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return array_map(self::convertToProductInfo(...), $results);
     }
 
-    public static function getProductsWithMostOffers(int $limit = 6) {
+    /**
+     * @return array
+     */
+    public static function getProductsWithMostOffers(int $limit = 8) {
         $conn = self::getConnection();
-        $limit = (int)$limit;
         $stmt = $conn->prepare("
             SELECT p.*, COUNT(po.ID) as offer_count, MIN(po.Price) as min_price
             FROM Product p
@@ -82,10 +77,11 @@ class ProductRepository extends Repository {
             return self::convertToProduct($row);
         }, $results);
     }
-
+    /**
+     * @return array
+     */
     public static function getTopOffers(int $limit = 6) {
         $conn = self::getConnection();
-        $limit = (int)$limit;
         $stmt = $conn->prepare("
             SELECT p.*, MIN(po.Price) as min_price, COUNT(po.ID) as offer_count
             FROM Product p
@@ -102,8 +98,10 @@ class ProductRepository extends Repository {
         }, $results);
     }
 
-    public static function getMostInfoProducts($limit = 6) {
-        $limit = (int)$limit;
+    /**
+     * @return array
+     */
+    public static function getMostInfoProducts(int $limit = 8) {
         $conn = self::getConnection();
         $stmt = $conn->prepare("
             SELECT p.*, COUNT(pi.ID) as info_count
@@ -120,8 +118,10 @@ class ProductRepository extends Repository {
             return self::convertToProduct($row);
         }, $results);
     }
-
-    public static function getNewestProducts($limit = 6) {
+    /**
+     * @return array
+     */
+    public static function getNewestProducts($limit = 8) {
         try {
             $limit = (int)$limit;
             $conn = self::getConnection();
@@ -139,7 +139,9 @@ class ProductRepository extends Repository {
             return [];
         }
     }
-
+    /**
+     * @return null|array
+     */
     public static function getDealOfTheDay() {
         $conn = self::getConnection();
         $stmt = $conn->prepare("
@@ -175,10 +177,11 @@ class ProductRepository extends Repository {
 
         return $result->min_price ? (float)$result->min_price : null;
     }
-    public static function getCompleteProduct($id) {
+
+    public static function getCompleteProduct(int $id): ?object {
         $product = self::getProductById($id);
-        if (!$product) return false;
-        
+        if (!$product) return null;
+
         return (object)[
             'product' => $product,
             'info' => self::getProductInfo($id),

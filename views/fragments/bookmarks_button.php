@@ -21,20 +21,18 @@ function bookmarks_button() {
                     <h5 class="modal-title fw-bold">🔖 Your Bookmarks</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body" id="cartModalBody" style="max-height: 400px; overflow-y: auto;">
+                <div class="modal-body" id="bookmarksModalBody" style="max-height: 400px; overflow-y: auto;">
                     <div class="text-center py-4">
                         <div class="spinner-border text-primary"></div>
-                        <p class="mt-2">Loading cart...</p>
+                        <p class="mt-2">Loading bookmarks...</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="/cart" class="btn btn-primary">View Full Cart</a>
+                    <a href="/bookmarks" class="btn btn-primary">View Full Cart</a>
                     <button class="btn btn-success" onclick="checkout()">Checkout 🚀</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="js/bookmarks_button.js"></script>
 <?php
 }

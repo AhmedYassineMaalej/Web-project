@@ -1,3 +1,25 @@
+bookmarkButtons = document.querySelectorAll(".product-bookmark-btn");
+
+bookmarkButtons.forEach(async (button) => {
+    button.addEventListener("click", _event => {
+        const added = addBookmark(button.dataset.reference);
+        console.log("hello");
+        if (added) {
+            button.classList.toggle("bookmark-full")
+        }
+    })
+})
+
+
+async function addBookmark(productReference) {
+    await fetch('/bookmarks/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productReference: productReference })
+    }).then(response => response.ok);
+}
+
+
 function showBookmarksModal() {
     const modal = new bootstrap.Modal(document.getElementById('bookmarksModal'));
     modal.show();

@@ -1,3 +1,8 @@
+.catalog-container {
+    padding: 3em;
+}
+
+
 .stickers-container {
     position: fixed;
     top: 0;

@@ -264,3 +264,124 @@ h3 {
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
+/* Dark modal styles */
+.modal-content {
+    background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+    padding: 20px 25px;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(255,255,255,0.2) !important;
+    padding: 20px 25px;
+}
+
+.btn-close-white {
+    filter: brightness(0) invert(1);
+}
+
+.modal-title {
+    color: white !important;
+}
+
+.modal-body .text-white {
+    color: white !important;
+}
+/* Product card styles for myspace */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.product-card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card img {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+.btn-coral {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.btn-coral:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    color: white;
+}
+
+/* Fix alignment issues */
+.row-cols-1 .col {
+    display: flex;
+}
+
+.card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .btn {
+    margin-top: auto;
+}
+
+/* Make cards equal height */
+.row-cols-1 .col {
+    display: flex;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+/* Adjust card size - make them slightly smaller */
+.product-card {
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .product-card {
+        max-width: 300px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .product-card {
+        max-width: 320px;
+    }
+}

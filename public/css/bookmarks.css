@@ -113,3 +113,140 @@
 .bookmarks-item .btn-danger {
     color: white !important;
 }
+/* Ensure stickers animate properly */
+.stickers-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.sticker {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.8;
+    animation: floatRandom linear infinite;
+    will-change: transform;
+}
+
+/* Make sure the animation is applied */
+@keyframes floatRandom {
+    0% {
+        transform: translateY(0px) translateX(0px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-300px) translateX(20px);
+    }
+    100% {
+        transform: translateY(-700px) translateX(-20px);
+        opacity: 0;
+    }
+}
+
+/* Ensure stickers are visible and animating */
+.sticker:nth-child(1) { left: 5%; top: 80%; animation-duration: 12s; }
+.sticker:nth-child(2) { left: 15%; top: 60%; animation-duration: 18s; font-size: 40px; }
+.sticker:nth-child(3) { left: 25%; top: 90%; animation-duration: 14s; }
+.sticker:nth-child(4) { left: 35%; top: 70%; animation-duration: 20s; font-size: 45px; }
+.sticker:nth-child(5) { left: 45%; top: 85%; animation-duration: 16s; }
+.sticker:nth-child(6) { left: 55%; top: 75%; animation-duration: 22s; }
+.sticker:nth-child(7) { left: 65%; top: 95%; animation-duration: 17s; font-size: 38px; }
+.sticker:nth-child(8) { left: 75%; top: 65%; animation-duration: 19s; }
+.sticker:nth-child(9) { left: 85%; top: 88%; animation-duration: 15s; }
+.sticker:nth-child(10) { left: 10%; top: 95%; animation-duration: 21s; }
+.sticker:nth-child(11) { left: 50%; top: 92%; animation-duration: 18s; }
+.sticker:nth-child(12) { left: 90%; top: 85%; animation-duration: 23s; font-size: 42px; }
+/* Modal content styles - copy from catalog.css */
+.product-image-modal {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.info-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.info-card h4,
+.info-card p {
+    color: white !important;
+}
+
+.offer-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.price-tag {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.btn-view-offer {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 20px;
+    color: white;
+}
+
+.info-badge {
+    background: rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.info-key {
+    font-weight: bold;
+    color: #3b82f6;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.info-value {
+    color: white;
+    font-size: 0.95rem;
+}
+
+.text-white-50 {
+    color: rgba(255,255,255,0.5);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+    border-radius: 25px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.btn-close-white {
+    filter: brightness(0) invert(1);
+}
+
+.modal-title {
+    color: white !important;
+}

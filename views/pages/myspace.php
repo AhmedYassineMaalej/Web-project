@@ -3,8 +3,11 @@
 
 <!doctype html>
 <html lang="en">
-    <?php head("My Space", "myspace.css","/css/cart.css") ?>
+    
+    <?php head("My Space", "myspace.css","home.css","bookmarks.css") ?>
+    <link rel="stylesheet" href="css/catalog.css">
 <body>
+    
 
 <!-- Floating Stickers/Coins Animation -->
 <div class="stickers-container">
@@ -43,36 +46,62 @@
         </div>
 
         <!-- Recommended Products Section -->
-        <?php if (!empty($recommendedProducts)): ?>
-        <section class="mb-5">
-            <h3 class="section-title mb-4">🎯 Recommended For You</h3>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-                <?php foreach ($recommendedProducts as $product): ?>
-                    <div class="col">
-                        <div class="card h-100 shadow-sm border-0 product-card">
-                            <div class="card-body text-center p-4">
-                                <img src="<?= htmlspecialchars($product->image) ?>" 
-                                     alt="<?= htmlspecialchars($product->name) ?>"
-                                     style="height: 150px; object-fit: contain; margin-bottom: 15px;">
-                                <h5 class="card-title fw-bold"><?= htmlspecialchars($product->name) ?></h5>
-                                <p class="text-muted small">Ref: <?= htmlspecialchars($product->reference) ?></p>
-                                <button class="btn btn-coral w-100" onclick="window.location.href='/product?ref=<?= urlencode($product->reference) ?>'">
-                                    View Deals 🚀
-                                </button>
-                            </div>
-                        </div>
+<!-- Recommended Products Section -->
+<?php if (!empty($recommendedProducts)): ?>
+<section class="mb-5">
+    <h3 class="section-title mb-4">🎯 Recommended For You</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        <?php foreach ($recommendedProducts as $product): ?>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 product-card">
+                    <div class="card-body text-center p-4">
+                        <img src="<?= htmlspecialchars($product->image) ?>" 
+                             alt="<?= htmlspecialchars($product->name) ?>"
+                             style="height: 150px; object-fit: contain; margin-bottom: 15px;">
+                        <h5 class="card-title fw-bold"><?= htmlspecialchars($product->name) ?></h5>
+                        <p class="text-muted small">Ref: <?= htmlspecialchars($product->reference) ?></p>
+                        <button class="btn btn-primary w-100 mt-auto" onclick="showProductModal(<?= $product->id ?>)">
+                            View Details 👀
+                        </button>
                     </div>
-                <?php endforeach; ?>
+                </div>
             </div>
-        </section>
-        <?php else: ?>
-        <section class="mb-5">
-            <h3 class="section-title mb-4">🎯 Recommended For You</h3>
-            <p class="text-muted">Add items to your cart to get personalized recommendations!</p>
-        </section>
-        <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php else: ?>
+<section class="mb-5">
+    <h3 class="section-title mb-4">🎯 Recommended For You</h3>
+    <p class="text-muted">Bookmark some products to get personalized recommendations!</p>
+</section>
+<?php endif; ?>
     </div>
 </main>
 
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold text-white" id="productModalLabel">
+                            <span id="modalProductTitle">Loading...</span>
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <div class="text-center text-white">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-3">Loading product details...</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/catalog.js"></script>
 </html>

@@ -8,6 +8,7 @@ require __DIR__ . "/../fragments/head.php"; ?>
 <!doctype html>
 <html lang="en">
     <?php head("Pickpocket | Home", 'home.css') ?>
+    <link rel="stylesheet" href="css/to_organize.css">
     <body>
         <div class="stickers-container">
             <div class="sticker">🪙</div>
@@ -41,4 +42,5 @@ require __DIR__ . "/../fragments/head.php"; ?>
         ?>
 
     </body>
+    <script src = "/js/catalog.js"></script>
 </html>

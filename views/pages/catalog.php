@@ -8,8 +8,9 @@ use App\Repositories\BookmarkItemRepository;
 
 <!doctype html>
 <html lang="en">
-    <?php head("Pickpocket | Home", 'home.css', 'bookmarks.css') ?>
+    <?php head("Pickpocket | Catalog", 'home.css', 'bookmarks.css') ?>
     <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/to_organize.css">
 
     <body>
 
@@ -39,13 +40,17 @@ use App\Repositories\BookmarkItemRepository;
             </div>
         </header>
 
-        <!-- Product Catalog Main Content -->
-            <div class="products-container catalog-container">
-                <?php if (!empty($products)): ?>
-                <?php foreach ($products as $product): ?>
-                <?php product_card($product)?>
-                <?php endforeach; ?>
-                <?php else: ?>
+        <div class="products-container catalog-container">
+            <?php if (!empty($products)): ?>
+                <div class="row">
+                    <?php foreach ($products as $product): ?>
+                        <?php 
+                            $isBookmarked = in_array($product->id, $bookmarkedProductIds ?? []);
+                            product_card($product, $isBookmarked);
+                        ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
                 <div class="col-12 text-center py-5">
                     <div class="card p-5" style="background: rgba(255,255,255,0.95);">
                         <div class="mb-4">
@@ -57,8 +62,8 @@ use App\Repositories\BookmarkItemRepository;
                         <p class="text-muted">Check back later for amazing deals!</p>
                     </div>
                 </div>
-                <?php endif; ?>
-            </div>
+            <?php endif; ?>
+        </div>
 
         <!-- Product Modal -->
         <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">

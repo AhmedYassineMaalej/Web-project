@@ -1,9 +1,8 @@
 bookmarkButtons = document.querySelectorAll(".product-bookmark-btn");
 
-bookmarkButtons.forEach(async (button) => {
-    button.addEventListener("click", _event => {
-        const added = addBookmark(button.dataset.reference);
-        console.log("hello");
+bookmarkButtons.forEach((button) => {
+    button.addEventListener("click", async _event => {
+        const added = await addBookmark(button.dataset.reference);
         if (added) {
             button.classList.toggle("bookmark-full")
         }
@@ -12,10 +11,13 @@ bookmarkButtons.forEach(async (button) => {
 
 
 async function addBookmark(productReference) {
-    await fetch('/bookmarks/add', {
+    const data = new FormData();
+
+    data.append("productReference", productReference);
+
+    return await fetch('/bookmarks/add', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productReference: productReference })
+        body: data,
     }).then(response => response.ok);
 }
 

@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers;
+use App\Entities\Product;
 use App\Helpers\JWT;
 use App\Repositories\BookmarkRepository;
+use App\Repositories\ProductRepository;
 
 class BookmarksController {
     public static function getBookmarksJson() {
@@ -45,19 +47,14 @@ class BookmarksController {
             exit;
         }
 
-        $productId = $_GET['id'] ?? null;
-        if (!$productId) {
-            echo json_encode(['success' => false, 'error' => 'Invalid product']);
-            exit;
-        }
-
         $userId = JWT::getUserId();
-<<<<<<< HEAD
 
-        $result = BookmarksItemRepository::addToBookmarks($cart->id, (int)$productOfferId, $quantity);
-=======
-        $result = BookmarkRepository::addUserBookmark($userId, $productId);
->>>>>>> 1b2dbaf (add bookmarks)
+        $productReference = $_POST['productReference'];
+        $productID = ProductRepository::getProductByReference($productReference)->id;
+        $result = BookmarkRepository::addUserBookmark($userId, $productID);
+
+        error_log(print_r($result, true));
+
 
         if ($result) {
             echo json_encode(['success' => true]);

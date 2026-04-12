@@ -39,6 +39,13 @@ class ProductRepository extends Repository {
         return self::convertToProduct($result);
     }
 
+    public static function getProductByReference(string $reference): Product {
+        $result = self::select(["Reference" => $reference]); 
+
+        return self::convertToProduct($result[0]);
+    }
+
+
     /**
      * @return Product[]
      */

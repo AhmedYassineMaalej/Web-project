@@ -22,5 +22,14 @@ class BookmarkRepository extends Repository {
         }, $bookmarks);
     }
 
+
+    public static function addUserBookmark(int $userID, int $productID): bool {
+        return self::insert([
+            "UserID" => $userID,
+            "ProductID" => $productID,
+        ]);
+    }
+
+
 }
 

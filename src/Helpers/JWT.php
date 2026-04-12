@@ -81,7 +81,13 @@ class JWT {
 
         return $payload;
     }
-    public static function getUserId(){
+
+
+    /**
+    * Only call this function after checking the User is logged in
+    * via `JWT::isLoggedIn()`
+    */
+    public static function getUserId(): int {
         $secret = $_ENV['JWT_SECRET'] ?? 'my_key_for_jwt_signing';
         $payload = self::decode_jwt($_COOKIE['JWT'],$secret);
         return $payload['user_id'];

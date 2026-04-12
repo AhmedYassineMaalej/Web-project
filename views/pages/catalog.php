@@ -85,6 +85,5 @@ use App\Repositories\BookmarkItemRepository;
             </div>
         </div>
         <script src="js/catalog.js"></script>
-        <script src="js/bookmark_button.js"></script>
     </body>
 </html>

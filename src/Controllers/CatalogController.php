@@ -9,8 +9,7 @@ use App\Entities\Product;
 use App\Helpers\JWT;
 
 class CatalogController {
-    
-    public function index() {
+    public static function index() {
         if (! JWT::isLoggedIn()){
             $_SESSION['error'] = "You're not logged in yet !";
             header('Location: /');
@@ -29,31 +28,31 @@ class CatalogController {
             exit;
         }
     }
-    
-    public function getProductAjax() {
+
+    public static function getProductAjax(): void {
         header('Content-Type: application/json');
-        
+
         if (!JWT::isLoggedIn()) {
             echo json_encode(['error' => 'Not logged in']);
             exit;
         }
-        
+
         // Get product ID
         $productId = isset($_GET['id']) ? (int)$_GET['id'] : null;
-        
+
         if (!$productId) {
             echo json_encode(['error' => 'Product ID required']);
             exit;
         }
-        
+
         $completeProduct = ProductRepository::getCompleteProduct($productId);
-        
+
         // Check if product exists
         if (!$completeProduct || !$completeProduct->product) {
             echo json_encode(['error' => 'Product not found']);
             exit;
         }
-        
+
         $response = [
             'product' => [
                 'id' => $completeProduct->product->id,

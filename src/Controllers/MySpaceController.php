@@ -8,7 +8,7 @@ use App\Repositories\CartRepository;
 use App\Repositories\CartItemRepository;
 
 class MySpaceController {
-    public function index() {
+    public static function index(): void {
         if (!JWT::isLoggedIn()){
             $_SESSION['error'] = "You're not logged in";
             header("Location: /");

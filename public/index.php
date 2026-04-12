@@ -1,5 +1,13 @@
 <?php
 
+use App\Controllers\Auth\LogoutController;
+use App\Controllers\Auth\LoginController;
+use App\Controllers\BookmarksController;
+use App\Controllers\CatalogController;
+use App\Controllers\HomeController;
+use App\Controllers\NavbarController;
+use App\Controllers\MySpaceController;
+use App\Controllers\Auth\SignUpController;
 use App\Router;
 use App\Helpers\Env;
 
@@ -21,20 +29,21 @@ define_user_endpoints($router);
 define_apis($router);
 
 
-function define_apis($router){
-    $router->add('GET', '/catalog/getProductAjax', 'App\Controllers\CatalogController@getProductAjax');
-    $router->add('GET', '/cart/items', 'App\Controllers\CartController@getCartItemsJson');
-    $router->add('POST', '/cart/add', 'App\Controllers\CartController@addToCart');
-    $router->add('POST', '/cart/remove', 'App\Controllers\CartController@removeFromCart');
+function define_apis(Router $router){
+    $router->add('GET', '/catalog/getProductAjax', CatalogController::getProductAjax(...));
+    $router->add('GET', '/bookmarks/items', BookmarksController::getBookmarksJson(...));
+    $router->add('POST', '/bookmarks/add', BookmarksController::addBookmark(...));
+    $router->add('POST', '/bookmarks/remove', BookmarksController::removeBookmark(...));
 }
-function define_user_endpoints($router){
-    $router->add('GET', '/', 'App\Controllers\HomeController@index');
-    $router->add('ANY', '/catalog', 'App\Controllers\CatalogController@index');
-    $router->add('GET', '/myspace', 'App\Controllers\MySpaceController@index');
-    $router->add('GET', '/navbar', 'App\Controllers\NavbarController@index');
-    $router->add('ANY','/login', 'App\Controllers\Auth\LoginController@index');
-    $router->add('ANY','/logout', 'App\Controllers\Auth\LogoutController@index');
-    $router->add('ANY','/signup','App\Controllers\Auth\SignupController@index');
+
+function define_user_endpoints(Router $router){
+    $router->add('GET', '/', HomeController::index(...));
+    $router->add('ANY', '/catalog', CatalogController::index(...));
+    $router->add('GET', '/myspace', MySpaceController::index(...));
+    $router->add('GET', '/navbar', NavbarController::index(...));
+    $router->add('ANY','/login', LoginController::index(...));
+    $router->add('ANY','/logout', LogoutController::index(...));
+    $router->add('ANY','/signup', SignUpController::index(...));
 }
 
 

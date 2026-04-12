@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 class NavbarController {
-    public function index() {
+    public static function index(): void {
         $path = __DIR__ . '/../../views/pages/navbar.php';
 
         if (file_exists($path)) {

@@ -24,6 +24,7 @@ require __DIR__ . "/../fragments/head.php"; ?>
             <div class="sticker">💰</div>
         </div>
         <?php navbar(); ?>
+        <?php echo "hello world"; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">

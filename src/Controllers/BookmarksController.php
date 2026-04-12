@@ -1,30 +1,28 @@
 <?php
 namespace App\Controllers;
 use App\Helpers\JWT;
-use App\Repositories\CartRepository;
-use App\Repositories\CartItemRepository;
-use App\Repositories\RecommendationRepository;
+use App\Repositories\BookmarksRepository;
+use App\Repositories\BookmarksItemRepository;
 
-class CartController{
-
-    public function getCartItemsJson() {
+class BookmarksController {
+    public static function getBookmarksJson() {
         header('Content-Type: application/json');
-        
+
         if (!JWT::isLoggedIn()) {
             echo json_encode(['items' => [], 'total' => 0]);
             exit;
         }
-        
+
         $userId = JWT::getUserId();
-        $cart = CartRepository::getOrCreateCartByUserId($userId);
-        $items = CartItemRepository::getCartItems($cart->id);
+        $cart = BookmarksRepository::getOrCreateBookmarksByUserId($userId);
+        $items = BookmarksItemRepository::getBookmarksItems($cart->id);
         $cart->setItems($items);
-        
+
         $response = [
             'items' => [],
             'total' => $cart->getTotalCost()
         ];
-        
+
         foreach ($items as $item) {
             $offer = $item->productOffer;
             if ($offer) {
@@ -38,35 +36,30 @@ class CartController{
                 ];
             }
         }
-        
+
         echo json_encode($response);
         exit;
     }
 
     
-    public function addToCart() {
+    public static function addBookmark() {
         header('Content-Type: application/json');
-        
+
         if (!JWT::isLoggedIn()) {
             echo json_encode(['success' => false, 'error' => 'Not logged in']);
             exit;
         }
-        
+
         $productId = $_GET['id'] ?? null;
         if (!$productId) {
             echo json_encode(['success' => false, 'error' => 'Invalid product']);
             exit;
         }
-        
-        $productOfferId = $productId;
-        $quantity = 1;
-        
+
         $userId = JWT::getUserId();
-        $cart = CartRepository::getOrCreateCartByUserId($userId);
-        
-        // Just add to cart - the repository handles the recommendation update
-        $result = CartItemRepository::addToCart($cart->id, (int)$productOfferId, $quantity);
-        
+
+        $result = BookmarksItemRepository::addToBookmarks($cart->id, (int)$productOfferId, $quantity);
+
         if ($result) {
             echo json_encode(['success' => true]);
         } else {
@@ -74,29 +67,27 @@ class CartController{
         }
         exit;
     }
-
-
-    public function removeFromCart() {
+    public static function removeBookmark() {
         header('Content-Type: application/json');
-        
+
         if (!JWT::isLoggedIn()) {
             echo json_encode(['success' => false, 'error' => 'Not logged in']);
             exit;
         }
-        
+
         // Read JSON input
         $input = json_decode(file_get_contents('php://input'), true);
         $cartItemId = $input['cart_item_id'] ?? $_POST['cart_item_id'] ?? null;
-        
-        error_log("CartItemId to remove: " . $cartItemId);
-        
+
+        error_log("BookmarksItemId to remove: " . $cartItemId);
+
         if (!$cartItemId) {
             echo json_encode(['success' => false, 'error' => 'Invalid item']);
             exit;
         }
-        
-        $result = CartItemRepository::removeFromCart((int)$cartItemId);
-        
+
+        $result = BookmarksItemRepository::removeFromBookmarks((int)$cartItemId);
+
         if ($result) {
             echo json_encode(['success' => true]);
         } else {
@@ -104,8 +95,4 @@ class CartController{
         }
         exit;
     }
-
-
-
-
 }

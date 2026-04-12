@@ -6,7 +6,7 @@ use App\Repositories\ProductRepository;
 use App\Helpers\JWT;
 
 class HomeController {
-    public function index(): void {
+    public static function index(): void {
         $is_logged = JWT::isLoggedIn();
         $username = $_SESSION['username'] ?? '';
 

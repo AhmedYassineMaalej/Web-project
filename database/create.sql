@@ -72,43 +72,16 @@ CREATE TABLE IF NOT EXISTS ProductOffer (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Bookmark (
-    UserID    INT NOT NULL,
+
+CREATE TABLE if not exists Bookmark (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT NOT NULL,
     ProductID INT NOT NULL,
-    PRIMARY KEY (UserID, ProductID),
-    CONSTRAINT fk_bookmark_user
-        FOREIGN KEY (UserID) REFERENCES Users(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    CONSTRAINT fk_bookmark_product
-        FOREIGN KEY (ProductID) REFERENCES Product(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-
-
-CREATE TABLE if not exists Cart (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    total_price int default 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_user_cart (user_id)
-);
-
-CREATE TABLE if not exists CartItem (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    cart_id INT NOT NULL,
-    product_offer_id INT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
-    totalprice DECIMAL(10, 2) default 0 NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (cart_id) REFERENCES Cart(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_offer_id) REFERENCES ProductOffer(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_cart_item (cart_id, product_offer_id)
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(ID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Product(ID) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_bookmark (UserID, ProductID)
 );
 CREATE TABLE IF NOT EXISTS recommendation (
     id INT PRIMARY KEY AUTO_INCREMENT,

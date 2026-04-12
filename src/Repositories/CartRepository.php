@@ -8,6 +8,21 @@ use Exception;
 class CartRepository extends Repository {
     protected static string $tableName = "Cart";
 
+    public static function getCartById(int $cart_id): ?Cart {
+        $data = self::findById($cart_id);
+        if (!$data) {
+            return null;
+        }
+        
+        return new Cart(
+            $data->id,
+            $data->user_id,
+            (float)$data->total_price,
+            $data->created_at,
+            $data->updated_at
+        );
+    }
+
     public static function getCartByUserId(int $userId): ?Cart {
         $data = self::select(['user_id' => $userId]);
         if (empty($data)) return null;

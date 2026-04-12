@@ -110,3 +110,14 @@ CREATE TABLE if not exists CartItem (
     FOREIGN KEY (product_offer_id) REFERENCES ProductOffer(id) ON DELETE CASCADE,
     UNIQUE KEY unique_cart_item (cart_id, product_offer_id)
 );
+CREATE TABLE IF NOT EXISTS recommendation (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    category_id INT,
+    product_id1 INT,
+    product_id2 INT,
+    weight INT CHECK (weight >= 0),
+    CONSTRAINT fk_recommendation_product1 FOREIGN KEY (product_id1) REFERENCES product(id),
+    CONSTRAINT fk_recommendation_product2 FOREIGN KEY (product_id2) REFERENCES product(id),
+    CONSTRAINT fk_recommendation_category FOREIGN KEY (category_id) REFERENCES category(id),
+    CONSTRAINT unique_recommendation UNIQUE KEY (category_id, product_id1, product_id2)
+);

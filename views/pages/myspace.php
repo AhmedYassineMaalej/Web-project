@@ -42,80 +42,35 @@
             </div>
         </div>
 
+        <!-- Recommended Products Section -->
+        <?php if (!empty($recommendedProducts)): ?>
         <section class="mb-5">
-            <h3 class="section-title mb-4">⭐ My Favorites</h3>
+            <h3 class="section-title mb-4">🎯 Recommended For You</h3>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-0 product-card">
-                        <div class="badge-price">-15%</div>
-                        <div class="card-body text-center p-4">
-                            <div class="placeholder-img mb-3"></div>
-                            <h5 class="card-title fw-bold">Wireless Headphones</h5>
-                            <p class="price-tag">$199.99</p>
-                            <button class="btn btn-coral w-100">View Deals 🎧</button>
+                <?php foreach ($recommendedProducts as $product): ?>
+                    <div class="col">
+                        <div class="card h-100 shadow-sm border-0 product-card">
+                            <div class="card-body text-center p-4">
+                                <img src="<?= htmlspecialchars($product->image) ?>" 
+                                     alt="<?= htmlspecialchars($product->name) ?>"
+                                     style="height: 150px; object-fit: contain; margin-bottom: 15px;">
+                                <h5 class="card-title fw-bold"><?= htmlspecialchars($product->name) ?></h5>
+                                <p class="text-muted small">Ref: <?= htmlspecialchars($product->reference) ?></p>
+                                <button class="btn btn-coral w-100" onclick="window.location.href='/product?ref=<?= urlencode($product->reference) ?>'">
+                                    View Deals 🚀
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-0 product-card">
-                        <div class="badge-price">-20%</div>
-                        <div class="card-body text-center p-4">
-                            <div class="placeholder-img mb-3"></div>
-                            <h5 class="card-title fw-bold">Smart Watch Pro</h5>
-                            <p class="price-tag">$299.99</p>
-                            <button class="btn btn-coral w-100">View Deals ⌚</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-0 product-card">
-                        <div class="badge-price">-10%</div>
-                        <div class="card-body text-center p-4">
-                            <div class="placeholder-img mb-3"></div>
-                            <h5 class="card-title fw-bold">Gaming Mouse</h5>
-                            <p class="price-tag">$59.99</p>
-                            <button class="btn btn-coral w-100">View Deals 🖱️</button>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </section>
-
-        <section>
-            <h3 class="section-title mb-4">📜 Recent History</h3>
-            <div class="table-responsive bg-white p-3 rounded shadow-sm">
-                <table class="table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Date Viewed</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="fw-bold">Apple Smart Watch</td>
-                            <td>Electronics</td>
-                            <td>Feb 5, 2026</td>
-                            <td><a href="#" class="text-coral">Revisit 👀</a></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Power Bank 20000mAh</td>
-                            <td>Electronics</td>
-                            <td>Jul 16, 2025</td>
-                            <td><a href="#" class="text-coral">Revisit 👀</a></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Noise Cancelling Headphones</td>
-                            <td>Electronics</td>
-                            <td>Jan 28, 2026</td>
-                            <td><a href="#" class="text-coral">Revisit 👀</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <?php else: ?>
+        <section class="mb-5">
+            <h3 class="section-title mb-4">🎯 Recommended For You</h3>
+            <p class="text-muted">Add items to your cart to get personalized recommendations!</p>
         </section>
+        <?php endif; ?>
     </div>
 </main>
 

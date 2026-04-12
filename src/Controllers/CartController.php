@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Helpers\JWT;
 use App\Repositories\CartRepository;
 use App\Repositories\CartItemRepository;
+use App\Repositories\RecommendationRepository;
 
 class CartController{
 
@@ -41,6 +42,8 @@ class CartController{
         echo json_encode($response);
         exit;
     }
+
+    
     public function addToCart() {
         header('Content-Type: application/json');
         
@@ -55,14 +58,13 @@ class CartController{
             exit;
         }
         
-        // You need to get the product offer ID from the product
-        // For now, assuming product ID is the same as product offer ID
         $productOfferId = $productId;
         $quantity = 1;
         
         $userId = JWT::getUserId();
         $cart = CartRepository::getOrCreateCartByUserId($userId);
         
+        // Just add to cart - the repository handles the recommendation update
         $result = CartItemRepository::addToCart($cart->id, (int)$productOfferId, $quantity);
         
         if ($result) {
@@ -72,6 +74,8 @@ class CartController{
         }
         exit;
     }
+
+
     public function removeFromCart() {
         header('Content-Type: application/json');
         

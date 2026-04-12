@@ -9,29 +9,29 @@ class CartItemRepository extends Repository {
     protected static string $tableName = "CartItem";
 
     public static function getCartItems(int $cartId): array {
-    $data = self::select(['cart_id' => $cartId]);
+        $data = self::select(['cart_id' => $cartId]);
+        
+        $items = [];
+        foreach ($data as $itemData) {
+            $price = $itemData->totalprice / $itemData->quantity;
+            
+            $item = new CartItem(
+                $itemData->id,
+                $itemData->cart_id,
+                $itemData->product_offer_id,
+                $itemData->quantity,
+                $price,
+                $itemData->created_at,
+                $itemData->updated_at
+            );
+        
+        
+        
+            $items[] = $item;
+        }
     
-    $items = [];
-    foreach ($data as $itemData) {
-        $price = $itemData->totalprice / $itemData->quantity;
-        
-        $item = new CartItem(
-            $itemData->id,
-            $itemData->cart_id,
-            $itemData->product_offer_id,
-            $itemData->quantity,
-            $price,
-            $itemData->created_at,
-            $itemData->updated_at
-        );
-        
-        
-        
-        $items[] = $item;
+        return $items;
     }
-    
-    return $items;
-}
 
     public static function addToCart(int $cartId, int $productOfferId, int $quantity = 1): bool {
         $existing = self::select([
@@ -66,6 +66,14 @@ class CartItemRepository extends Repository {
                 'quantity' => $quantity,
                 'totalprice' => $totalPrice
             ]);
+            
+            if ($result) {
+                // Get user_id from cart
+                $cart = CartRepository::getCartById($cartId);
+                if ($cart) {
+                    RecommendationRepository::updateWeightsOnBookmark($cart->userId, $productOfferId,true);
+                }
+            }
         }
         
         if ($result) {
@@ -74,6 +82,9 @@ class CartItemRepository extends Repository {
         
         return $result;
     }
+
+
+
 
     public static function updateQuantity(int $cartItemId, int $quantity): bool {
         try {
@@ -102,10 +113,19 @@ class CartItemRepository extends Repository {
         if (!$item) return false;
         
         $cartId = $item->cart_id;
+        
+        // Get cart to find user_id
+        $cart = CartRepository::getCartById($cartId);
+        
         $result = self::delete($cartItemId);
         
         if ($result) {
             self::updateCartTotal($cartId);
+            
+            // Decrease weights when removing
+            if ($cart) {
+                RecommendationRepository::updateWeightsOnBookmark($cart->userId, $item->product_offer_id,false); //here increment=false
+            }
         }
         
         return $result;

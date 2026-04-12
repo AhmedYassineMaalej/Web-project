@@ -60,14 +60,13 @@ function cart_button() {
                                 </div>
                             `;
                     });
-                    html += `
-                        <div class="mt-3 pt-2 border-top">
-                            <div class="d-flex justify-content-between">
-                                <strong>Total:</strong>
-                                <strong class="text-primary">$${data.total}</strong>
-                            </div>
-                        </div>
-                    `;
+                    html += `<div class="mt-3 pt-2 border-top">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Total:</strong>
+                                        <strong id="cartTotal" class="text-primary">$${data.total}</strong>
+                                    </div>
+                                </div>
+                            `;
                     document.getElementById('cartModalBody').innerHTML = html;
                 } else {
                     document.getElementById('cartModalBody').innerHTML = `
@@ -95,22 +94,23 @@ function removeFromCart(itemId) {
                 itemElement.remove();
             }
             
-            // Update totals without reloading modal
+            // Update total price without refetching
             fetch('/cart/items')
                 .then(response => response.json())
                 .then(cartData => {
-                    // Update total price
-                    const totalElement = document.querySelector('#cartModalBody .total-price');
+                    // Update total using the ID
+                    const totalElement = document.getElementById('cartTotal');
                     if (totalElement) {
                         totalElement.textContent = `$${cartData.total}`;
                     }
                     
-                    // Update item count
+                    // Update cart count badge
                     const count = cartData.items.length;
                     const badge = document.querySelector('.nav-link .badge');
                     if (badge) {
                         if (count > 0) {
                             badge.textContent = count;
+                            badge.style.display = 'inline-block';
                         } else {
                             badge.style.display = 'none';
                         }

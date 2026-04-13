@@ -3,30 +3,20 @@
 namespace App\Controllers;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProductOfferRepository; 
-use App\Repositories\BookmarkRepository;
 use App\Entities\ProductInfo; 
 use App\Entities\ProductOffer;
 use App\Entities\Product;
 use App\Helpers\JWT;
 
 class CatalogController {
-    
     public static function index() {
-        if (!JWT::isLoggedIn()){
+        if (! JWT::isLoggedIn()){
             $_SESSION['error'] = "You're not logged in yet !";
             header('Location: /');
             exit;
         }
         if ($_SERVER['REQUEST_METHOD'] === 'GET'){
             $products = ProductRepository::getAllProducts();
-            
-            $userId = JWT::getUserId();
-            $bookmarks = BookmarkRepository::getUserBookmarks($userId);
-            $bookmarkedProductIds = [];
-            foreach ($bookmarks as $bookmark) {
-                $bookmarkedProductIds[] = $bookmark->product->id;
-            }
-            
             require __DIR__ . '/../../views/pages/catalog.php';
         }
         else if ($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -38,9 +28,6 @@ class CatalogController {
             exit;
         }
     }
-
-
-
 
     public static function getProductAjax(): void {
         header('Content-Type: application/json');
@@ -69,7 +56,6 @@ class CatalogController {
         $response = [
             'product' => [
                 'id' => $completeProduct->product->id,
-                'name' => $completeProduct->product->name,  // Add this line
                 'reference' => $completeProduct->product->reference,
                 'image' => $completeProduct->product->image,
                 'categoryName' => $completeProduct->product->category->Name

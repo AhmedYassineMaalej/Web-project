@@ -6,7 +6,7 @@ class Router {
     /**
     *  @param callable(): void $controller
     */
-    public function add(string $method, string $uri, $controller): void {
+    public function add(string $method, string $uri, callable $controller): void {
         $this->routes[] = compact('method', 'uri', 'controller');
     }
 

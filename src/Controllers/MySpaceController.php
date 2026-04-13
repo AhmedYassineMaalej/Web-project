@@ -4,9 +4,11 @@ namespace App\Controllers;
 
 use App\Helpers\JWT;
 use App\Repositories\RecommendationRepository;
+use App\Repositories\CartRepository;
+use App\Repositories\CartItemRepository;
 
 class MySpaceController {
-    public static function index() {
+    public static function index(): void {
         if (!JWT::isLoggedIn()){
             $_SESSION['error'] = "You're not logged in";
             header("Location: /");
@@ -17,8 +19,10 @@ class MySpaceController {
         $username = $payload['user'];
         $userId = $payload['user_id'];
         
-        // Make sure this line exists
+        // Get recommended products based on user's id (who must have at most one cart)
         $recommendedProducts = RecommendationRepository::getRecommendationsForUser($userId, 6);
+        
+
         
         require __DIR__ . '/../../views/pages/myspace.php';
     }

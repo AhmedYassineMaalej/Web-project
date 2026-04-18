@@ -22,16 +22,14 @@ class BookmarksController {
         ];
 
         foreach ($bookmarks as $bookmark) {
-            $offer = $bookmark->productOffer;
-            if ($offer) {
-                $response['items'][] = [
-                    'id' => $bookmark->id,
-                    'name' => $bookmark->product->name,
-                    'image' => $bookmark->product->image,
-                    'quantity' => $bookmark->quantity,
-                    'price' => $bookmark->price,
-                ];
-            }
+            $response['items'][] = [
+                'id'       => $bookmark['id'],
+                'name'     => $bookmark['name'],
+                'image'    => $bookmark['image'],
+                'quantity' => $bookmark['quantity'],
+                'price'    => $bookmark['price'],
+                'total'    => $bookmark['total'],
+            ];
         }
 
         echo json_encode($response);
@@ -75,7 +73,7 @@ class BookmarksController {
 
         // Read JSON input
         $input = json_decode(file_get_contents('php://input'), true);
-        $cartItemId = $input['cart_item_id'] ?? $_POST['cart_item_id'] ?? null;
+        $cartItemId = $input['bookmarks_item_id'] ?? $_POST['bookmarks_item_id'] ?? null;
 
         error_log("BookmarksItemId to remove: " . $cartItemId);
 
@@ -84,7 +82,7 @@ class BookmarksController {
             exit;
         }
 
-        $result = BookmarksItemRepository::removeFromBookmarks((int)$cartItemId);
+        $result = BookmarkRepository::delete((int)$cartItemId);
 
         if ($result) {
             echo json_encode(['success' => true]);

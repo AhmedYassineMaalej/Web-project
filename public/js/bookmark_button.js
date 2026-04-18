@@ -86,7 +86,7 @@ function removeFromBookmarks(itemId) {
                     .then(response => response.json())
                     .then(bookmarksData => {
                         // Update total price
-                        const totalElement = document.querySelector('#bookmarksModalBody .total-price');
+                        const totalElement = document.querySelector('#bookmarksModalBody .text-primary');
                         if (totalElement) {
                             totalElement.textContent = `$${bookmarksData.total}`;
                         }

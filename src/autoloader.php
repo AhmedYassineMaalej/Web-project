@@ -4,6 +4,9 @@ namespace App;
 
 
 function autoload(string $classpath) {
+    if (!str_starts_with($classpath, 'App\\')) {
+        return;
+    }
     $parts = explode("\\", $classpath);
     $classname = end($parts);
     $namespace_parts = array_slice($parts, 0, -1);
@@ -23,7 +26,10 @@ function autoload(string $classpath) {
     }
 
 
-    require __DIR__ . $path . '/' . $classname . ".php";
+    $file=__DIR__ . $path . '/' . $classname . ".php";
+    if (file_exists($file)) {
+        require $file;
+    }
 }
 
 

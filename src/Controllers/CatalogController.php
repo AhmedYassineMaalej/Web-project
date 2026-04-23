@@ -58,7 +58,8 @@ class CatalogController {
                 'id' => $completeProduct->product->id,
                 'reference' => $completeProduct->product->reference,
                 'image' => $completeProduct->product->image,
-                'categoryName' => $completeProduct->product->category->Name
+                'categoryName' => $completeProduct->product->category->Name,
+                'name' => $completeProduct->product->name,
             ],
             'info' => [],
             'offers' => []

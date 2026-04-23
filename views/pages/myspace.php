@@ -6,21 +6,7 @@
     <?php head("My Space", "myspace.css","/css/cart.css") ?>
 <body>
 
-<!-- Floating Stickers/Coins Animation -->
-<div class="stickers-container">
-    <div class="sticker">🪙</div>
-    <div class="sticker">💰</div>
-    <div class="sticker">💵</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💸</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💰</div>
-    <div class="sticker">💵</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💸</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💰</div>
-</div>
+<?php stickers() ?>
 
 <?php navbar() ?>
 

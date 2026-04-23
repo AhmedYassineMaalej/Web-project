@@ -8,23 +8,7 @@
 
 <?php navbar(); ?>
 
-<!-- Floating Stickers/Coins Animation -->
-<div class="stickers-container">
-    <div class="sticker">🪙</div>
-    <div class="sticker">💰</div>
-    <div class="sticker">💵</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💸</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💰</div>
-    <div class="sticker">💵</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💸</div>
-    <div class="sticker">🪙</div>
-    <div class="sticker">💰</div>
-</div>
-
-
+<?php stickers()?>
 
 <?php if (isset($_SESSION['error'])): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: relative; z-index: 2; max-width: 600px; margin: 20px auto;">

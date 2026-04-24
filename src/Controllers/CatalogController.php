@@ -16,7 +16,18 @@ class CatalogController {
             exit;
         }
         if ($_SERVER['REQUEST_METHOD'] === 'GET'){
-            $products = ProductRepository::getAllProducts();
+            $filters=$_GET["filters"] ?? [];
+            $product_array = ProductOfferRepository::filterOffers($filters);
+
+
+            $products = array_map(
+                function ($offer) {
+                    return Product::convertToProduct( $offer['product']);
+                },
+                $product_array
+            );
+
+
             require __DIR__ . '/../../views/pages/catalog.php';
         }
         else if ($_SERVER['REQUEST_METHOD'] === 'POST'){

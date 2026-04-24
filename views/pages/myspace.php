@@ -1,6 +1,6 @@
 <?php require __DIR__ . "/../fragments/head.php"; ?>
 <?php require __DIR__ . "/../fragments/navbar.php"; ?>
-
+<?php require __DIR__ . "/../fragments/stickers.php"; ?>
 <!doctype html>
 <html lang="en">
     <?php head("My Space", "myspace.css","/css/cart.css") ?>

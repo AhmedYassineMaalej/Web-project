@@ -1,5 +1,6 @@
 <?php require __DIR__ . "/../fragments/head.php"; ?>
 <?php require __DIR__ . "/../fragments/navbar.php"; ?>
+<?php require __DIR__ . "/../fragments/stickers.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">

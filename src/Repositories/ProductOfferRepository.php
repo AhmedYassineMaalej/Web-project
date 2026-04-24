@@ -31,7 +31,7 @@ class ProductOfferRepository extends Repository {
         if (!$data) return null;
         return self::convertToProductOffer($data);
     }
-    public function filterOffers(array $filters = [])
+    public  static function filterOffers(array $filters = []) //this function gives the product with the minimal price with all its possibles proprities
     {
         $joinCategory = false;
         $joinProvider = false;
@@ -95,8 +95,16 @@ class ProductOfferRepository extends Repository {
             pi.`Key` AS info_key,
             pi.Value AS info_value
 
-        FROM ProductOffer po
-        JOIN Product p ON po.ProductID = p.ID
+       FROM Product p
+       JOIN ProductOffer po
+       ON po.ProductID = p.ID
+       JOIN (
+       SELECT ProductID, MIN(Price) AS min_price
+       FROM ProductOffer
+       GROUP BY ProductID
+       ) best
+       ON best.ProductID = po.ProductID
+       AND best.min_price = po.Price
     ";
 
 

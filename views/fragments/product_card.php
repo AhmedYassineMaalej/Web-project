@@ -5,7 +5,7 @@ use App\Helpers\JWT;
 use App\Repositories\BookmarkRepository;
 use App\Repositories\ProductRepository;
 
-function product_card(Product $product)
+function product_card($product)
 {
     $minPrice = ProductRepository::getMinPriceForProduct($product->id);
 

@@ -7,6 +7,8 @@ use App\Controllers\BookmarksController;
 use App\Controllers\CatalogController;
 use App\Controllers\HomeController;
 use App\Controllers\MySpaceController;
+use App\Controllers\ProductDetailsController;
+use App\Controllers\testController;
 use App\Helpers\Env;
 use App\Router;
 
@@ -43,6 +45,8 @@ function define_user_endpoints(Router $router)
     $router->add('ANY', '/login', LoginController::index(...));
     $router->add('ANY', '/logout', LogoutController::index(...));
     $router->add('ANY', '/signup', SignUpController::index(...));
+    $router->add('ANY', '/productDetails', ProductDetailsController::index(...));
+    $router->add('ANY', '/test', testController::index(...));
 }
 
 $router->dispatch($uri, $method);

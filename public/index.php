@@ -31,6 +31,7 @@ define_apis($router);
 function define_apis(Router $router)
 {
     $router->add('GET', '/catalog/getProductAjax', CatalogController::getProductAjax(...));
+    $router->add('GET','/catalog/getFilteredProductsAJAX',CatalogController::getFilteredProductsAJAX(...));
     $router->add('GET', '/bookmarks/items', BookmarksController::getBookmarksJson(...));
     $router->add('POST', '/bookmarks/add', BookmarksController::addBookmark(...));
     $router->add('POST', '/bookmarks/remove', BookmarksController::removeBookmark(...));

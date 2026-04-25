@@ -322,3 +322,23 @@ main {
 .toast-notification.info {
     background: #17a2b8;
 }
+.catalog-layout {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+}
+
+
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+
+.catalog-products {
+    flex: 1;
+    padding: 20px;
+}

@@ -7,6 +7,7 @@ use App\Entities\ProductInfo;
 use App\Entities\ProductOffer;
 use App\Entities\Product;
 use App\Helpers\JWT;
+require_once __DIR__ . '/../../views/fragments/product_section.php';
 
 class CatalogController {
     public static function index() {
@@ -107,6 +108,33 @@ class CatalogController {
         echo json_encode($response);
         exit;
     }
+
+
+    public static function getFilteredProductsAJAX(): void
+    {
+        $filters = [
+            'min_price' => isset($_GET['minPrice']) ? (float)$_GET['minPrice'] : null,
+            'max_price' => isset($_GET['maxPrice']) ? (float)$_GET['maxPrice'] : null,
+            'category' => isset($_GET['category']) ? trim($_GET['category']) : '',
+            'provider' => isset($_GET['providers'][0]) ? trim($_GET['providers'][0]) : '', // filterOffers expects a single string
+        ];
+
+        // Remove null/empty so filterOffers conditions are not triggered
+        $filters = array_filter($filters, fn($v) => $v !== null && $v !== '');
+
+        $product_array = ProductOfferRepository::filterOffers($filters);
+
+
+        $products = array_map(
+            function ($offer) {
+                return Product::convertToProduct( $offer['product']);
+            },
+            $product_array
+        );
+
+        product_section("",$products);
+    }
+
 
 }
 

@@ -3,7 +3,7 @@ use App\Repositories\ProductRepository;
 require __DIR__ . "/../fragments/head.php"; ?>
 <?php require __DIR__ . "/../fragments/navbar.php"; ?>
 <?php require __DIR__ . "/../fragments/deal_of_the_day.php"; ?>
-<?php require __DIR__ . "/../fragments/product_section.php"; ?>
+<?php require_once __DIR__ . "/../fragments/product_section.php"; ?>
 <?php require __DIR__ . "/../fragments/stickers.php"; ?>
 <!doctype html>
 <html lang="en">
@@ -30,7 +30,7 @@ require __DIR__ . "/../fragments/head.php"; ?>
         <?php require __DIR__ . "/../fragments/productModal.php"; ?>
     </body>
 <script src="/js/catalog.js">
-    <script src="js/bookmark_button.js"></script>
+    <script src="/js/bookmark_button.js">
 
-</script>
+
 </html>

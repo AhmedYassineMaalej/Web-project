@@ -1,5 +1,9 @@
-<?php 
+<?php
+
+use App\Entities\Category;
 use App\Helpers\JWT;
+use App\Repositories\CategoryRepository;
+
 function navbar() {
     require __DIR__ . "/logo.php";
     require __DIR__ . "/search_bar.php";
@@ -37,7 +41,8 @@ function navbar() {
                 <?php
                 if (JWT::isLoggedIn()) {
                     bookmarks_button();
-                    catalog_button();
+                    $categories = CategoryRepository::findAll();
+                    catalog_button($categories);
                     myspace_button();
                     logout_button();
                 } else {
